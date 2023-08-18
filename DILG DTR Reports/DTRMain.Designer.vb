@@ -312,7 +312,7 @@ Partial Class DTRMain
         ' 
         ListView1.BackColor = Color.White
         ListView1.BorderStyle = BorderStyle.FixedSingle
-        ListView1.Font = New Font("Arial Narrow", 9F, FontStyle.Regular, GraphicsUnit.Point)
+        ListView1.Font = New Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point)
         ListView1.GridLines = True
         ListView1.HeaderStyle = ColumnHeaderStyle.None
         ListView1.Location = New Point(16, 218)
@@ -498,7 +498,7 @@ Partial Class DTRMain
         ' 
         ListView2.BackColor = Color.White
         ListView2.BorderStyle = BorderStyle.FixedSingle
-        ListView2.Font = New Font("Arial Narrow", 9F, FontStyle.Regular, GraphicsUnit.Point)
+        ListView2.Font = New Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point)
         ListView2.GridLines = True
         ListView2.HeaderStyle = ColumnHeaderStyle.None
         ListView2.Location = New Point(16, 218)
@@ -672,7 +672,7 @@ Partial Class DTRMain
         AutoScaleDimensions = New SizeF(6F, 14F)
         AutoScaleMode = AutoScaleMode.Font
         AutoScroll = True
-        ClientSize = New Size(858, 1061)
+        ClientSize = New Size(858, 959)
         Controls.Add(PictureBox1)
         Controls.Add(Panel1)
         Controls.Add(GroupBox1)
