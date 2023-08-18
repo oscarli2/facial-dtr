@@ -60,7 +60,6 @@ Public Class DTRMain
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         PrintPreviewDialog1.ShowDialog()
-        PrintDocument1.Print()
     End Sub
 
     Private Sub PrintDocument1_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
