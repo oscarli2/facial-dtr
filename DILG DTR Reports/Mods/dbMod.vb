@@ -173,8 +173,7 @@ Module dbMod
         Dim i As Integer
         connection()
         Dim query As String
-        query = Database_Updater.RichTextBox1.Text
-        'Dim cmd As New OleDbCommand(sql, con)
+        query = "UPDATE hr_employee SET id=@OldID WHERE id=@NewID"
 
         cmd = New MySqlCommand(query, conn)
         cmd.Parameters.AddWithValue("@OldID", OldID)
@@ -190,6 +189,24 @@ Module dbMod
         Finally
             CloseDB()
         End Try
+
+        query = "UPDATE hr_biotemplate SET id=@OldID WHERE id=@NewID"
+
+        cmd = New MySqlCommand(query, conn)
+        cmd.Parameters.AddWithValue("@OldID", OldID)
+        cmd.Parameters.AddWithValue("@NewID", NewID)
+
+        Try
+            i = cmd.ExecuteNonQuery
+            If i > 0 Then
+                MsgBox("Fingeprint Updated!")
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            CloseDB()
+        End Try
+
     End Sub
 End Module
 
