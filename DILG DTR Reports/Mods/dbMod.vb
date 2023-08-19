@@ -1,5 +1,8 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports Mysqlx
 Imports System.IO
+Imports System.Net
+Imports System.Windows
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Module dbMod
@@ -21,8 +24,6 @@ Module dbMod
     'Dim user As String = "root"
     'Dim pass As String = "CDPabina"
     'Dim db As String = "zkteco"
-
-
     Public Sub connection()
         Try
 
@@ -34,7 +35,6 @@ Module dbMod
                 conn.Open()
             Else
                 conn.Close()
-                MessageBox.Show("Connection Failed!", "Database Connection", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
 
         Catch ex As Exception
@@ -167,6 +167,29 @@ Module dbMod
             MessageBox.Show(ex.Message.ToString)
         End Try
         CloseDB()
+    End Sub
+
+    Public Sub DBUpdater(OldID As Integer, NewID As Integer)
+        Dim i As Integer
+        connection()
+        Dim query As String
+        query = Database_Updater.RichTextBox1.Text
+        'Dim cmd As New OleDbCommand(sql, con)
+
+        cmd = New MySqlCommand(query, conn)
+        cmd.Parameters.AddWithValue("@OldID", OldID)
+        cmd.Parameters.AddWithValue("@NewID", NewID)
+
+        Try
+            i = cmd.ExecuteNonQuery
+            If i > 0 Then
+                MsgBox("User Updated!")
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            CloseDB()
+        End Try
     End Sub
 End Module
 
