@@ -678,6 +678,7 @@ Partial Class DTRMain
         Controls.Add(GroupBox1)
         Font = New Font("Calibri", 9F, FontStyle.Regular, GraphicsUnit.Point)
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
+        KeyPreview = True
         Name = "DTRMain"
         Text = "DILG DTR Printer 1.0"
         GroupBox1.ResumeLayout(False)

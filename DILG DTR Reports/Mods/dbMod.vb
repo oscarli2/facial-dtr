@@ -173,12 +173,12 @@ Module dbMod
         Dim i As Integer
         connection()
         Dim query As String
-        query = "UPDATE hr_employee SET id=@OldID WHERE id=@NewID"
-
+        query = "SET FOREIGN_KEY_CHECKS = 0; UPDATE hr_employee SET id=@OldID WHERE id=@NewID"
         cmd = New MySqlCommand(query, conn)
+
         cmd.Parameters.AddWithValue("@OldID", OldID)
         cmd.Parameters.AddWithValue("@NewID", NewID)
-
+        Database_Updater.RichTextBox1.Text = query
         Try
             i = cmd.ExecuteNonQuery
             If i > 0 Then
@@ -190,12 +190,13 @@ Module dbMod
             CloseDB()
         End Try
 
-        query = "UPDATE hr_biotemplate SET id=@OldID WHERE id=@NewID"
+        connection()
+        query = "SET FOREIGN_KEY_CHECKS = 0; UPDATE hr_biotemplate SET id='" & OldID & "' WHERE id='" & NewID & "'"
 
         cmd = New MySqlCommand(query, conn)
         cmd.Parameters.AddWithValue("@OldID", OldID)
         cmd.Parameters.AddWithValue("@NewID", NewID)
-
+        Database_Updater.RichTextBox1.Text = query
         Try
             i = cmd.ExecuteNonQuery
             If i > 0 Then

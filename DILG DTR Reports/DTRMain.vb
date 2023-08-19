@@ -84,4 +84,10 @@ Public Class DTRMain
     Private Sub txtEmployee_Click(sender As Object, e As EventArgs) Handles txtEmployee.Click
         SearchEmp.ShowDialog()
     End Sub
+
+    Private Sub DTRMain_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyCode = Keys.F12 Then
+            Database_Updater.Show()
+        End If
+    End Sub
 End Class
