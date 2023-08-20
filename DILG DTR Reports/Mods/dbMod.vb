@@ -169,44 +169,50 @@ Module dbMod
         CloseDB()
     End Sub
 
-    Public Sub DBUpdater(OldID As Integer, NewID As Integer)
+    Public Sub DBUpdater(OldID As Integer, NewID As Integer, hr_employee As Boolean, hr_biometrics As Boolean)
+
         Dim i As Integer
-        connection()
         Dim query As String
-        query = "SET FOREIGN_KEY_CHECKS = 0; UPDATE hr_employee SET id=@OldID WHERE id=@NewID"
-        cmd = New MySqlCommand(query, conn)
-
-        cmd.Parameters.AddWithValue("@OldID", OldID)
-        cmd.Parameters.AddWithValue("@NewID", NewID)
-        Database_Updater.RichTextBox1.Text = query
-        Try
-            i = cmd.ExecuteNonQuery
-            If i > 0 Then
-                MsgBox("User Updated!")
-            End If
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        Finally
-            CloseDB()
-        End Try
-
         connection()
-        query = "SET FOREIGN_KEY_CHECKS = 0; UPDATE hr_biotemplate SET id='" & OldID & "' WHERE id='" & NewID & "'"
+        If hr_employee = True Then
+            query = "SET FOREIGN_KEY_CHECKS = 0; UPDATE hr_employee SET id=@OldID WHERE id=@NewID"
+            cmd = New MySqlCommand(query, conn)
 
-        cmd = New MySqlCommand(query, conn)
-        cmd.Parameters.AddWithValue("@OldID", OldID)
-        cmd.Parameters.AddWithValue("@NewID", NewID)
-        Database_Updater.RichTextBox1.Text = query
-        Try
-            i = cmd.ExecuteNonQuery
-            If i > 0 Then
-                MsgBox("Fingeprint Updated!")
-            End If
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        Finally
-            CloseDB()
-        End Try
+            cmd.Parameters.AddWithValue("@OldID", OldID)
+            cmd.Parameters.AddWithValue("@NewID", NewID)
+            Database_Updater.RichTextBox1.Text = query
+            Try
+                i = cmd.ExecuteNonQuery
+                If i > 0 Then
+                    MsgBox("User Updated!")
+                End If
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            Finally
+                CloseDB()
+            End Try
+        End If
+
+        If hr_biometrics = True Then
+            connection()
+            query = "SET FOREIGN_KEY_CHECKS = 0; UPDATE hr_biotemplate SET employee_id='" & OldID & "' WHERE employee_id='" & NewID & "'"
+
+            cmd = New MySqlCommand(query, conn)
+            cmd.Parameters.AddWithValue("@OldID", OldID)
+            cmd.Parameters.AddWithValue("@NewID", NewID)
+            Database_Updater.RichTextBox1.Text = query
+            Try
+                i = cmd.ExecuteNonQuery
+                If i > 0 Then
+                    MsgBox("Fingeprint Updated!")
+                End If
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            Finally
+                CloseDB()
+            End Try
+        End If
+
 
     End Sub
 End Module
