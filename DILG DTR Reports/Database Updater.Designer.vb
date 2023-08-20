@@ -311,9 +311,10 @@ Partial Class Database_Updater
         ' RadioButton1
         ' 
         RadioButton1.AutoSize = True
-        RadioButton1.Location = New Point(399, 252)
+        RadioButton1.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
+        RadioButton1.Location = New Point(384, 252)
         RadioButton1.Name = "RadioButton1"
-        RadioButton1.Size = New Size(112, 19)
+        RadioButton1.Size = New Size(124, 20)
         RadioButton1.TabIndex = 37
         RadioButton1.TabStop = True
         RadioButton1.Text = "Employees Table"
@@ -322,9 +323,10 @@ Partial Class Database_Updater
         ' RadioButton2
         ' 
         RadioButton2.AutoSize = True
+        RadioButton2.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
         RadioButton2.Location = New Point(532, 252)
         RadioButton2.Name = "RadioButton2"
-        RadioButton2.Size = New Size(111, 19)
+        RadioButton2.Size = New Size(121, 20)
         RadioButton2.TabIndex = 38
         RadioButton2.TabStop = True
         RadioButton2.Text = "Biometrics Table"
