@@ -138,6 +138,7 @@ Module dbMod
                             days += 1
                         End While
                     Else
+                        Exit Sub
                     End If
                 Else
                     Dim items As New ListViewItem
