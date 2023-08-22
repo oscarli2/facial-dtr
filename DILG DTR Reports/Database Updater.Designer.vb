@@ -51,6 +51,7 @@ Partial Class Database_Updater
         GroupBox2 = New GroupBox()
         RadioButton1 = New RadioButton()
         RadioButton2 = New RadioButton()
+        Button2 = New Button()
         GroupBox1.SuspendLayout()
         GroupBox2.SuspendLayout()
         SuspendLayout()
@@ -158,10 +159,10 @@ Partial Class Database_Updater
         ' Button1
         ' 
         Button1.BackColor = Color.YellowGreen
-        Button1.Font = New Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
-        Button1.Location = New Point(330, 282)
+        Button1.Font = New Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
+        Button1.Location = New Point(324, 244)
         Button1.Name = "Button1"
-        Button1.Size = New Size(375, 85)
+        Button1.Size = New Size(381, 85)
         Button1.TabIndex = 22
         Button1.Text = "Run"
         Button1.UseVisualStyleBackColor = False
@@ -261,7 +262,7 @@ Partial Class Database_Updater
         GroupBox1.Font = New Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
         GroupBox1.Location = New Point(321, 12)
         GroupBox1.Name = "GroupBox1"
-        GroupBox1.Size = New Size(384, 217)
+        GroupBox1.Size = New Size(384, 174)
         GroupBox1.TabIndex = 35
         GroupBox1.TabStop = False
         GroupBox1.Text = "SQL QUERY"
@@ -272,7 +273,8 @@ Partial Class Database_Updater
         RichTextBox1.Font = New Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
         RichTextBox1.Location = New Point(3, 21)
         RichTextBox1.Name = "RichTextBox1"
-        RichTextBox1.Size = New Size(378, 193)
+        RichTextBox1.ReadOnly = True
+        RichTextBox1.Size = New Size(378, 150)
         RichTextBox1.TabIndex = 33
         RichTextBox1.Text = ""
         ' 
@@ -303,7 +305,7 @@ Partial Class Database_Updater
         GroupBox2.Font = New Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
         GroupBox2.Location = New Point(12, 12)
         GroupBox2.Name = "GroupBox2"
-        GroupBox2.Size = New Size(303, 355)
+        GroupBox2.Size = New Size(290, 355)
         GroupBox2.TabIndex = 36
         GroupBox2.TabStop = False
         GroupBox2.Text = "EMPLOYEE IDs"
@@ -312,7 +314,7 @@ Partial Class Database_Updater
         ' 
         RadioButton1.AutoSize = True
         RadioButton1.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
-        RadioButton1.Location = New Point(384, 252)
+        RadioButton1.Location = New Point(384, 219)
         RadioButton1.Name = "RadioButton1"
         RadioButton1.Size = New Size(124, 20)
         RadioButton1.TabIndex = 37
@@ -324,7 +326,7 @@ Partial Class Database_Updater
         ' 
         RadioButton2.AutoSize = True
         RadioButton2.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
-        RadioButton2.Location = New Point(532, 252)
+        RadioButton2.Location = New Point(532, 219)
         RadioButton2.Name = "RadioButton2"
         RadioButton2.Size = New Size(121, 20)
         RadioButton2.TabIndex = 38
@@ -332,11 +334,24 @@ Partial Class Database_Updater
         RadioButton2.Text = "Biometrics Table"
         RadioButton2.UseVisualStyleBackColor = True
         ' 
+        ' Button2
+        ' 
+        Button2.BackColor = Color.Tomato
+        Button2.Font = New Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
+        Button2.ForeColor = Color.DarkRed
+        Button2.Location = New Point(324, 330)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(381, 37)
+        Button2.TabIndex = 39
+        Button2.Text = "Clear Fields"
+        Button2.UseVisualStyleBackColor = False
+        ' 
         ' Database_Updater
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(716, 384)
+        ClientSize = New Size(721, 384)
+        Controls.Add(Button2)
         Controls.Add(RadioButton2)
         Controls.Add(RadioButton1)
         Controls.Add(GroupBox2)
@@ -344,6 +359,7 @@ Partial Class Database_Updater
         Controls.Add(Label3)
         Controls.Add(Button1)
         Name = "Database_Updater"
+        SizeGripStyle = SizeGripStyle.Hide
         Text = "Database_Updater"
         GroupBox1.ResumeLayout(False)
         GroupBox2.ResumeLayout(False)
@@ -381,4 +397,5 @@ Partial Class Database_Updater
     Friend WithEvents RichTextBox1 As RichTextBox
     Friend WithEvents RadioButton1 As RadioButton
     Friend WithEvents RadioButton2 As RadioButton
+    Friend WithEvents Button2 As Button
 End Class

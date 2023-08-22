@@ -2,11 +2,15 @@
 
 Public Class DTRMain
     Dim dateFrmTo As String = ""
+    Dim ifDTPChanged As Boolean = False
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
         If txtEmployee.Text = "" Then
             MsgBox("Please select an employee")
         ElseIf dtp_from.Value.Date = dtp_to.Value.Date Then
             MsgBox("Please select a range of dates!")
+        ElseIf ifDTPChanged = False Then
+            MsgBox("Please change your FROM Date!")
         Else
             searchDTR(Convert.ToInt32(emp_id.Text), dtp_from.Value, dtp_to.Value)
         End If
@@ -50,6 +54,7 @@ Public Class DTRMain
 
     Private Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles dtp_from.ValueChanged
         Dim day As Integer = Convert.ToInt32(dtp_from.Value.ToString("dd"))
+        ifDTPChanged = True
         If day <= 15 Then
             lblMonth.Text = dtp_from.Value.ToString("MMMM").ToUpper & " 1 - 15 , " & dtp_from.Value.ToString("yyyy").ToUpper
         Else

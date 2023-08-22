@@ -38,4 +38,10 @@ Public Class Database_Updater
         End If
 
     End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        For Each txt As Control In Me.GroupBox2.Controls.OfType(Of TextBox)()
+            txt.Text = ""
+        Next
+    End Sub
 End Class

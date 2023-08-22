@@ -86,6 +86,7 @@ Partial Class DTRMain
         txtEmployee.Font = New Font("Calibri", 12F, FontStyle.Bold, GraphicsUnit.Point)
         txtEmployee.Location = New Point(28, 51)
         txtEmployee.Name = "txtEmployee"
+        txtEmployee.ReadOnly = True
         txtEmployee.Size = New Size(247, 27)
         txtEmployee.TabIndex = 0
         txtEmployee.Text = "CLICK TO SEARCH"

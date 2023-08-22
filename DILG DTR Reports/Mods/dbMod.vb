@@ -89,10 +89,10 @@ Module dbMod
         Dim query As String
         query = "
             SELECT CAST(punch_time AS DATE) punch_date, DAY(punch_time) punch_day
-            , MAX(CASE WHEN workstate = 0 AND employee_id = @emp_id AND TIME(punch_time) BETWEEN '05:00:00' AND '11:59:00' THEN TIME(punch_time) END) as ArrivalAM 
-            , MAX(CASE WHEN workstate = 1 AND employee_id = @emp_id AND TIME(punch_time) BETWEEN '12:00:00' AND '14:00:00' THEN TIME(punch_time) END) as DepartAM 
-            , MAX(CASE WHEN workstate = 0 AND employee_id = @emp_id AND TIME(punch_time) BETWEEN '12:00:00' AND '14:00:00' THEN TIME(punch_time) END) as ArrivalPM 
-            , MAX(CASE WHEN workstate = 1 AND employee_id = @emp_id AND TIME(punch_time) BETWEEN '13:00:00' AND '19:00:00' THEN TIME(punch_time) END) as DepartPM 
+            , MAX(CASE WHEN workstate = 0 AND employee_id = @emp_id AND TIME(punch_time) BETWEEN '05:00:00' AND '11:59:00' THEN DATE_FORMAT(punch_time, '%l:%i %p') END) as ArrivalAM 
+            , MAX(CASE WHEN workstate = 1 AND employee_id = @emp_id AND TIME(punch_time) BETWEEN '12:00:00' AND '14:00:00' THEN DATE_FORMAT(punch_time, '%l:%i %p') END) as DepartAM 
+            , MAX(CASE WHEN workstate = 0 AND employee_id = @emp_id AND TIME(punch_time) BETWEEN '12:00:00' AND '14:00:00' THEN DATE_FORMAT(punch_time, '%l:%i %p') END) as ArrivalPM 
+            , MAX(CASE WHEN workstate = 1 AND employee_id = @emp_id AND TIME(punch_time) BETWEEN '13:00:00' AND '19:00:00' THEN DATE_FORMAT(punch_time, '%l:%i %p') END) as DepartPM 
             FROM att_punches 
             GROUP BY punch_date
             HAVING punch_date BETWEEN @dateFrm AND @dateTo;
@@ -215,5 +215,6 @@ Module dbMod
 
 
     End Sub
+
 End Module
 
