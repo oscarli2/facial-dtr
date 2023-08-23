@@ -412,10 +412,10 @@ Partial Class DTRMain
         TextBox1.BackColor = Color.White
         TextBox1.BorderStyle = BorderStyle.None
         TextBox1.Font = New Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point)
-        TextBox1.Location = New Point(92, 34)
+        TextBox1.Location = New Point(115, 34)
         TextBox1.Name = "TextBox1"
         TextBox1.ReadOnly = True
-        TextBox1.Size = New Size(334, 22)
+        TextBox1.Size = New Size(294, 22)
         TextBox1.TabIndex = 26
         TextBox1.Text = "DAILY TIME RECORD"
         TextBox1.TextAlign = HorizontalAlignment.Center

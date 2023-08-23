@@ -52,17 +52,6 @@ Public Class DTRMain
         Next
     End Sub
 
-    Private Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles dtp_from.ValueChanged
-        Dim day As Integer = Convert.ToInt32(dtp_from.Value.ToString("dd"))
-        ifDTPChanged = True
-        If day <= 15 Then
-            lblMonth.Text = dtp_from.Value.ToString("MMMM").ToUpper & " 1 - 15 , " & dtp_from.Value.ToString("yyyy").ToUpper
-        Else
-            lblMonth.Text = dtp_from.Value.ToString("MMMM").ToUpper & " 16 - 30 , " & dtp_from.Value.ToString("yyyy").ToUpper
-        End If
-    End Sub
-
-
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         PrintPreviewDialog1.ShowDialog()
     End Sub
@@ -94,5 +83,14 @@ Public Class DTRMain
         If e.KeyCode = Keys.F12 Then
             Database_Updater.Show()
         End If
+    End Sub
+
+    Private Sub dtp_from_ValueChanged(sender As Object, e As EventArgs) Handles dtp_from.ValueChanged
+        ifDTPChanged = True
+        updateMonth()
+    End Sub
+
+    Private Sub dtp_to_ValueChanged(sender As Object, e As EventArgs) Handles dtp_to.ValueChanged
+        updateMonth()
     End Sub
 End Class

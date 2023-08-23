@@ -213,8 +213,17 @@ Module dbMod
                 CloseDB()
             End Try
         End If
-
-
+    End Sub
+    Public Sub updateMonth()
+        Dim day As Integer = Convert.ToInt32(DTRMain.dtp_from.Value.ToString("dd"))
+        Dim dayTo As Integer = Convert.ToInt32(DTRMain.dtp_to.Value.ToString("dd"))
+        If day > 0 And dayTo < 16 Then
+            DTRMain.lblMonth.Text = DTRMain.dtp_from.Value.ToString("MMMM").ToUpper & " 1 - 15 , " & DTRMain.dtp_from.Value.ToString("yyyy").ToUpper
+        ElseIf day = 1 And dayTo >= 30 Then
+            DTRMain.lblMonth.Text = DTRMain.dtp_from.Value.ToString("MMMM yyyy").ToUpper
+        Else
+            DTRMain.lblMonth.Text = DTRMain.dtp_from.Value.ToString("MMMM").ToUpper & " 16 - 30 , " & DTRMain.dtp_from.Value.ToString("yyyy").ToUpper
+        End If
     End Sub
 
 End Module
