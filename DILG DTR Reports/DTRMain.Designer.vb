@@ -530,10 +530,11 @@ Partial Class DTRMain
         ' 
         RichTextBox3.BackColor = Color.LightGray
         RichTextBox3.BorderStyle = BorderStyle.None
-        RichTextBox3.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
-        RichTextBox3.Location = New Point(14, 173)
+        RichTextBox3.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
+        RichTextBox3.Location = New Point(16, 173)
         RichTextBox3.Name = "RichTextBox3"
-        RichTextBox3.Size = New Size(52, 37)
+        RichTextBox3.ReadOnly = True
+        RichTextBox3.Size = New Size(50, 37)
         RichTextBox3.TabIndex = 60
         RichTextBox3.Text = vbLf & "     Day"
         ' 
@@ -576,10 +577,11 @@ Partial Class DTRMain
         ' TextBox5
         ' 
         TextBox5.BackColor = Color.LightGray
-        TextBox5.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox5.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
         TextBox5.Location = New Point(387, 171)
         TextBox5.Name = "TextBox5"
-        TextBox5.Size = New Size(107, 20)
+        TextBox5.ReadOnly = True
+        TextBox5.Size = New Size(107, 22)
         TextBox5.TabIndex = 52
         TextBox5.Text = "Undertime"
         TextBox5.TextAlign = HorizontalAlignment.Center
@@ -587,10 +589,11 @@ Partial Class DTRMain
         ' TextBox3
         ' 
         TextBox3.BackColor = Color.LightGray
-        TextBox3.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox3.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
         TextBox3.Location = New Point(224, 171)
         TextBox3.Name = "TextBox3"
-        TextBox3.Size = New Size(165, 20)
+        TextBox3.ReadOnly = True
+        TextBox3.Size = New Size(165, 22)
         TextBox3.TabIndex = 51
         TextBox3.Text = "PM"
         TextBox3.TextAlign = HorizontalAlignment.Center
@@ -598,10 +601,11 @@ Partial Class DTRMain
         ' TextBox2
         ' 
         TextBox2.BackColor = Color.LightGray
-        TextBox2.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox2.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
         TextBox2.Location = New Point(66, 171)
         TextBox2.Name = "TextBox2"
-        TextBox2.Size = New Size(161, 20)
+        TextBox2.ReadOnly = True
+        TextBox2.Size = New Size(161, 22)
         TextBox2.TabIndex = 50
         TextBox2.Text = "AM"
         TextBox2.TextAlign = HorizontalAlignment.Center
@@ -609,10 +613,11 @@ Partial Class DTRMain
         ' TextBox14
         ' 
         TextBox14.BackColor = Color.LightGray
-        TextBox14.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox14.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
         TextBox14.Location = New Point(439, 190)
         TextBox14.Name = "TextBox14"
-        TextBox14.Size = New Size(55, 20)
+        TextBox14.ReadOnly = True
+        TextBox14.Size = New Size(55, 22)
         TextBox14.TabIndex = 59
         TextBox14.Text = "Minutes"
         TextBox14.TextAlign = HorizontalAlignment.Center
@@ -620,10 +625,11 @@ Partial Class DTRMain
         ' TextBox15
         ' 
         TextBox15.BackColor = Color.LightGray
-        TextBox15.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox15.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
         TextBox15.Location = New Point(387, 190)
         TextBox15.Name = "TextBox15"
-        TextBox15.Size = New Size(54, 20)
+        TextBox15.ReadOnly = True
+        TextBox15.Size = New Size(54, 22)
         TextBox15.TabIndex = 58
         TextBox15.Text = "Hours"
         TextBox15.TextAlign = HorizontalAlignment.Center
@@ -631,10 +637,11 @@ Partial Class DTRMain
         ' TextBox12
         ' 
         TextBox12.BackColor = Color.LightGray
-        TextBox12.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox12.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
         TextBox12.Location = New Point(304, 190)
         TextBox12.Name = "TextBox12"
-        TextBox12.Size = New Size(85, 20)
+        TextBox12.ReadOnly = True
+        TextBox12.Size = New Size(85, 22)
         TextBox12.TabIndex = 57
         TextBox12.Text = "Departure"
         TextBox12.TextAlign = HorizontalAlignment.Center
@@ -642,10 +649,11 @@ Partial Class DTRMain
         ' TextBox13
         ' 
         TextBox13.BackColor = Color.LightGray
-        TextBox13.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox13.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
         TextBox13.Location = New Point(224, 190)
         TextBox13.Name = "TextBox13"
-        TextBox13.Size = New Size(84, 20)
+        TextBox13.ReadOnly = True
+        TextBox13.Size = New Size(84, 22)
         TextBox13.TabIndex = 56
         TextBox13.Text = "Arrival"
         TextBox13.TextAlign = HorizontalAlignment.Center
@@ -653,10 +661,11 @@ Partial Class DTRMain
         ' TextBox8
         ' 
         TextBox8.BackColor = Color.LightGray
-        TextBox8.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox8.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
         TextBox8.Location = New Point(144, 190)
         TextBox8.Name = "TextBox8"
-        TextBox8.Size = New Size(82, 20)
+        TextBox8.ReadOnly = True
+        TextBox8.Size = New Size(82, 22)
         TextBox8.TabIndex = 55
         TextBox8.Text = "Departure"
         TextBox8.TextAlign = HorizontalAlignment.Center
@@ -664,10 +673,11 @@ Partial Class DTRMain
         ' TextBox7
         ' 
         TextBox7.BackColor = Color.LightGray
-        TextBox7.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox7.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
         TextBox7.Location = New Point(66, 190)
         TextBox7.Name = "TextBox7"
-        TextBox7.Size = New Size(81, 20)
+        TextBox7.ReadOnly = True
+        TextBox7.Size = New Size(81, 22)
         TextBox7.TabIndex = 54
         TextBox7.Text = "Arrival"
         TextBox7.TextAlign = HorizontalAlignment.Center
