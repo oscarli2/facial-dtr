@@ -84,65 +84,97 @@ Module dbMod
         CloseDB()
     End Sub
 
-    Public Sub searchDTR(emp_id As Integer, dtrDatefrm As Date, dtrDateTo As Date)
+    Public Sub searchDTR(emp_id As Integer, a As Boolean, b As Boolean)
 
         Dim query As String
         query = "
-            SELECT CAST(punch_time AS DATE) punch_date, DAY(punch_time) punch_day
-            , MAX(CASE WHEN workstate = 0 AND employee_id = @emp_id AND TIME(punch_time) BETWEEN '05:00:00' AND '11:59:00' THEN DATE_FORMAT(punch_time, '%l:%i %p') END) as ArrivalAM 
-            , MAX(CASE WHEN workstate = 1 AND employee_id = @emp_id AND TIME(punch_time) BETWEEN '12:00:00' AND '14:00:00' THEN DATE_FORMAT(punch_time, '%l:%i %p') END) as DepartAM 
-            , MAX(CASE WHEN workstate = 0 AND employee_id = @emp_id AND TIME(punch_time) BETWEEN '12:00:00' AND '14:00:00' THEN DATE_FORMAT(punch_time, '%l:%i %p') END) as ArrivalPM 
-            , MAX(CASE WHEN workstate = 1 AND employee_id = @emp_id AND TIME(punch_time) BETWEEN '13:00:00' AND '19:00:00' THEN DATE_FORMAT(punch_time, '%l:%i %p') END) as DepartPM 
-            FROM att_punches 
-            GROUP BY punch_date
-            HAVING punch_date BETWEEN @dateFrm AND @dateTo;
+            WITH RECURSIVE date_ranges AS (
+            SELECT @dateFrm dt UNION ALL
+            SELECT dt + INTERVAL 1 DAY FROM date_ranges 
+            WHERE dt + INTERVAL 1 DAY <= @dateTo)
+            SELECT date_ranges.dt
+            , MAX(CASE WHEN T.workstate = 0 AND T.employee_id = @emp_id AND TIME(T.punch_time) BETWEEN '05:00:00' AND '11:59:00' THEN DATE_FORMAT(T.punch_time, '%l:%i %p') END) AS ArrivalAM 
+            , MAX(CASE WHEN T.workstate = 1 AND T.employee_id = @emp_id  AND TIME(T.punch_time) BETWEEN '12:00:00' AND '14:00:00' THEN DATE_FORMAT(T.punch_time, '%l:%i %p') END) AS DepartAM 
+            , MAX(CASE WHEN T.workstate = 0 AND T.employee_id = @emp_id  AND TIME(T.punch_time) BETWEEN '12:00:00' AND '13:00:00' THEN DATE_FORMAT(T.punch_time, '%l:%i %p') END) AS ArrivalPM 
+            , MAX(CASE WHEN T.workstate = 1 AND T.employee_id = @emp_id  AND TIME(T.punch_time) BETWEEN '13:00:01' AND '19:00:00' THEN DATE_FORMAT(T.punch_time, '%l:%i %p') END) AS DepartPM 
+             FROM date_ranges
+            LEFT JOIN `att_punches` T
+            ON date_ranges.dt = CAST(punch_time AS DATE)
+            GROUP BY date_ranges.dt;
             "
 
         str = "Server=" & server & ";Port=" & port & ";Uid=" & user & ";Pwd=" & pass & ";Database=" & db & ";persist security info=false; SslMode=none;"
         conn = New MySqlConnection(str)
         cmd = New MySqlCommand(query, conn)
-        cmd.Parameters.AddWithValue("@dateFrm", dtrDatefrm.AddDays(-1))
-        cmd.Parameters.AddWithValue("@dateTo", dtrDateTo)
+
+
+        Dim dayFrom As Integer = Convert.ToInt32(DTRMain.dtp_from.Value.ToString("dd"))
+        Dim days As Integer = 0
+
+        If a = True And b = False Then
+            cmd.Parameters.AddWithValue("@dateFrm", "2023-08-01")
+            cmd.Parameters.AddWithValue("@dateTo", "2023-08-15")
+            days = 1
+        ElseIf b = True And a = False Then
+            cmd.Parameters.AddWithValue("@dateFrm", "2023-08-16")
+            cmd.Parameters.AddWithValue("@dateTo", "2023-08-31")
+            days = 16
+        End If
         cmd.Parameters.AddWithValue("@emp_id", emp_id)
         conn.Open()
         dr = cmd.ExecuteReader
 
         DTRMain.ListView1.Clear()
-        DTRMain.ListView1.Columns.Add("Day", 50, HorizontalAlignment.Center)
-        DTRMain.ListView1.Columns.Add("Arrive", 80, HorizontalAlignment.Center)
-        DTRMain.ListView1.Columns.Add("Depart", 80, HorizontalAlignment.Center)
-        DTRMain.ListView1.Columns.Add("Arrive", 80, HorizontalAlignment.Center)
-        DTRMain.ListView1.Columns.Add("Depart", 80, HorizontalAlignment.Center)
-        DTRMain.ListView1.Columns.Add("Hours", 30, HorizontalAlignment.Center)
-        DTRMain.ListView1.Columns.Add("Minutes", 50, HorizontalAlignment.Center)
+        DTRMain.ListView1.Columns.Add("Day", 50, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        DTRMain.ListView1.Columns.Add("Arrive", 80, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        DTRMain.ListView1.Columns.Add("Depart", 80, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        DTRMain.ListView1.Columns.Add("Arrive", 80, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        DTRMain.ListView1.Columns.Add("Depart", 80, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        DTRMain.ListView1.Columns.Add("Hours", 30, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        DTRMain.ListView1.Columns.Add("Minutes", 50, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
 
-        Dim days As Integer = 1
-        Dim punchday As Integer = 1
         Try
-            While days <= 31
-                If days = 1 Then
-                    If dr.HasRows Then
-                        While dr.Read()
-                            punchday = Convert.ToInt32(dr(1))
-                            Dim items As New ListViewItem
-                            items.Text = punchday.ToString
-                            items.SubItems.Add(dr(2).ToString)
-                            items.SubItems.Add(dr(3).ToString)
-                            items.SubItems.Add(dr(4).ToString)
-                            items.SubItems.Add(dr(5).ToString)
-                            items.SubItems.Add("")
-                            items.SubItems.Add("")
-                            items.SubItems.Add("")
-                            DTRMain.ListView1.View = View.Details
-                            DTRMain.ListView1.Items.Add(items)
-                            days += 1
-                        End While
+            If days = 1 Then
+                While days <= 31
+                    If days = 1 Then
+                        If dr.HasRows Then
+                            While dr.Read()
+                                Dim items As New ListViewItem
+                                items.Text = days.ToString
+                                items.SubItems.Add(dr(1).ToString)
+                                items.SubItems.Add(dr(2).ToString)
+                                items.SubItems.Add(dr(3).ToString)
+                                items.SubItems.Add(dr(4).ToString)
+                                items.SubItems.Add("")
+                                items.SubItems.Add("")
+                                items.SubItems.Add("")
+                                DTRMain.ListView1.View = View.Details
+                                DTRMain.ListView1.Items.Add(items)
+                                days += 1
+                            End While
+                        Else
+                            Exit Sub
+                        End If
                     Else
-                        Exit Sub
+                        Dim items As New ListViewItem
+                        items.Text = days.ToString
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        DTRMain.ListView1.View = View.Details
+                        DTRMain.ListView1.Items.Add(items)
+                        days += 1
                     End If
-                Else
+                End While
+            ElseIf days = 16 Then
+                Dim count As Integer = 1
+                While count <= 16
                     Dim items As New ListViewItem
-                    items.Text = days.ToString
+                    items.Text = count.ToString
                     items.SubItems.Add("")
                     items.SubItems.Add("")
                     items.SubItems.Add("")
@@ -152,12 +184,30 @@ Module dbMod
                     items.SubItems.Add("")
                     DTRMain.ListView1.View = View.Details
                     DTRMain.ListView1.Items.Add(items)
-                    days += 1
-                    punchday += 1
+                    count += 1
+                End While
+                If dr.HasRows Then
+                    While dr.Read()
+                        Dim items As New ListViewItem
+                        items.Text = days.ToString
+                        items.SubItems.Add(dr(1).ToString)
+                        items.SubItems.Add(dr(2).ToString)
+                        items.SubItems.Add(dr(3).ToString)
+                        items.SubItems.Add(dr(4).ToString)
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        DTRMain.ListView1.View = View.Details
+                        DTRMain.ListView1.Items.Add(items)
+                        days += 1
+                    End While
+                Else
+                    Exit Sub
                 End If
-            End While
+            End If
+
             With DTRMain
-                Dim BoldFont As Font = New Font(.ListView1.Font.FontFamily, .ListView1.Font.Size, FontStyle.Bold)
+                Dim BoldFont As Font = New Font(.ListView1.Font.FontFamily, .ListView1.Font.Size, Drawing.FontStyle.Bold)
                 For i As Integer = 0 To .ListView1.Items.Count - 1
                     .ListView1.Items(i).UseItemStyleForSubItems = False
                     .ListView1.Items(i).Font = BoldFont
@@ -168,6 +218,7 @@ Module dbMod
             MessageBox.Show(ex.Message.ToString)
         End Try
         CloseDB()
+
     End Sub
 
     Public Sub DBUpdater(OldID As Integer, NewID As Integer, hr_employee As Boolean, hr_biometrics As Boolean)

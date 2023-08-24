@@ -26,13 +26,13 @@ Public Class SearchEmp
     End Sub
     Private Sub lv_employees_DoubleClick(sender As Object, e As EventArgs) Handles lv_employees.DoubleClick
         'initialize columns in DTRMain Form
-        DTRMain.ListView1.Columns.Add("Day", 50, HorizontalAlignment.Center)
-        DTRMain.ListView1.Columns.Add("Arrive", 80, HorizontalAlignment.Center)
-        DTRMain.ListView1.Columns.Add("Depart", 80, HorizontalAlignment.Center)
-        DTRMain.ListView1.Columns.Add("Arrive", 80, HorizontalAlignment.Center)
-        DTRMain.ListView1.Columns.Add("Depart", 80, HorizontalAlignment.Center)
-        DTRMain.ListView1.Columns.Add("Hours", 50, HorizontalAlignment.Center)
-        DTRMain.ListView1.Columns.Add("Minutes", 50, HorizontalAlignment.Center)
+        DTRMain.ListView1.Columns.Add("Day", CStr(50), HorizontalAlignment.Center)
+        DTRMain.ListView1.Columns.Add("Arrive", CStr(80), HorizontalAlignment.Center)
+        DTRMain.ListView1.Columns.Add("Depart", CStr(80), HorizontalAlignment.Center)
+        DTRMain.ListView1.Columns.Add("Arrive", CStr(80), HorizontalAlignment.Center)
+        DTRMain.ListView1.Columns.Add("Depart", CStr(80), HorizontalAlignment.Center)
+        DTRMain.ListView1.Columns.Add("Hours", CStr(30), HorizontalAlignment.Center)
+        DTRMain.ListView1.Columns.Add("Minutes", CStr(50), HorizontalAlignment.Center)
 
         With DTRMain
             .emp_id.Text = lv_employees.SelectedItems(0).Text

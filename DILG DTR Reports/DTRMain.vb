@@ -1,18 +1,21 @@
-﻿Imports Mysqlx.XDevAPI.Relational
+﻿Imports System.Drawing.Printing
+Imports Mysqlx.XDevAPI.Relational
 
 Public Class DTRMain
     Dim dateFrmTo As String = ""
     Dim ifDTPChanged As Boolean = False
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
-        If txtEmployee.Text = "" Then
+        If txtEmployee.Text = "CLICK TO SEARCH" Then
             MsgBox("Please select an employee")
-        ElseIf dtp_from.Value.Date = dtp_to.Value.Date Then
-            MsgBox("Please select a range of dates!")
         ElseIf ifDTPChanged = False Then
             MsgBox("Please change your FROM Date!")
         Else
-            searchDTR(Convert.ToInt32(emp_id.Text), dtp_from.Value, dtp_to.Value)
+            If RadioButton1.Checked = True Then
+                searchDTR(Convert.ToInt32(emp_id.Text), True, False)
+            ElseIf RadioButton2.Checked = True Then
+                searchDTR(Convert.ToInt32(emp_id.Text), False, True)
+            End If
         End If
     End Sub
 
@@ -21,13 +24,13 @@ Public Class DTRMain
         dtp_from.Value = Date.Now
         dtp_to.Value = Date.Now
 
-        ListView1.Columns.Add("Day", 50, HorizontalAlignment.Center)
-        ListView1.Columns.Add("Arrive(AM)", 80, HorizontalAlignment.Center)
-        ListView1.Columns.Add("Depart(AM)", 80, HorizontalAlignment.Center)
-        ListView1.Columns.Add("Arrive(PM", 80, HorizontalAlignment.Center)
-        ListView1.Columns.Add("Depart(PM)", 80, HorizontalAlignment.Center)
-        ListView1.Columns.Add("Hours", 30, HorizontalAlignment.Center)
-        ListView1.Columns.Add("Minutes", 50, HorizontalAlignment.Center)
+        ListView1.Columns.Add("Day", CStr(50), HorizontalAlignment.Center)
+        ListView1.Columns.Add("Arrive", CStr(80), HorizontalAlignment.Center)
+        ListView1.Columns.Add("Depart", CStr(80), HorizontalAlignment.Center)
+        ListView1.Columns.Add("Arrive", CStr(80), HorizontalAlignment.Center)
+        ListView1.Columns.Add("Depart", CStr(80), HorizontalAlignment.Center)
+        ListView1.Columns.Add("Hours", CStr(30), HorizontalAlignment.Center)
+        ListView1.Columns.Add("Minutes", CStr(50), HorizontalAlignment.Center)
 
         Dim days As Integer = 0
         While days < 31
@@ -71,7 +74,8 @@ Public Class DTRMain
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         PageSetupDialog1.Document = PrintDocument1
-        PageSetupDialog1.Document.DefaultPageSettings.Color = False
+        PageSetupDialog1.Document.DefaultPageSettings.Color = True
+        PageSetupDialog1.Document.DefaultPageSettings.PaperSize = New PaperSize("A4", 830, 1170)
         PageSetupDialog1.ShowDialog()
     End Sub
 
@@ -91,6 +95,15 @@ Public Class DTRMain
     End Sub
 
     Private Sub dtp_to_ValueChanged(sender As Object, e As EventArgs) Handles dtp_to.ValueChanged
+        updateMonth()
+    End Sub
+
+    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
+        ifDTPChanged = True
+        updateMonth()
+    End Sub
+
+    Private Sub RadioButton2_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton2.CheckedChanged
         updateMonth()
     End Sub
 End Class

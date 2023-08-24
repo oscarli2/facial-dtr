@@ -28,9 +28,10 @@ Partial Class DTRMain
         Label3 = New Label()
         Button1 = New Button()
         GroupBox1 = New GroupBox()
+        RadioButton2 = New RadioButton()
+        RadioButton1 = New RadioButton()
         Button3 = New Button()
         Button2 = New Button()
-        lblDateFrmTo = New Label()
         Label5 = New Label()
         Label4 = New Label()
         dtp_to = New DateTimePicker()
@@ -57,7 +58,6 @@ Partial Class DTRMain
         Label13 = New Label()
         Panel1 = New Panel()
         PictureBox2 = New PictureBox()
-        ListView2 = New ListView()
         Label2 = New Label()
         RichTextBox3 = New RichTextBox()
         Label15 = New Label()
@@ -105,27 +105,32 @@ Partial Class DTRMain
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(28, 141)
+        Label3.Location = New Point(28, 160)
         Label3.Name = "Label3"
         Label3.Size = New Size(34, 14)
         Label3.TabIndex = 5
         Label3.Text = "From"
+        Label3.Visible = False
         ' 
         ' Button1
         ' 
-        Button1.Location = New Point(31, 179)
+        Button1.BackColor = Color.DarkSeaGreen
+        Button1.Font = New Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
+        Button1.ForeColor = Color.White
+        Button1.Location = New Point(28, 196)
         Button1.Name = "Button1"
-        Button1.Size = New Size(245, 51)
+        Button1.Size = New Size(245, 54)
         Button1.TabIndex = 7
         Button1.Text = "Search"
-        Button1.UseVisualStyleBackColor = True
+        Button1.UseVisualStyleBackColor = False
         ' 
         ' GroupBox1
         ' 
         GroupBox1.BackColor = Color.Khaki
+        GroupBox1.Controls.Add(RadioButton2)
+        GroupBox1.Controls.Add(RadioButton1)
         GroupBox1.Controls.Add(Button3)
         GroupBox1.Controls.Add(Button2)
-        GroupBox1.Controls.Add(lblDateFrmTo)
         GroupBox1.Controls.Add(Label5)
         GroupBox1.Controls.Add(Label4)
         GroupBox1.Controls.Add(dtp_to)
@@ -143,9 +148,33 @@ Partial Class DTRMain
         GroupBox1.TabIndex = 8
         GroupBox1.TabStop = False
         ' 
+        ' RadioButton2
+        ' 
+        RadioButton2.AutoSize = True
+        RadioButton2.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
+        RadioButton2.Location = New Point(139, 128)
+        RadioButton2.Name = "RadioButton2"
+        RadioButton2.Size = New Size(99, 20)
+        RadioButton2.TabIndex = 17
+        RadioButton2.TabStop = True
+        RadioButton2.Text = "Days 16 - 31"
+        RadioButton2.UseVisualStyleBackColor = True
+        ' 
+        ' RadioButton1
+        ' 
+        RadioButton1.AutoSize = True
+        RadioButton1.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
+        RadioButton1.Location = New Point(41, 128)
+        RadioButton1.Name = "RadioButton1"
+        RadioButton1.Size = New Size(92, 20)
+        RadioButton1.TabIndex = 16
+        RadioButton1.TabStop = True
+        RadioButton1.Text = "Days 1 - 15"
+        RadioButton1.UseVisualStyleBackColor = True
+        ' 
         ' Button3
         ' 
-        Button3.Location = New Point(28, 265)
+        Button3.Location = New Point(28, 271)
         Button3.Name = "Button3"
         Button3.Size = New Size(245, 28)
         Button3.TabIndex = 15
@@ -161,16 +190,6 @@ Partial Class DTRMain
         Button2.Text = "Print"
         Button2.UseVisualStyleBackColor = True
         ' 
-        ' lblDateFrmTo
-        ' 
-        lblDateFrmTo.AutoSize = True
-        lblDateFrmTo.Font = New Font("Calibri", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
-        lblDateFrmTo.Location = New Point(98, 107)
-        lblDateFrmTo.Name = "lblDateFrmTo"
-        lblDateFrmTo.Size = New Size(13, 18)
-        lblDateFrmTo.TabIndex = 14
-        lblDateFrmTo.Text = "-"
-        ' 
         ' Label5
         ' 
         Label5.AutoSize = True
@@ -184,31 +203,34 @@ Partial Class DTRMain
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Location = New Point(160, 141)
+        Label4.Location = New Point(160, 160)
         Label4.Name = "Label4"
         Label4.Size = New Size(19, 14)
         Label4.TabIndex = 12
         Label4.Text = "To"
+        Label4.Visible = False
         ' 
         ' dtp_to
         ' 
         dtp_to.CustomFormat = "yyyy-MM-dd"
         dtp_to.Font = New Font("Calibri", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
         dtp_to.Format = DateTimePickerFormat.Custom
-        dtp_to.Location = New Point(183, 133)
+        dtp_to.Location = New Point(183, 152)
         dtp_to.Name = "dtp_to"
         dtp_to.Size = New Size(92, 26)
         dtp_to.TabIndex = 11
+        dtp_to.Visible = False
         ' 
         ' dtp_from
         ' 
         dtp_from.CustomFormat = "yyyy-MM-dd"
         dtp_from.Font = New Font("Calibri", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
         dtp_from.Format = DateTimePickerFormat.Custom
-        dtp_from.Location = New Point(64, 133)
+        dtp_from.Location = New Point(64, 152)
         dtp_from.Name = "dtp_from"
         dtp_from.Size = New Size(92, 26)
         dtp_from.TabIndex = 10
+        dtp_from.Visible = False
         ' 
         ' lblName
         ' 
@@ -228,7 +250,6 @@ Partial Class DTRMain
         emp_id.Size = New Size(47, 14)
         emp_id.TabIndex = 8
         emp_id.Text = "EMP_ID"
-        emp_id.Visible = False
         ' 
         ' PrintDocument1
         ' 
@@ -316,7 +337,7 @@ Partial Class DTRMain
         ListView1.Font = New Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point)
         ListView1.GridLines = True
         ListView1.HeaderStyle = ColumnHeaderStyle.None
-        ListView1.Location = New Point(16, 218)
+        ListView1.Location = New Point(16, 211)
         ListView1.Name = "ListView1"
         ListView1.Size = New Size(477, 625)
         ListView1.TabIndex = 37
@@ -362,7 +383,7 @@ Partial Class DTRMain
         Label10.AutoSize = True
         Label10.BackColor = Color.White
         Label10.Font = New Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point)
-        Label10.Location = New Point(20, 138)
+        Label10.Location = New Point(20, 140)
         Label10.Margin = New Padding(4, 0, 4, 0)
         Label10.Name = "Label10"
         Label10.Size = New Size(122, 15)
@@ -424,7 +445,6 @@ Partial Class DTRMain
         ' 
         Label12.AutoSize = True
         Label12.BackColor = Color.White
-        Label12.Enabled = False
         Label12.Font = New Font("Arial", 9.75F, FontStyle.Italic, GraphicsUnit.Point)
         Label12.Location = New Point(136, 59)
         Label12.Margin = New Padding(4, 0, 4, 0)
@@ -449,7 +469,6 @@ Partial Class DTRMain
         ' 
         Panel1.BackColor = Color.White
         Panel1.Controls.Add(PictureBox2)
-        Panel1.Controls.Add(ListView2)
         Panel1.Controls.Add(Label2)
         Panel1.Controls.Add(RichTextBox3)
         Panel1.Controls.Add(ListView1)
@@ -495,21 +514,6 @@ Partial Class DTRMain
         PictureBox2.TabIndex = 48
         PictureBox2.TabStop = False
         ' 
-        ' ListView2
-        ' 
-        ListView2.BackColor = Color.White
-        ListView2.BorderStyle = BorderStyle.FixedSingle
-        ListView2.Font = New Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point)
-        ListView2.GridLines = True
-        ListView2.HeaderStyle = ColumnHeaderStyle.None
-        ListView2.Location = New Point(16, 218)
-        ListView2.Name = "ListView2"
-        ListView2.Size = New Size(477, 625)
-        ListView2.TabIndex = 62
-        ListView2.UseCompatibleStateImageBehavior = False
-        ListView2.View = View.Details
-        ListView2.Visible = False
-        ' 
         ' Label2
         ' 
         Label2.AutoSize = True
@@ -526,11 +530,12 @@ Partial Class DTRMain
         ' 
         RichTextBox3.BackColor = Color.LightGray
         RichTextBox3.BorderStyle = BorderStyle.None
-        RichTextBox3.Location = New Point(15, 175)
+        RichTextBox3.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        RichTextBox3.Location = New Point(14, 173)
         RichTextBox3.Name = "RichTextBox3"
-        RichTextBox3.Size = New Size(51, 41)
+        RichTextBox3.Size = New Size(52, 37)
         RichTextBox3.TabIndex = 60
-        RichTextBox3.Text = vbLf & "    Day"
+        RichTextBox3.Text = vbLf & "     Day"
         ' 
         ' Label15
         ' 
@@ -571,9 +576,10 @@ Partial Class DTRMain
         ' TextBox5
         ' 
         TextBox5.BackColor = Color.LightGray
-        TextBox5.Location = New Point(387, 173)
+        TextBox5.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox5.Location = New Point(387, 171)
         TextBox5.Name = "TextBox5"
-        TextBox5.Size = New Size(107, 22)
+        TextBox5.Size = New Size(107, 20)
         TextBox5.TabIndex = 52
         TextBox5.Text = "Undertime"
         TextBox5.TextAlign = HorizontalAlignment.Center
@@ -581,9 +587,10 @@ Partial Class DTRMain
         ' TextBox3
         ' 
         TextBox3.BackColor = Color.LightGray
-        TextBox3.Location = New Point(224, 173)
+        TextBox3.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox3.Location = New Point(224, 171)
         TextBox3.Name = "TextBox3"
-        TextBox3.Size = New Size(165, 22)
+        TextBox3.Size = New Size(165, 20)
         TextBox3.TabIndex = 51
         TextBox3.Text = "PM"
         TextBox3.TextAlign = HorizontalAlignment.Center
@@ -591,9 +598,10 @@ Partial Class DTRMain
         ' TextBox2
         ' 
         TextBox2.BackColor = Color.LightGray
-        TextBox2.Location = New Point(65, 173)
+        TextBox2.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox2.Location = New Point(66, 171)
         TextBox2.Name = "TextBox2"
-        TextBox2.Size = New Size(161, 22)
+        TextBox2.Size = New Size(161, 20)
         TextBox2.TabIndex = 50
         TextBox2.Text = "AM"
         TextBox2.TextAlign = HorizontalAlignment.Center
@@ -601,9 +609,10 @@ Partial Class DTRMain
         ' TextBox14
         ' 
         TextBox14.BackColor = Color.LightGray
-        TextBox14.Location = New Point(438, 195)
+        TextBox14.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox14.Location = New Point(439, 190)
         TextBox14.Name = "TextBox14"
-        TextBox14.Size = New Size(56, 22)
+        TextBox14.Size = New Size(55, 20)
         TextBox14.TabIndex = 59
         TextBox14.Text = "Minutes"
         TextBox14.TextAlign = HorizontalAlignment.Center
@@ -611,9 +620,10 @@ Partial Class DTRMain
         ' TextBox15
         ' 
         TextBox15.BackColor = Color.LightGray
-        TextBox15.Location = New Point(387, 195)
+        TextBox15.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox15.Location = New Point(387, 190)
         TextBox15.Name = "TextBox15"
-        TextBox15.Size = New Size(54, 22)
+        TextBox15.Size = New Size(54, 20)
         TextBox15.TabIndex = 58
         TextBox15.Text = "Hours"
         TextBox15.TextAlign = HorizontalAlignment.Center
@@ -621,9 +631,10 @@ Partial Class DTRMain
         ' TextBox12
         ' 
         TextBox12.BackColor = Color.LightGray
-        TextBox12.Location = New Point(304, 195)
+        TextBox12.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox12.Location = New Point(304, 190)
         TextBox12.Name = "TextBox12"
-        TextBox12.Size = New Size(85, 22)
+        TextBox12.Size = New Size(85, 20)
         TextBox12.TabIndex = 57
         TextBox12.Text = "Departure"
         TextBox12.TextAlign = HorizontalAlignment.Center
@@ -631,9 +642,10 @@ Partial Class DTRMain
         ' TextBox13
         ' 
         TextBox13.BackColor = Color.LightGray
-        TextBox13.Location = New Point(224, 195)
+        TextBox13.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox13.Location = New Point(224, 190)
         TextBox13.Name = "TextBox13"
-        TextBox13.Size = New Size(84, 22)
+        TextBox13.Size = New Size(84, 20)
         TextBox13.TabIndex = 56
         TextBox13.Text = "Arrival"
         TextBox13.TextAlign = HorizontalAlignment.Center
@@ -641,9 +653,10 @@ Partial Class DTRMain
         ' TextBox8
         ' 
         TextBox8.BackColor = Color.LightGray
-        TextBox8.Location = New Point(143, 195)
+        TextBox8.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox8.Location = New Point(144, 190)
         TextBox8.Name = "TextBox8"
-        TextBox8.Size = New Size(82, 22)
+        TextBox8.Size = New Size(82, 20)
         TextBox8.TabIndex = 55
         TextBox8.Text = "Departure"
         TextBox8.TextAlign = HorizontalAlignment.Center
@@ -651,9 +664,10 @@ Partial Class DTRMain
         ' TextBox7
         ' 
         TextBox7.BackColor = Color.LightGray
-        TextBox7.Location = New Point(65, 195)
+        TextBox7.Font = New Font("Arial", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox7.Location = New Point(66, 190)
         TextBox7.Name = "TextBox7"
-        TextBox7.Size = New Size(81, 22)
+        TextBox7.Size = New Size(81, 20)
         TextBox7.TabIndex = 54
         TextBox7.Text = "Arrival"
         TextBox7.TextAlign = HorizontalAlignment.Center
@@ -702,7 +716,6 @@ Partial Class DTRMain
     Friend WithEvents Label4 As Label
     Friend WithEvents dtp_to As DateTimePicker
     Friend WithEvents Label5 As Label
-    Friend WithEvents lblDateFrmTo As Label
     Friend WithEvents PrintDocument1 As Printing.PrintDocument
     Friend WithEvents Button2 As Button
     Friend WithEvents PrintPreviewDialog1 As PrintPreviewDialog
@@ -739,7 +752,8 @@ Partial Class DTRMain
     Friend WithEvents TextBox12 As TextBox
     Friend WithEvents TextBox13 As TextBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents ListView2 As ListView
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
+    Friend WithEvents RadioButton2 As RadioButton
+    Friend WithEvents RadioButton1 As RadioButton
 End Class
