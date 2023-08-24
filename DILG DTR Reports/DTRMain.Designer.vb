@@ -302,8 +302,8 @@ Partial Class DTRMain
         ' 
         RichTextBox1.BackColor = Color.White
         RichTextBox1.BorderStyle = BorderStyle.None
-        RichTextBox1.Font = New Font("Arial", 9.75F, FontStyle.Italic, GraphicsUnit.Point)
-        RichTextBox1.Location = New Point(35, 850)
+        RichTextBox1.Font = New Font("Arial", 9F, FontStyle.Italic, GraphicsUnit.Point)
+        RichTextBox1.Location = New Point(35, 856)
         RichTextBox1.Name = "RichTextBox1"
         RichTextBox1.Size = New Size(444, 50)
         RichTextBox1.TabIndex = 38
@@ -387,9 +387,9 @@ Partial Class DTRMain
         TextBox4.BorderStyle = BorderStyle.None
         TextBox4.Enabled = False
         TextBox4.Font = New Font("Arial", 8.25F, FontStyle.Regular, GraphicsUnit.Point)
-        TextBox4.Location = New Point(92, 101)
+        TextBox4.Location = New Point(125, 100)
         TextBox4.Name = "TextBox4"
-        TextBox4.Size = New Size(334, 13)
+        TextBox4.Size = New Size(264, 13)
         TextBox4.TabIndex = 29
         TextBox4.Text = "(Name)"
         TextBox4.TextAlign = HorizontalAlignment.Center
@@ -515,7 +515,7 @@ Partial Class DTRMain
         Label2.AutoSize = True
         Label2.BackColor = Color.White
         Label2.Font = New Font("Arial", 9.75F, FontStyle.Italic, GraphicsUnit.Point)
-        Label2.Location = New Point(35, 939)
+        Label2.Location = New Point(35, 938)
         Label2.Margin = New Padding(4, 0, 4, 0)
         Label2.Name = "Label2"
         Label2.Size = New Size(264, 16)
