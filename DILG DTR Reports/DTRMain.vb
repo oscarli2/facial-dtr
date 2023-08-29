@@ -14,7 +14,7 @@ Public Class DTRMain
     Dim tool As String = directoryPath + "\DILG DTR Reports.exe"
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
-        If txtEmployee.Text = "CLICK TO SEARCH" Then
+        If txtEmployee.Text = "CLICK HERE TO SEARCH" Then
             MsgBox("Please select an employee")
         ElseIf ifDTPChanged = False Then
             MsgBox("Please change your FROM Date!")
@@ -65,9 +65,6 @@ Public Class DTRMain
         Next
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        PrintPreviewDialog1.ShowDialog()
-    End Sub
 
     Private Sub PrintDocument1_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
         Dim h As Integer = 0
@@ -80,13 +77,6 @@ Public Class DTRMain
         e.Graphics.DrawString("______________________________", New Font("Arial", 20, FontStyle.Bold), Brushes.Black, 50, h)
         h += 100
         e.Graphics.DrawString("______________________________", New Font("Arial", 20, FontStyle.Bold), Brushes.Black, 50, h)
-    End Sub
-
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        PageSetupDialog1.Document = PrintDocument1
-        PageSetupDialog1.Document.DefaultPageSettings.Color = True
-        PageSetupDialog1.Document.DefaultPageSettings.PaperSize = New PaperSize("A4", 830, 1170)
-        PageSetupDialog1.ShowDialog()
     End Sub
 
     Private Sub txtEmployee_Click(sender As Object, e As EventArgs) Handles txtEmployee.Click
@@ -121,37 +111,5 @@ Public Class DTRMain
         updateMonth()
     End Sub
 
-    Private Sub UpdateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdateToolStripMenuItem.Click
-        Dim request As HttpWebRequest = HttpWebRequest.Create("https://www.dropbox.com/scl/fi/h4vw7a3acgvmlw7zb5cj8/updatenum.txt?rlkey=rlvdu4hrzuosjl1j6h89jf7i3&dl=1")
-        Dim response As HttpWebResponse = request.GetResponse()
-        Dim sr As IO.StreamReader = New System.IO.StreamReader(response.GetResponseStream())
-        Dim newestversion As String = sr.ReadToEnd()
-        Dim currentversion As String = Application.ProductVersion
 
-        If newestversion.Contains(currentversion) Then
-            'Do nothing
-            MsgBox("System is up to date.." + Application.ProductVersion.ToString)
-        Else
-            If MsgBox("New Version Available. Do you want to update now?", MsgBoxStyle.YesNo, "Close Window") = MsgBoxResult.Yes Then
-                getUpdate()
-            End If
-        End If
-    End Sub
-    Dim wc As WebClient
-    Public Sub getUpdate()
-        Dim currADUser As UserPrincipal
-        currADUser = UserPrincipal.Current
-
-        wc = New WebClient()
-
-        If IO.File.Exists("C:\Users\" & currADUser.ToString & "\Downloads\DILG DTR Setup.msi") Then
-            IO.File.Delete("C:\Users\" & currADUser.ToString & "\Downloads\DILG DTR Setup.msi")
-            wc.DownloadFileAsync(New Uri("https://www.dropbox.com/scl/fi/y4jqtf7pe6262g1txa8wj/DILG-DTR-Setup.msi?rlkey=t6kty6m3w7v6kwtkataila8xs&dl=1"), "C:\Users\" & currADUser.ToString & "\Downloads\DILG DTR Setup.msi")
-        Else
-            wc.DownloadFileAsync(New Uri("https://www.dropbox.com/scl/fi/y4jqtf7pe6262g1txa8wj/DILG-DTR-Setup.msi?rlkey=t6kty6m3w7v6kwtkataila8xs&dl=1"), "C:\Users\" & currADUser.ToString & "\Downloads\DILG DTR Setup.msi")
-        End If
-        MsgBox("Closing application for installation of updates..")
-        Process.Start("C:\Users\" & currADUser.ToString & "\Downloads\DILG DTR Setup.msi")
-        Me.Close()
-    End Sub
 End Class

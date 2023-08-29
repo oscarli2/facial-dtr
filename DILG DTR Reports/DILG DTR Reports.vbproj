@@ -4,17 +4,13 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>DILG_DTR_Reports</RootNamespace>
-    <StartupObject>Sub Main</StartupObject>
+    <StartupObject>DILG_DTR_Reports.Form1</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
     <ImportedNamespaces>System.Data=False,System.Drawing=False,System.Windows.Forms=False,Microsoft.VisualBasic=True,System=True,System.Collections=True,System.Collections.Generic=True,System.Diagnostics=True,System.Linq=True,System.Xml.Linq=True,System.Threading.Tasks=True,DILG DTR Reports=True</ImportedNamespaces>
     <ApplicationIcon>pngaaa.com-4194622.ico</ApplicationIcon>
     <AssemblyVersion>1.0.2.0</AssemblyVersion>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Include="pngaaa.com-4194622.ico" />
-  </ItemGroup>
 
   <ItemGroup>
     <Import Include="System.Data" />
