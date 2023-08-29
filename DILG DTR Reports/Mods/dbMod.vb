@@ -84,7 +84,7 @@ Module dbMod
         CloseDB()
     End Sub
 
-    Public Sub searchDTR(emp_id As Integer, a As Boolean, b As Boolean)
+    Public Sub searchDTR(emp_id As Integer, a As Boolean, b As Boolean, c As Boolean)
 
         Dim query As String
         query = "
@@ -93,10 +93,10 @@ Module dbMod
             SELECT dt + INTERVAL 1 DAY FROM date_ranges 
             WHERE dt + INTERVAL 1 DAY <= @dateTo)
             SELECT date_ranges.dt
-            , MAX(CASE WHEN T.workstate = 0 AND T.employee_id = @emp_id AND TIME(T.punch_time) BETWEEN '05:00:00' AND '11:59:00' THEN DATE_FORMAT(T.punch_time, '%l:%i %p') END) AS ArrivalAM 
+            , MAX(CASE WHEN T.workstate = 0 AND T.employee_id = @emp_id AND TIME(T.punch_time) BETWEEN '03:00:00' AND '11:59:00' THEN DATE_FORMAT(T.punch_time, '%l:%i %p') END) AS ArrivalAM 
             , MAX(CASE WHEN T.workstate = 1 AND T.employee_id = @emp_id  AND TIME(T.punch_time) BETWEEN '12:00:00' AND '14:00:00' THEN DATE_FORMAT(T.punch_time, '%l:%i %p') END) AS DepartAM 
             , MAX(CASE WHEN T.workstate = 0 AND T.employee_id = @emp_id  AND TIME(T.punch_time) BETWEEN '12:00:00' AND '13:00:00' THEN DATE_FORMAT(T.punch_time, '%l:%i %p') END) AS ArrivalPM 
-            , MAX(CASE WHEN T.workstate = 1 AND T.employee_id = @emp_id  AND TIME(T.punch_time) BETWEEN '13:00:01' AND '19:00:00' THEN DATE_FORMAT(T.punch_time, '%l:%i %p') END) AS DepartPM 
+            , MAX(CASE WHEN T.workstate = 1 AND T.employee_id = @emp_id  AND TIME(T.punch_time) BETWEEN '13:00:01' AND '23:59:00' THEN DATE_FORMAT(T.punch_time, '%l:%i %p') END) AS DepartPM 
              FROM date_ranges
             LEFT JOIN `att_punches` T
             ON date_ranges.dt = CAST(punch_time AS DATE)
@@ -111,14 +111,18 @@ Module dbMod
         Dim dayFrom As Integer = Convert.ToInt32(DTRMain.dtp_from.Value.ToString("dd"))
         Dim days As Integer = 0
 
-        If a = True And b = False Then
+        If a = True And b = False And c = False Then
             cmd.Parameters.AddWithValue("@dateFrm", "2023-08-01")
             cmd.Parameters.AddWithValue("@dateTo", "2023-08-15")
             days = 1
-        ElseIf b = True And a = False Then
+        ElseIf b = True And a = False And c = False Then
             cmd.Parameters.AddWithValue("@dateFrm", "2023-08-16")
             cmd.Parameters.AddWithValue("@dateTo", "2023-08-31")
             days = 16
+        ElseIf b = False And a = False And c = True Then
+            cmd.Parameters.AddWithValue("@dateFrm", "2023-08-01")
+            cmd.Parameters.AddWithValue("@dateTo", "2023-08-31")
+            days = 1
         End If
         cmd.Parameters.AddWithValue("@emp_id", emp_id)
         conn.Open()
@@ -134,7 +138,7 @@ Module dbMod
         DTRMain.ListView1.Columns.Add("Minutes", 50, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
 
         Try
-            If days = 1 Then
+            If days = 1 And c = False Then
                 While days <= 31
                     If days = 1 Then
                         If dr.HasRows Then
@@ -170,9 +174,9 @@ Module dbMod
                         days += 1
                     End If
                 End While
-            ElseIf days = 16 Then
+            ElseIf days = 16 And c = False Then
                 Dim count As Integer = 1
-                While count <= 16
+                While count <= 15
                     Dim items As New ListViewItem
                     items.Text = count.ToString
                     items.SubItems.Add("")
@@ -204,6 +208,38 @@ Module dbMod
                 Else
                     Exit Sub
                 End If
+            ElseIf days = 1 And c = True Then
+                If dr.HasRows Then
+                    While dr.Read()
+                        Dim items As New ListViewItem
+                        items.Text = days.ToString
+                        items.SubItems.Add(dr(1).ToString)
+                        items.SubItems.Add(dr(2).ToString)
+                        items.SubItems.Add(dr(3).ToString)
+                        items.SubItems.Add(dr(4).ToString)
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        DTRMain.ListView1.View = View.Details
+                        DTRMain.ListView1.Items.Add(items)
+                        days += 1
+                    End While
+                Else
+                    Exit Sub
+                End If
+            Else
+                Dim items As New ListViewItem
+                items.Text = days.ToString
+                items.SubItems.Add("")
+                items.SubItems.Add("")
+                items.SubItems.Add("")
+                items.SubItems.Add("")
+                items.SubItems.Add("")
+                items.SubItems.Add("")
+                items.SubItems.Add("")
+                DTRMain.ListView1.View = View.Details
+                DTRMain.ListView1.Items.Add(items)
+                days += 1
             End If
 
             With DTRMain
@@ -268,11 +304,11 @@ Module dbMod
     Public Sub updateMonth()
         Dim day As Integer = Convert.ToInt32(DTRMain.dtp_from.Value.ToString("dd"))
         Dim dayTo As Integer = Convert.ToInt32(DTRMain.dtp_to.Value.ToString("dd"))
-        If day > 0 And dayTo < 16 Then
+        If DTRMain.RadioButton1.Checked = True Then
             DTRMain.lblMonth.Text = DTRMain.dtp_from.Value.ToString("MMMM").ToUpper & " 1 - 15 , " & DTRMain.dtp_from.Value.ToString("yyyy").ToUpper
-        ElseIf day = 1 And dayTo >= 30 Then
+        ElseIf DTRMain.RadioButton3.Checked = True Then
             DTRMain.lblMonth.Text = DTRMain.dtp_from.Value.ToString("MMMM yyyy").ToUpper
-        Else
+        ElseIf DTRMain.RadioButton2.Checked = True Then
             DTRMain.lblMonth.Text = DTRMain.dtp_from.Value.ToString("MMMM").ToUpper & " 16 - 30 , " & DTRMain.dtp_from.Value.ToString("yyyy").ToUpper
         End If
     End Sub

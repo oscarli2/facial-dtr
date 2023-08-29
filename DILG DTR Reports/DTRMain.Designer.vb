@@ -28,16 +28,17 @@ Partial Class DTRMain
         Label3 = New Label()
         Button1 = New Button()
         GroupBox1 = New GroupBox()
+        RadioButton3 = New RadioButton()
         RadioButton2 = New RadioButton()
         RadioButton1 = New RadioButton()
         Button3 = New Button()
         Button2 = New Button()
         Label5 = New Label()
+        lblName = New Label()
+        emp_id = New Label()
         Label4 = New Label()
         dtp_to = New DateTimePicker()
         dtp_from = New DateTimePicker()
-        lblName = New Label()
-        emp_id = New Label()
         PrintDocument1 = New Printing.PrintDocument()
         PrintPreviewDialog1 = New PrintPreviewDialog()
         Label8 = New Label()
@@ -74,10 +75,15 @@ Partial Class DTRMain
         TextBox7 = New TextBox()
         PageSetupDialog1 = New PageSetupDialog()
         PictureBox1 = New PictureBox()
+        MenuStrip1 = New MenuStrip()
+        FileToolStripMenuItem = New ToolStripMenuItem()
+        UpdateToolStripMenuItem = New ToolStripMenuItem()
+        FileToolStripMenuItem1 = New ToolStripMenuItem()
         GroupBox1.SuspendLayout()
         Panel1.SuspendLayout()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
+        MenuStrip1.SuspendLayout()
         SuspendLayout()
         ' 
         ' txtEmployee
@@ -105,7 +111,7 @@ Partial Class DTRMain
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(28, 160)
+        Label3.Location = New Point(38, 588)
         Label3.Name = "Label3"
         Label3.Size = New Size(34, 14)
         Label3.TabIndex = 5
@@ -127,18 +133,15 @@ Partial Class DTRMain
         ' GroupBox1
         ' 
         GroupBox1.BackColor = Color.Khaki
+        GroupBox1.Controls.Add(RadioButton3)
         GroupBox1.Controls.Add(RadioButton2)
         GroupBox1.Controls.Add(RadioButton1)
         GroupBox1.Controls.Add(Button3)
         GroupBox1.Controls.Add(Button2)
         GroupBox1.Controls.Add(Label5)
-        GroupBox1.Controls.Add(Label4)
-        GroupBox1.Controls.Add(dtp_to)
-        GroupBox1.Controls.Add(dtp_from)
         GroupBox1.Controls.Add(lblName)
         GroupBox1.Controls.Add(emp_id)
         GroupBox1.Controls.Add(Button1)
-        GroupBox1.Controls.Add(Label3)
         GroupBox1.Controls.Add(Label1)
         GroupBox1.Controls.Add(txtEmployee)
         GroupBox1.FlatStyle = FlatStyle.Flat
@@ -148,11 +151,23 @@ Partial Class DTRMain
         GroupBox1.TabIndex = 8
         GroupBox1.TabStop = False
         ' 
+        ' RadioButton3
+        ' 
+        RadioButton3.AutoSize = True
+        RadioButton3.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
+        RadioButton3.Location = New Point(98, 154)
+        RadioButton3.Name = "RadioButton3"
+        RadioButton3.Size = New Size(109, 20)
+        RadioButton3.TabIndex = 18
+        RadioButton3.TabStop = True
+        RadioButton3.Text = "Whole Month"
+        RadioButton3.UseVisualStyleBackColor = True
+        ' 
         ' RadioButton2
         ' 
         RadioButton2.AutoSize = True
         RadioButton2.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        RadioButton2.Location = New Point(139, 128)
+        RadioButton2.Location = New Point(158, 128)
         RadioButton2.Name = "RadioButton2"
         RadioButton2.Size = New Size(99, 20)
         RadioButton2.TabIndex = 17
@@ -200,38 +215,6 @@ Partial Class DTRMain
         Label5.TabIndex = 13
         Label5.Text = "DATES"
         ' 
-        ' Label4
-        ' 
-        Label4.AutoSize = True
-        Label4.Location = New Point(160, 160)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(19, 14)
-        Label4.TabIndex = 12
-        Label4.Text = "To"
-        Label4.Visible = False
-        ' 
-        ' dtp_to
-        ' 
-        dtp_to.CustomFormat = "yyyy-MM-dd"
-        dtp_to.Font = New Font("Calibri", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
-        dtp_to.Format = DateTimePickerFormat.Custom
-        dtp_to.Location = New Point(183, 152)
-        dtp_to.Name = "dtp_to"
-        dtp_to.Size = New Size(92, 26)
-        dtp_to.TabIndex = 11
-        dtp_to.Visible = False
-        ' 
-        ' dtp_from
-        ' 
-        dtp_from.CustomFormat = "yyyy-MM-dd"
-        dtp_from.Font = New Font("Calibri", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
-        dtp_from.Format = DateTimePickerFormat.Custom
-        dtp_from.Location = New Point(64, 152)
-        dtp_from.Name = "dtp_from"
-        dtp_from.Size = New Size(92, 26)
-        dtp_from.TabIndex = 10
-        dtp_from.Visible = False
-        ' 
         ' lblName
         ' 
         lblName.AutoSize = True
@@ -250,6 +233,38 @@ Partial Class DTRMain
         emp_id.Size = New Size(47, 14)
         emp_id.TabIndex = 8
         emp_id.Text = "EMP_ID"
+        ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.Location = New Point(170, 588)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(19, 14)
+        Label4.TabIndex = 12
+        Label4.Text = "To"
+        Label4.Visible = False
+        ' 
+        ' dtp_to
+        ' 
+        dtp_to.CustomFormat = "yyyy-MM-dd"
+        dtp_to.Font = New Font("Calibri", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
+        dtp_to.Format = DateTimePickerFormat.Custom
+        dtp_to.Location = New Point(193, 580)
+        dtp_to.Name = "dtp_to"
+        dtp_to.Size = New Size(92, 26)
+        dtp_to.TabIndex = 11
+        dtp_to.Visible = False
+        ' 
+        ' dtp_from
+        ' 
+        dtp_from.CustomFormat = "yyyy-MM-dd"
+        dtp_from.Font = New Font("Calibri", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
+        dtp_from.Format = DateTimePickerFormat.Custom
+        dtp_from.Location = New Point(74, 580)
+        dtp_from.Name = "dtp_from"
+        dtp_from.Size = New Size(92, 26)
+        dtp_from.TabIndex = 10
+        dtp_from.Visible = False
         ' 
         ' PrintDocument1
         ' 
@@ -348,7 +363,7 @@ Partial Class DTRMain
         ' 
         Label6.AutoSize = True
         Label6.Font = New Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point)
-        Label6.Location = New Point(301, 153)
+        Label6.Location = New Point(301, 152)
         Label6.Margin = New Padding(4, 0, 4, 0)
         Label6.Name = "Label6"
         Label6.Size = New Size(62, 15)
@@ -359,7 +374,7 @@ Partial Class DTRMain
         ' 
         Label7.AutoSize = True
         Label7.Font = New Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point)
-        Label7.Location = New Point(301, 137)
+        Label7.Location = New Point(301, 136)
         Label7.Margin = New Padding(4, 0, 4, 0)
         Label7.Name = "Label7"
         Label7.Size = New Size(82, 15)
@@ -371,7 +386,7 @@ Partial Class DTRMain
         Label9.AutoSize = True
         Label9.BackColor = Color.White
         Label9.Font = New Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point)
-        Label9.Location = New Point(20, 155)
+        Label9.Location = New Point(20, 154)
         Label9.Margin = New Padding(4, 0, 4, 0)
         Label9.Name = "Label9"
         Label9.Size = New Size(84, 15)
@@ -383,7 +398,7 @@ Partial Class DTRMain
         Label10.AutoSize = True
         Label10.BackColor = Color.White
         Label10.Font = New Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point)
-        Label10.Location = New Point(20, 140)
+        Label10.Location = New Point(20, 139)
         Label10.Margin = New Padding(4, 0, 4, 0)
         Label10.Name = "Label10"
         Label10.Size = New Size(122, 15)
@@ -420,10 +435,10 @@ Partial Class DTRMain
         txtEmpName.BackColor = Color.White
         txtEmpName.BorderStyle = BorderStyle.None
         txtEmpName.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        txtEmpName.Location = New Point(92, 80)
+        txtEmpName.Location = New Point(110, 80)
         txtEmpName.Name = "txtEmpName"
         txtEmpName.ReadOnly = True
-        txtEmpName.Size = New Size(334, 15)
+        txtEmpName.Size = New Size(300, 15)
         txtEmpName.TabIndex = 27
         txtEmpName.Text = "EMPLOYEE NAME HERE"
         txtEmpName.TextAlign = HorizontalAlignment.Center
@@ -507,9 +522,9 @@ Partial Class DTRMain
         ' PictureBox2
         ' 
         PictureBox2.Image = My.Resources.Resources.pngaaa_com_4194622
-        PictureBox2.Location = New Point(15, 29)
+        PictureBox2.Location = New Point(27, 29)
         PictureBox2.Name = "PictureBox2"
-        PictureBox2.Size = New Size(101, 66)
+        PictureBox2.Size = New Size(76, 66)
         PictureBox2.SizeMode = PictureBoxSizeMode.Zoom
         PictureBox2.TabIndex = 48
         PictureBox2.TabStop = False
@@ -528,13 +543,13 @@ Partial Class DTRMain
         ' 
         ' RichTextBox3
         ' 
-        RichTextBox3.BackColor = Color.LightGray
+        RichTextBox3.BackColor = Color.Silver
         RichTextBox3.BorderStyle = BorderStyle.None
         RichTextBox3.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        RichTextBox3.Location = New Point(16, 173)
+        RichTextBox3.Location = New Point(16, 172)
         RichTextBox3.Name = "RichTextBox3"
         RichTextBox3.ReadOnly = True
-        RichTextBox3.Size = New Size(50, 37)
+        RichTextBox3.Size = New Size(50, 39)
         RichTextBox3.TabIndex = 60
         RichTextBox3.Text = vbLf & "     Day"
         ' 
@@ -543,7 +558,7 @@ Partial Class DTRMain
         Label15.AutoSize = True
         Label15.BackColor = Color.White
         Label15.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
-        Label15.Location = New Point(388, 148)
+        Label15.Location = New Point(388, 147)
         Label15.Margin = New Padding(4, 0, 4, 0)
         Label15.Name = "Label15"
         Label15.Size = New Size(91, 16)
@@ -555,7 +570,7 @@ Partial Class DTRMain
         Label14.AutoSize = True
         Label14.BackColor = Color.White
         Label14.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
-        Label14.Location = New Point(388, 132)
+        Label14.Location = New Point(388, 131)
         Label14.Margin = New Padding(4, 0, 4, 0)
         Label14.Name = "Label14"
         Label14.Size = New Size(91, 16)
@@ -614,10 +629,10 @@ Partial Class DTRMain
         ' 
         TextBox14.BackColor = Color.LightGray
         TextBox14.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        TextBox14.Location = New Point(439, 190)
+        TextBox14.Location = New Point(438, 190)
         TextBox14.Name = "TextBox14"
         TextBox14.ReadOnly = True
-        TextBox14.Size = New Size(55, 22)
+        TextBox14.Size = New Size(56, 22)
         TextBox14.TabIndex = 59
         TextBox14.Text = "Minutes"
         TextBox14.TextAlign = HorizontalAlignment.Center
@@ -685,12 +700,40 @@ Partial Class DTRMain
         ' PictureBox1
         ' 
         PictureBox1.Image = My.Resources.Resources.pngaaa_com_4194622
-        PictureBox1.Location = New Point(53, 12)
+        PictureBox1.Location = New Point(53, 40)
         PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(212, 180)
+        PictureBox1.Size = New Size(199, 152)
         PictureBox1.SizeMode = PictureBoxSizeMode.Zoom
         PictureBox1.TabIndex = 47
         PictureBox1.TabStop = False
+        ' 
+        ' MenuStrip1
+        ' 
+        MenuStrip1.Items.AddRange(New ToolStripItem() {FileToolStripMenuItem})
+        MenuStrip1.Location = New Point(0, 0)
+        MenuStrip1.Name = "MenuStrip1"
+        MenuStrip1.Size = New Size(843, 24)
+        MenuStrip1.TabIndex = 48
+        MenuStrip1.Text = "MenuStrip1"
+        ' 
+        ' FileToolStripMenuItem
+        ' 
+        FileToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {UpdateToolStripMenuItem, FileToolStripMenuItem1})
+        FileToolStripMenuItem.Name = "FileToolStripMenuItem"
+        FileToolStripMenuItem.Size = New Size(37, 20)
+        FileToolStripMenuItem.Text = "File"
+        ' 
+        ' UpdateToolStripMenuItem
+        ' 
+        UpdateToolStripMenuItem.Name = "UpdateToolStripMenuItem"
+        UpdateToolStripMenuItem.Size = New Size(180, 22)
+        UpdateToolStripMenuItem.Text = "Update"
+        ' 
+        ' FileToolStripMenuItem1
+        ' 
+        FileToolStripMenuItem1.Name = "FileToolStripMenuItem1"
+        FileToolStripMenuItem1.Size = New Size(180, 22)
+        FileToolStripMenuItem1.Text = "File"
         ' 
         ' DTRMain
         ' 
@@ -701,9 +744,15 @@ Partial Class DTRMain
         Controls.Add(PictureBox1)
         Controls.Add(Panel1)
         Controls.Add(GroupBox1)
+        Controls.Add(dtp_to)
+        Controls.Add(Label3)
+        Controls.Add(Label4)
+        Controls.Add(dtp_from)
+        Controls.Add(MenuStrip1)
         Font = New Font("Calibri", 9F, FontStyle.Regular, GraphicsUnit.Point)
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
         KeyPreview = True
+        MainMenuStrip = MenuStrip1
         Name = "DTRMain"
         Text = "DILG DTR Printer 1.0"
         GroupBox1.ResumeLayout(False)
@@ -712,7 +761,10 @@ Partial Class DTRMain
         Panel1.PerformLayout()
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
+        MenuStrip1.ResumeLayout(False)
+        MenuStrip1.PerformLayout()
         ResumeLayout(False)
+        PerformLayout()
     End Sub
 
     Friend WithEvents txtEmployee As TextBox
@@ -766,4 +818,9 @@ Partial Class DTRMain
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents RadioButton2 As RadioButton
     Friend WithEvents RadioButton1 As RadioButton
+    Friend WithEvents RadioButton3 As RadioButton
+    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents UpdateToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents FileToolStripMenuItem1 As ToolStripMenuItem
 End Class
