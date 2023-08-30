@@ -2,6 +2,7 @@
 Imports Mysqlx
 Imports System.IO
 Imports System.Net
+Imports System.Security.Cryptography
 Imports System.Windows
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
@@ -311,6 +312,25 @@ Module dbMod
         ElseIf DTRMain.RadioButton2.Checked = True Then
             DTRMain.lblMonth.Text = DTRMain.dtp_from.Value.ToString("MMMM").ToUpper & " 16 - 30 , " & DTRMain.dtp_from.Value.ToString("yyyy").ToUpper
         End If
+    End Sub
+
+    Public Sub searchLogin(ByVal txtUser As String, txtPass As String)
+        connection()
+        Dim query As String = "SELECT username, user_pwd FROM sys_user WHERE username = @txtUser and user_pwd = @txtPass"
+        cmd = New MySqlCommand(query, conn)
+        cmd.Parameters.AddWithValue("@txtUser", txtUser)
+        cmd.Parameters.AddWithValue("@txtPass", txtPass)
+        dr = cmd.ExecuteReader
+
+        If dr.HasRows Then
+            Form1.ToolStripButton3.Enabled = True
+            Form1.Show()
+            Form1.ToolStripStatusLabel1.Text = "Welcome " + txtUser + "!"
+            LoginForm1.Hide()
+        Else
+            MsgBox("User not found or User/Pass not correct")
+        End If
+        CloseDB()
     End Sub
 
 End Module

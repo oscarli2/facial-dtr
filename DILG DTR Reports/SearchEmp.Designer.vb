@@ -28,20 +28,23 @@ Partial Class SearchEmp
         StatusStrip1 = New StatusStrip()
         ToolStripStatusLabel2 = New ToolStripStatusLabel()
         recordCount = New ToolStripStatusLabel()
+        Label2 = New Label()
         StatusStrip1.SuspendLayout()
         SuspendLayout()
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(10, 21)
+        Label1.Font = New Font("Calibri", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
+        Label1.Location = New Point(10, 14)
         Label1.Name = "Label1"
-        Label1.Size = New Size(109, 14)
+        Label1.Size = New Size(126, 18)
         Label1.TabIndex = 3
         Label1.Text = "Name of Employee"
         ' 
         ' txtEmployee
         ' 
+        txtEmployee.BorderStyle = BorderStyle.FixedSingle
         txtEmployee.Font = New Font("Calibri", 12F, FontStyle.Bold, GraphicsUnit.Point)
         txtEmployee.Location = New Point(10, 38)
         txtEmployee.Name = "txtEmployee"
@@ -51,6 +54,7 @@ Partial Class SearchEmp
         ' lv_employees
         ' 
         lv_employees.BackColor = SystemColors.Window
+        lv_employees.BorderStyle = BorderStyle.FixedSingle
         lv_employees.Font = New Font("Calibri", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
         lv_employees.ForeColor = Color.Black
         lv_employees.FullRowSelect = True
@@ -84,11 +88,23 @@ Partial Class SearchEmp
         recordCount.Size = New Size(13, 17)
         recordCount.Text = "0"
         ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.Font = New Font("Calibri", 9F, FontStyle.Italic, GraphicsUnit.Point)
+        Label2.ForeColor = Color.Red
+        Label2.Location = New Point(338, 44)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(216, 14)
+        Label2.TabIndex = 6
+        Label2.Text = "Enter FIRST or LAST NAME and Hit 'ENTER'"
+        ' 
         ' SearchEmp
         ' 
         AutoScaleDimensions = New SizeF(6F, 14F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(615, 515)
+        Controls.Add(Label2)
         Controls.Add(StatusStrip1)
         Controls.Add(lv_employees)
         Controls.Add(Label1)
@@ -96,6 +112,7 @@ Partial Class SearchEmp
         Font = New Font("Calibri", 9F, FontStyle.Regular, GraphicsUnit.Point)
         KeyPreview = True
         Name = "SearchEmp"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Search Employee"
         StatusStrip1.ResumeLayout(False)
         StatusStrip1.PerformLayout()
@@ -109,4 +126,5 @@ Partial Class SearchEmp
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents recordCount As ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
+    Friend WithEvents Label2 As Label
 End Class

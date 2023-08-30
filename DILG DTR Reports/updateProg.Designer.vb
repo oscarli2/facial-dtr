@@ -66,6 +66,7 @@ Partial Class updateProg
         Controls.Add(Button1)
         Controls.Add(ProgressBar1)
         Name = "updateProg"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "updateProg"
         ResumeLayout(False)
     End Sub

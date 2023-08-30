@@ -68,14 +68,14 @@ Public Class DTRMain
 
     Private Sub PrintDocument1_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
         Dim h As Integer = 0
-        Dim bm As New Bitmap(Me.Panel1.Width, Me.Panel1.Height + 10)
-        Panel1.DrawToBitmap(bm, New Rectangle(15, 15, Me.Panel1.Width, Me.Panel1.Height))
+        Dim bm As New Bitmap(Me.Panel1.Width + 2, Me.Panel1.Height + 10)
+        Panel1.DrawToBitmap(bm, New Rectangle(15, 15, Me.Panel1.Width + 2, Me.Panel1.Height))
         e.Graphics.DrawImage(bm, 0, 0)
         h += 104
         e.Graphics.DrawString("________________________________________", New Font("Arial", 10), Brushes.Black, 120, h)
-        h += 846
+        h += 780
         e.Graphics.DrawString("______________________________", New Font("Arial", 20, FontStyle.Bold), Brushes.Black, 50, h)
-        h += 100
+        h += 105
         e.Graphics.DrawString("______________________________", New Font("Arial", 20, FontStyle.Bold), Brushes.Black, 50, h)
     End Sub
 
@@ -110,6 +110,5 @@ Public Class DTRMain
     Private Sub RadioButton3_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton3.CheckedChanged
         updateMonth()
     End Sub
-
 
 End Class

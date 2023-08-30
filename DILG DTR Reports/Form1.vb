@@ -10,6 +10,7 @@ Public Class Form1
         Dim ctl As Control
         ' Loop through all of the form's controls looking
         ' for the control of type MdiClient.
+
         For Each ctl In Me.Controls
             Try
                 ' Attempt to cast the control to type MdiClient.
@@ -27,7 +28,8 @@ Public Class Form1
     End Sub
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
-        DTRMain.ShowDialog()
+        DTRMain.MdiParent = Me
+        DTRMain.Show()
     End Sub
     Public Sub getUpdate()
         Dim wc As WebClient
@@ -89,5 +91,10 @@ Public Class Form1
         DTRMain.PageSetupDialog1.Document.DefaultPageSettings.Color = True
         DTRMain.PageSetupDialog1.Document.DefaultPageSettings.PaperSize = New PaperSize("A4", 830, 1170)
         DTRMain.PrintPreviewDialog1.ShowDialog()
+    End Sub
+
+    Private Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles ToolStripButton4.Click
+        Me.Close()
+        LoginForm1.Show()
     End Sub
 End Class
