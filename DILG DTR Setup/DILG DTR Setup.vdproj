@@ -28,7 +28,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_EFD1981D55EE4C879FFB4064987BD243"
+        "MsmKey" = "8:_A4C1377D675F47F39D0B7F6295CF2058"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -89,6 +89,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -141,9 +149,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EFD1981D55EE4C879FFB4064987BD243"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A4C1377D675F47F39D0B7F6295CF2058"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Downloads\\pngaaa.com-4194622.ico"
+            "SourcePath" = "8:..\\DILG DTR Reports\\pngaa.ico"
             "TargetName" = "8:pngaa.ico"
             "Tag" = "8:"
             "Folder" = "8:_4E8CA572915A4C889F55E26277F9A0F6"
@@ -217,15 +225,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DILG DTR Setup"
-        "ProductCode" = "8:{AA6CF023-FF52-4FF9-BB47-678A3E4ED38C}"
-        "PackageCode" = "8:{B76D825B-AEB4-460D-B9A0-FAE14C8C5D80}"
+        "ProductCode" = "8:{389A6DB5-BD92-473A-BABF-B103756E4F2F}"
+        "PackageCode" = "8:{C87BB501-0131-48E7-91A3-7C9C0F79F953}"
         "UpgradeCode" = "8:{620312D6-8876-432E-A5EB-4F62982E29F7}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.3"
+        "ProductVersion" = "8:1.0.8"
         "Manufacturer" = "8:RICTU 8"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -235,7 +243,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:_EFD1981D55EE4C879FFB4064987BD243"
+        "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -349,7 +357,7 @@
             "Target" = "8:_97665A432973498CA85319E398992392"
             "Folder" = "8:_C3B68BE01C7144799F93B411562A7B96"
             "WorkingFolder" = "8:_4E8CA572915A4C889F55E26277F9A0F6"
-            "Icon" = "8:_EFD1981D55EE4C879FFB4064987BD243"
+            "Icon" = "8:_A4C1377D675F47F39D0B7F6295CF2058"
             "Feature" = "8:"
             }
         }

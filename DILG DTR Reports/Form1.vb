@@ -93,8 +93,11 @@ Public Class Form1
         DTRMain.PrintPreviewDialog1.ShowDialog()
     End Sub
 
-    Private Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles ToolStripButton4.Click
-        Me.Close()
+    Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         LoginForm1.Show()
+    End Sub
+
+    Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles ToolStripButton5.Click
+        AllData.Show()
     End Sub
 End Class

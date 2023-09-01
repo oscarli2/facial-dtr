@@ -47,6 +47,11 @@ Public Class SearchEmp
             Next
         End With
 
+        With AllData
+            .emp_id.Text = lv_employees.SelectedItems(0).Text
+            .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
+        End With
+
         Me.Close()
     End Sub
 End Class

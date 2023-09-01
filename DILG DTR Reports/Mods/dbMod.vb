@@ -85,7 +85,7 @@ Module dbMod
         CloseDB()
     End Sub
 
-    Public Sub searchDTR(emp_id As Integer, a As Boolean, b As Boolean, c As Boolean)
+    Public Sub searchDTR(emp_id As Integer, a As Boolean, b As Boolean, c As Boolean, month As String)
 
         Dim query As String
         query = "
@@ -108,21 +108,23 @@ Module dbMod
         conn = New MySqlConnection(str)
         cmd = New MySqlCommand(query, conn)
 
-
         Dim dayFrom As Integer = Convert.ToInt32(DTRMain.dtp_from.Value.ToString("dd"))
         Dim days As Integer = 0
 
         If a = True And b = False And c = False Then
-            cmd.Parameters.AddWithValue("@dateFrm", "2023-08-01")
-            cmd.Parameters.AddWithValue("@dateTo", "2023-08-15")
+            Dim dateMonth As String = "2023-" & month
+            cmd.Parameters.AddWithValue("@dateFrm", dateMonth & "-01")
+            cmd.Parameters.AddWithValue("@dateTo", dateMonth & "-15")
             days = 1
         ElseIf b = True And a = False And c = False Then
-            cmd.Parameters.AddWithValue("@dateFrm", "2023-08-16")
-            cmd.Parameters.AddWithValue("@dateTo", "2023-08-31")
+            Dim dateMonth As String = "2023-" & month
+            cmd.Parameters.AddWithValue("@dateFrm", dateMonth & "-16")
+            cmd.Parameters.AddWithValue("@dateTo", dateMonth & "-31")
             days = 16
         ElseIf b = False And a = False And c = True Then
-            cmd.Parameters.AddWithValue("@dateFrm", "2023-08-01")
-            cmd.Parameters.AddWithValue("@dateTo", "2023-08-31")
+            Dim dateMonth As String = "2023-" & month
+            cmd.Parameters.AddWithValue("@dateFrm", dateMonth & "-01")
+            cmd.Parameters.AddWithValue("@dateTo", dateMonth & "-31")
             days = 1
         End If
         cmd.Parameters.AddWithValue("@emp_id", emp_id)
@@ -258,6 +260,81 @@ Module dbMod
 
     End Sub
 
+    Public Sub searchDTRAll(emp_id As Integer, dtpFrom As Date, dtpTo As Date)
+
+        Dim query As String
+        query = "
+                SELECT 
+                  `hr_employee`.`emp_pin`,
+                  `hr_employee`.`emp_firstname`,
+                  `hr_employee`.`emp_lastname`,
+                  `employee_id`,
+                  `workstate`,
+                  `punch_time`
+                FROM
+                  `att_punches`
+                LEFT JOIN `hr_employee` 
+                ON `att_punches`.`employee_id` = `hr_employee`.`id`
+                WHERE `employee_id` = @emp_id
+                AND CAST(`punch_time` AS DATE) BETWEEN @dtpFrom AND @dtpTo
+                ORDER BY `punch_time` DESC;
+                "
+
+        str = "Server=" & server & ";Port=" & port & ";Uid=" & user & ";Pwd=" & pass & ";Database=" & db & ";persist security info=false; SslMode=none;"
+        conn = New MySqlConnection(str)
+        cmd = New MySqlCommand(query, conn)
+
+        cmd.Parameters.AddWithValue("@emp_id", emp_id)
+        cmd.Parameters.AddWithValue("@dtpFrom", dtpFrom)
+        cmd.Parameters.AddWithValue("@dtpTo", dtpTo)
+        conn.Open()
+        dr = cmd.ExecuteReader
+
+        AllData.ListView1.Clear()
+        AllData.ListView1.Columns.Add("Emp_ID", 70, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        AllData.ListView1.Columns.Add("First Name", 150, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        AllData.ListView1.Columns.Add("Last Name", 150, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        AllData.ListView1.Columns.Add("Status", 100, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        AllData.ListView1.Columns.Add("Date/Time", 150, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+
+        Try
+            Dim days As Integer = 0
+            Dim workstate As String = ""
+            If dr.HasRows Then
+                While dr.Read()
+                    workstate = dr(4).ToString
+                    If workstate = 0 Then
+                        workstate = "TIME-IN"
+                    Else
+                        workstate = "TIME-OUT"
+                    End If
+                    Dim items As New ListViewItem
+                    items.Text = dr(0).ToString
+                    items.SubItems.Add(dr(1).ToString)
+                    items.SubItems.Add(dr(2).ToString)
+                    items.SubItems.Add(workstate)
+                    items.SubItems.Add(dr(4).ToString)
+                    AllData.ListView1.View = View.Details
+                    AllData.ListView1.Items.Add(items)
+                    days += 1
+                End While
+            Else
+                Exit Sub
+            End If
+            With AllData
+                Dim BoldFont As Font = New Font(.ListView1.Font.FontFamily, .ListView1.Font.Size, Drawing.FontStyle.Bold)
+                For i As Integer = 0 To .ListView1.Items.Count - 1
+                    .ListView1.Items(i).UseItemStyleForSubItems = False
+                    .ListView1.Items(i).Font = BoldFont
+                    .ListView1.Items(i).BackColor = Color.LightGray
+                Next
+            End With
+        Catch ex As Exception
+            MessageBox.Show(ex.Message.ToString)
+        End Try
+        CloseDB()
+
+    End Sub
     Public Sub DBUpdater(OldID As Integer, NewID As Integer, hr_employee As Boolean, hr_biometrics As Boolean)
 
         Dim i As Integer
@@ -306,11 +383,11 @@ Module dbMod
         Dim day As Integer = Convert.ToInt32(DTRMain.dtp_from.Value.ToString("dd"))
         Dim dayTo As Integer = Convert.ToInt32(DTRMain.dtp_to.Value.ToString("dd"))
         If DTRMain.RadioButton1.Checked = True Then
-            DTRMain.lblMonth.Text = DTRMain.dtp_from.Value.ToString("MMMM").ToUpper & " 1 - 15 , " & DTRMain.dtp_from.Value.ToString("yyyy").ToUpper
+            DTRMain.lblMonth.Text = DTRMain.ComboBox1.Text & " 1 - 15 , " & DTRMain.dtp_from.Value.ToString("yyyy").ToUpper
         ElseIf DTRMain.RadioButton3.Checked = True Then
-            DTRMain.lblMonth.Text = DTRMain.dtp_from.Value.ToString("MMMM yyyy").ToUpper
+            DTRMain.lblMonth.Text = DTRMain.ComboBox1.Text & " " & DTRMain.dtp_from.Value.ToString("yyyy").ToUpper
         ElseIf DTRMain.RadioButton2.Checked = True Then
-            DTRMain.lblMonth.Text = DTRMain.dtp_from.Value.ToString("MMMM").ToUpper & " 16 - 30 , " & DTRMain.dtp_from.Value.ToString("yyyy").ToUpper
+            DTRMain.lblMonth.Text = DTRMain.ComboBox1.Text & " 16 - 30 , " & DTRMain.dtp_from.Value.ToString("yyyy").ToUpper
         End If
     End Sub
 

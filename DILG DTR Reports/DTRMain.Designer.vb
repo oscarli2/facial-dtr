@@ -28,6 +28,7 @@ Partial Class DTRMain
         Label3 = New Label()
         Button1 = New Button()
         GroupBox1 = New GroupBox()
+        ComboBox1 = New ComboBox()
         RadioButton3 = New RadioButton()
         RadioButton2 = New RadioButton()
         RadioButton1 = New RadioButton()
@@ -56,6 +57,7 @@ Partial Class DTRMain
         Label12 = New Label()
         Label13 = New Label()
         Panel1 = New Panel()
+        TextBox6 = New TextBox()
         PictureBox2 = New PictureBox()
         Label2 = New Label()
         Label15 = New Label()
@@ -72,7 +74,6 @@ Partial Class DTRMain
         TextBox7 = New TextBox()
         PageSetupDialog1 = New PageSetupDialog()
         PictureBox1 = New PictureBox()
-        TextBox6 = New TextBox()
         GroupBox1.SuspendLayout()
         Panel1.SuspendLayout()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
@@ -128,6 +129,7 @@ Partial Class DTRMain
         ' GroupBox1
         ' 
         GroupBox1.BackColor = Color.Khaki
+        GroupBox1.Controls.Add(ComboBox1)
         GroupBox1.Controls.Add(RadioButton3)
         GroupBox1.Controls.Add(RadioButton2)
         GroupBox1.Controls.Add(RadioButton1)
@@ -144,11 +146,20 @@ Partial Class DTRMain
         GroupBox1.TabIndex = 8
         GroupBox1.TabStop = False
         ' 
+        ' ComboBox1
+        ' 
+        ComboBox1.FormattingEnabled = True
+        ComboBox1.Items.AddRange(New Object() {"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"})
+        ComboBox1.Location = New Point(90, 104)
+        ComboBox1.Name = "ComboBox1"
+        ComboBox1.Size = New Size(183, 22)
+        ComboBox1.TabIndex = 19
+        ' 
         ' RadioButton3
         ' 
         RadioButton3.AutoSize = True
         RadioButton3.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        RadioButton3.Location = New Point(98, 154)
+        RadioButton3.Location = New Point(98, 162)
         RadioButton3.Name = "RadioButton3"
         RadioButton3.Size = New Size(109, 20)
         RadioButton3.TabIndex = 18
@@ -160,7 +171,7 @@ Partial Class DTRMain
         ' 
         RadioButton2.AutoSize = True
         RadioButton2.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        RadioButton2.Location = New Point(158, 128)
+        RadioButton2.Location = New Point(158, 136)
         RadioButton2.Name = "RadioButton2"
         RadioButton2.Size = New Size(99, 20)
         RadioButton2.TabIndex = 17
@@ -172,7 +183,7 @@ Partial Class DTRMain
         ' 
         RadioButton1.AutoSize = True
         RadioButton1.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        RadioButton1.Location = New Point(41, 128)
+        RadioButton1.Location = New Point(41, 136)
         RadioButton1.Name = "RadioButton1"
         RadioButton1.Size = New Size(92, 20)
         RadioButton1.TabIndex = 16
@@ -186,9 +197,9 @@ Partial Class DTRMain
         Label5.Font = New Font("Calibri", 12F, FontStyle.Bold, GraphicsUnit.Point)
         Label5.Location = New Point(28, 107)
         Label5.Name = "Label5"
-        Label5.Size = New Size(52, 19)
+        Label5.Size = New Size(56, 19)
         Label5.TabIndex = 13
-        Label5.Text = "DATES"
+        Label5.Text = "Month"
         ' 
         ' lblName
         ' 
@@ -208,6 +219,7 @@ Partial Class DTRMain
         emp_id.Size = New Size(47, 14)
         emp_id.TabIndex = 8
         emp_id.Text = "EMP_ID"
+        emp_id.Visible = False
         ' 
         ' Label4
         ' 
@@ -494,6 +506,20 @@ Partial Class DTRMain
         Panel1.Size = New Size(507, 1043)
         Panel1.TabIndex = 46
         ' 
+        ' TextBox6
+        ' 
+        TextBox6.BackColor = Color.LightGray
+        TextBox6.BorderStyle = BorderStyle.FixedSingle
+        TextBox6.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox6.Location = New Point(16, 171)
+        TextBox6.Multiline = True
+        TextBox6.Name = "TextBox6"
+        TextBox6.ReadOnly = True
+        TextBox6.Size = New Size(51, 41)
+        TextBox6.TabIndex = 62
+        TextBox6.Text = vbCrLf & "Days"
+        TextBox6.TextAlign = HorizontalAlignment.Center
+        ' 
         ' PictureBox2
         ' 
         PictureBox2.Image = My.Resources.Resources.pngaaa_com_4194622
@@ -679,20 +705,6 @@ Partial Class DTRMain
         PictureBox1.TabIndex = 47
         PictureBox1.TabStop = False
         ' 
-        ' TextBox6
-        ' 
-        TextBox6.BackColor = Color.LightGray
-        TextBox6.BorderStyle = BorderStyle.FixedSingle
-        TextBox6.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        TextBox6.Location = New Point(16, 171)
-        TextBox6.Multiline = True
-        TextBox6.Name = "TextBox6"
-        TextBox6.ReadOnly = True
-        TextBox6.Size = New Size(51, 41)
-        TextBox6.TabIndex = 62
-        TextBox6.Text = vbCrLf & "Days"
-        TextBox6.TextAlign = HorizontalAlignment.Center
-        ' 
         ' DTRMain
         ' 
         AutoScaleDimensions = New SizeF(6F, 14F)
@@ -772,4 +784,5 @@ Partial Class DTRMain
     Friend WithEvents RadioButton1 As RadioButton
     Friend WithEvents RadioButton3 As RadioButton
     Friend WithEvents TextBox6 As TextBox
+    Friend WithEvents ComboBox1 As ComboBox
 End Class

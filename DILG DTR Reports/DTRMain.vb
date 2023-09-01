@@ -16,21 +16,50 @@ Public Class DTRMain
 
         If txtEmployee.Text = "CLICK HERE TO SEARCH" Then
             MsgBox("Please select an employee")
-        ElseIf ifDTPChanged = False Then
-            MsgBox("Please change your FROM Date!")
+        ElseIf ComboBox1.Text = "" Then
+            MsgBox("Please select a month or range of dates!")
         Else
+            Dim month As String
+            If ComboBox1.Text = "JANUARY" Then
+                month = "01"
+            ElseIf ComboBox1.Text = "FEBRUARY" Then
+                month = "02"
+            ElseIf ComboBox1.Text = "MARCH" Then
+                month = "03"
+            ElseIf ComboBox1.Text = "APRIL" Then
+                month = "04"
+            ElseIf ComboBox1.Text = "MAY" Then
+                month = "05"
+            ElseIf ComboBox1.Text = "JUNE" Then
+                month = "06"
+            ElseIf ComboBox1.Text = "JULY" Then
+                month = "07"
+            ElseIf ComboBox1.Text = "AUGUST" Then
+                month = "08"
+            ElseIf ComboBox1.Text = "SEPTEMBER" Then
+                month = "09"
+            ElseIf ComboBox1.Text = "OCTOBER" Then
+                month = "10"
+            ElseIf ComboBox1.Text = "NOVEMBER" Then
+                month = "11"
+            ElseIf ComboBox1.Text = "DECEMBER" Then
+                month = "12"
+            End If
+
             If RadioButton1.Checked = True And RadioButton2.Checked = False And RadioButton3.Checked = False Then
-                searchDTR(Convert.ToInt32(emp_id.Text), True, False, False)
+                searchDTR(Convert.ToInt32(emp_id.Text), True, False, False, month)
             ElseIf RadioButton2.Checked = True And RadioButton1.Checked = False And RadioButton3.Checked = False Then
-                searchDTR(Convert.ToInt32(emp_id.Text), False, True, False)
+                searchDTR(Convert.ToInt32(emp_id.Text), False, True, False, month)
             ElseIf RadioButton3.Checked = True And RadioButton2.Checked = False And RadioButton1.Checked = False Then
-                searchDTR(Convert.ToInt32(emp_id.Text), False, False, True)
+                searchDTR(Convert.ToInt32(emp_id.Text), False, False, True, month)
             End If
         End If
     End Sub
 
     Private Sub DTRMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        RadioButton1.Enabled = False
+        RadioButton2.Enabled = False
+        RadioButton3.Enabled = False
         dtp_from.Value = Date.Now
         dtp_to.Value = Date.Now
 
@@ -109,6 +138,13 @@ Public Class DTRMain
 
     Private Sub RadioButton3_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton3.CheckedChanged
         updateMonth()
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        updateMonth()
+        RadioButton1.Enabled = True
+        RadioButton2.Enabled = True
+        RadioButton3.Enabled = True
     End Sub
 
 End Class

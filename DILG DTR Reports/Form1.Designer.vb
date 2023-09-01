@@ -26,8 +26,8 @@ Partial Class Form1
         ToolStrip1 = New ToolStrip()
         ToolStripButton1 = New ToolStripButton()
         ToolStripButton3 = New ToolStripButton()
+        ToolStripButton5 = New ToolStripButton()
         ToolStripButton2 = New ToolStripButton()
-        ToolStripButton4 = New ToolStripButton()
         StatusStrip1 = New StatusStrip()
         ToolStripStatusLabel1 = New ToolStripStatusLabel()
         ToolStrip1.SuspendLayout()
@@ -39,7 +39,7 @@ Partial Class Form1
         ToolStrip1.AutoSize = False
         ToolStrip1.BackColor = Color.Firebrick
         ToolStrip1.GripStyle = ToolStripGripStyle.Hidden
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton3, ToolStripButton2, ToolStripButton4})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton3, ToolStripButton5, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(907, 49)
@@ -77,6 +77,21 @@ Partial Class Form1
         ToolStripButton3.TextAlign = ContentAlignment.BottomCenter
         ToolStripButton3.TextImageRelation = TextImageRelation.ImageAboveText
         ' 
+        ' ToolStripButton5
+        ' 
+        ToolStripButton5.AutoSize = False
+        ToolStripButton5.BackColor = Color.Firebrick
+        ToolStripButton5.Font = New Font("Bahnschrift", 8.25F, FontStyle.Regular, GraphicsUnit.Point)
+        ToolStripButton5.ForeColor = Color.White
+        ToolStripButton5.Image = CType(resources.GetObject("ToolStripButton5.Image"), Image)
+        ToolStripButton5.ImageScaling = ToolStripItemImageScaling.None
+        ToolStripButton5.ImageTransparentColor = Color.Magenta
+        ToolStripButton5.Name = "ToolStripButton5"
+        ToolStripButton5.Size = New Size(70, 50)
+        ToolStripButton5.Text = "All Records"
+        ToolStripButton5.TextAlign = ContentAlignment.BottomCenter
+        ToolStripButton5.TextImageRelation = TextImageRelation.ImageAboveText
+        ' 
         ' ToolStripButton2
         ' 
         ToolStripButton2.AutoSize = False
@@ -92,21 +107,6 @@ Partial Class Form1
         ToolStripButton2.TextAlign = ContentAlignment.BottomCenter
         ToolStripButton2.TextImageRelation = TextImageRelation.ImageAboveText
         ' 
-        ' ToolStripButton4
-        ' 
-        ToolStripButton4.Alignment = ToolStripItemAlignment.Right
-        ToolStripButton4.AutoSize = False
-        ToolStripButton4.BackColor = Color.Firebrick
-        ToolStripButton4.Font = New Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point)
-        ToolStripButton4.ForeColor = Color.White
-        ToolStripButton4.ImageScaling = ToolStripItemImageScaling.None
-        ToolStripButton4.ImageTransparentColor = Color.Magenta
-        ToolStripButton4.Name = "ToolStripButton4"
-        ToolStripButton4.RightToLeft = RightToLeft.No
-        ToolStripButton4.Size = New Size(50, 50)
-        ToolStripButton4.Text = "X"
-        ToolStripButton4.TextImageRelation = TextImageRelation.ImageAboveText
-        ' 
         ' StatusStrip1
         ' 
         StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1})
@@ -118,8 +118,9 @@ Partial Class Form1
         ' 
         ' ToolStripStatusLabel1
         ' 
+        ToolStripStatusLabel1.Font = New Font("Arial Narrow", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
         ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        ToolStripStatusLabel1.Size = New Size(119, 17)
+        ToolStripStatusLabel1.Size = New Size(126, 17)
         ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
         ' 
         ' Form1
@@ -132,7 +133,7 @@ Partial Class Form1
         Controls.Add(StatusStrip1)
         Controls.Add(ToolStrip1)
         DoubleBuffered = True
-        FormBorderStyle = FormBorderStyle.None
+        FormBorderStyle = FormBorderStyle.FixedSingle
         IsMdiContainer = True
         Name = "Form1"
         Text = "DILG R8 - DTR"
@@ -148,7 +149,7 @@ Partial Class Form1
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents ToolStripButton2 As ToolStripButton
     Friend WithEvents ToolStripButton3 As ToolStripButton
-    Friend WithEvents ToolStripButton4 As ToolStripButton
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
+    Friend WithEvents ToolStripButton5 As ToolStripButton
 End Class

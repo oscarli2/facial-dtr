@@ -5,6 +5,7 @@ Public Class updateProg
         currentADUser = UserPrincipal.Current
         MsgBox("Closing application for the installation of Updates..")
         Process.Start("cmd", "/c start C:\Users\" & currentADUser.ToString & "\Downloads\DILGDTRSetup.msi")
+        Application.Exit()
         Form1.Close()
     End Sub
 
