@@ -9,7 +9,8 @@
     <MyType>WindowsForms</MyType>
     <ImportedNamespaces>System.Data=False,System.Drawing=False,System.Windows.Forms=False,Microsoft.VisualBasic=True,System=True,System.Collections=True,System.Collections.Generic=True,System.Diagnostics=True,System.Linq=True,System.Xml.Linq=True,System.Threading.Tasks=True,DILG DTR Reports=True</ImportedNamespaces>
     <ApplicationIcon>pngaaa.com-4194622.ico</ApplicationIcon>
-    <AssemblyVersion>1.0.8.0</AssemblyVersion>
+    <AssemblyVersion>1.1.1.0</AssemblyVersion>
+    <PackageIcon>pngaaa.com-4194622.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -53,6 +54,10 @@
     <None Update="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Update="pngaaa.com-4194622.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 

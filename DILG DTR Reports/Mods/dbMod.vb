@@ -313,7 +313,7 @@ Module dbMod
                     items.SubItems.Add(dr(1).ToString)
                     items.SubItems.Add(dr(2).ToString)
                     items.SubItems.Add(workstate)
-                    items.SubItems.Add(dr(4).ToString)
+                    items.SubItems.Add(dr(5).ToString)
                     AllData.ListView1.View = View.Details
                     AllData.ListView1.Items.Add(items)
                     days += 1

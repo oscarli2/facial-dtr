@@ -90,6 +90,7 @@ Public Class Form1
         DTRMain.PageSetupDialog1.Document = DTRMain.PrintDocument1
         DTRMain.PageSetupDialog1.Document.DefaultPageSettings.Color = True
         DTRMain.PageSetupDialog1.Document.DefaultPageSettings.PaperSize = New PaperSize("A4", 830, 1170)
+        DTRMain.PageSetupDialog1.Document.DefaultPageSettings.Margins = New Margins(0.1, 0.1, 0.1, 0.1)
         DTRMain.PrintPreviewDialog1.ShowDialog()
     End Sub
 
@@ -98,6 +99,7 @@ Public Class Form1
     End Sub
 
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles ToolStripButton5.Click
+        AllData.MdiParent = Me
         AllData.Show()
     End Sub
 End Class

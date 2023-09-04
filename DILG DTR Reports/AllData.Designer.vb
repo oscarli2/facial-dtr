@@ -38,6 +38,8 @@ Partial Class AllData
         ' 
         ' ListView1
         ' 
+        ListView1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        ListView1.BorderStyle = BorderStyle.FixedSingle
         ListView1.Location = New Point(304, 12)
         ListView1.Name = "ListView1"
         ListView1.Size = New Size(670, 414)
@@ -68,7 +70,7 @@ Partial Class AllData
         dtp_to.CustomFormat = "yyyy-MM-dd"
         dtp_to.Font = New Font("Calibri", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
         dtp_to.Format = DateTimePickerFormat.Custom
-        dtp_to.Location = New Point(150, 135)
+        dtp_to.Location = New Point(154, 139)
         dtp_to.Name = "dtp_to"
         dtp_to.Size = New Size(94, 26)
         dtp_to.TabIndex = 22
@@ -77,7 +79,7 @@ Partial Class AllData
         ' 
         Label3.AutoSize = True
         Label3.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        Label3.Location = New Point(36, 115)
+        Label3.Location = New Point(30, 115)
         Label3.Name = "Label3"
         Label3.Size = New Size(40, 17)
         Label3.TabIndex = 20
@@ -87,7 +89,7 @@ Partial Class AllData
         ' 
         Label4.AutoSize = True
         Label4.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        Label4.Location = New Point(150, 115)
+        Label4.Location = New Point(148, 115)
         Label4.Name = "Label4"
         Label4.Size = New Size(23, 17)
         Label4.TabIndex = 23
@@ -98,7 +100,7 @@ Partial Class AllData
         dtp_from.CustomFormat = "yyyy-MM-dd"
         dtp_from.Font = New Font("Calibri", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
         dtp_from.Format = DateTimePickerFormat.Custom
-        dtp_from.Location = New Point(36, 135)
+        dtp_from.Location = New Point(40, 139)
         dtp_from.Name = "dtp_from"
         dtp_from.Size = New Size(89, 26)
         dtp_from.TabIndex = 21
@@ -106,7 +108,7 @@ Partial Class AllData
         ' lblName
         ' 
         lblName.AutoSize = True
-        lblName.Location = New Point(115, 231)
+        lblName.Location = New Point(119, 235)
         lblName.Name = "lblName"
         lblName.Size = New Size(94, 15)
         lblName.TabIndex = 9
@@ -116,7 +118,7 @@ Partial Class AllData
         ' emp_id
         ' 
         emp_id.AutoSize = True
-        emp_id.Location = New Point(62, 231)
+        emp_id.Location = New Point(66, 235)
         emp_id.Name = "emp_id"
         emp_id.Size = New Size(47, 15)
         emp_id.TabIndex = 8
@@ -129,7 +131,7 @@ Partial Class AllData
         Button1.FlatStyle = FlatStyle.Flat
         Button1.Font = New Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
         Button1.ForeColor = Color.Black
-        Button1.Location = New Point(14, 183)
+        Button1.Location = New Point(18, 187)
         Button1.Name = "Button1"
         Button1.Size = New Size(247, 45)
         Button1.TabIndex = 7
@@ -140,7 +142,7 @@ Partial Class AllData
         ' 
         Label1.AutoSize = True
         Label1.Font = New Font("Calibri", 12F, FontStyle.Bold, GraphicsUnit.Point)
-        Label1.Location = New Point(14, 31)
+        Label1.Location = New Point(18, 31)
         Label1.Name = "Label1"
         Label1.Size = New Size(128, 19)
         Label1.TabIndex = 1
@@ -151,7 +153,7 @@ Partial Class AllData
         txtEmployee.BorderStyle = BorderStyle.FixedSingle
         txtEmployee.Cursor = Cursors.Hand
         txtEmployee.Font = New Font("Calibri", 12F, FontStyle.Bold, GraphicsUnit.Point)
-        txtEmployee.Location = New Point(14, 74)
+        txtEmployee.Location = New Point(18, 74)
         txtEmployee.Name = "txtEmployee"
         txtEmployee.ReadOnly = True
         txtEmployee.Size = New Size(247, 27)
