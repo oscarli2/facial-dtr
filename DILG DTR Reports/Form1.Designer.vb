@@ -22,14 +22,19 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(Form1))
         ToolStrip1 = New ToolStrip()
         ToolStripButton1 = New ToolStripButton()
         ToolStripButton3 = New ToolStripButton()
         ToolStripButton5 = New ToolStripButton()
+        ToolStripSeparator1 = New ToolStripSeparator()
         ToolStripButton2 = New ToolStripButton()
+        lbl_empInCount = New ToolStripLabel()
+        ToolStripLabel1 = New ToolStripLabel()
         StatusStrip1 = New StatusStrip()
         ToolStripStatusLabel1 = New ToolStripStatusLabel()
+        Timer1 = New Timer(components)
         ToolStrip1.SuspendLayout()
         StatusStrip1.SuspendLayout()
         SuspendLayout()
@@ -39,7 +44,7 @@ Partial Class Form1
         ToolStrip1.AutoSize = False
         ToolStrip1.BackColor = Color.Firebrick
         ToolStrip1.GripStyle = ToolStripGripStyle.Hidden
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton3, ToolStripButton5, ToolStripButton2})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton3, ToolStripButton5, ToolStripSeparator1, ToolStripButton2, lbl_empInCount, ToolStripLabel1})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(907, 49)
@@ -92,6 +97,11 @@ Partial Class Form1
         ToolStripButton5.TextAlign = ContentAlignment.BottomCenter
         ToolStripButton5.TextImageRelation = TextImageRelation.ImageAboveText
         ' 
+        ' ToolStripSeparator1
+        ' 
+        ToolStripSeparator1.Name = "ToolStripSeparator1"
+        ToolStripSeparator1.Size = New Size(6, 49)
+        ' 
         ' ToolStripButton2
         ' 
         ToolStripButton2.AutoSize = False
@@ -106,6 +116,25 @@ Partial Class Form1
         ToolStripButton2.Text = "Update"
         ToolStripButton2.TextAlign = ContentAlignment.BottomCenter
         ToolStripButton2.TextImageRelation = TextImageRelation.ImageAboveText
+        ' 
+        ' lbl_empInCount
+        ' 
+        lbl_empInCount.Alignment = ToolStripItemAlignment.Right
+        lbl_empInCount.Font = New Font("Bahnschrift SemiBold", 14.25F, FontStyle.Bold, GraphicsUnit.Point)
+        lbl_empInCount.ForeColor = Color.White
+        lbl_empInCount.Name = "lbl_empInCount"
+        lbl_empInCount.Padding = New Padding(0, 0, 20, 0)
+        lbl_empInCount.Size = New Size(40, 46)
+        lbl_empInCount.Text = "0"
+        ' 
+        ' ToolStripLabel1
+        ' 
+        ToolStripLabel1.Alignment = ToolStripItemAlignment.Right
+        ToolStripLabel1.Font = New Font("Bahnschrift", 12F, FontStyle.Regular, GraphicsUnit.Point)
+        ToolStripLabel1.ForeColor = Color.White
+        ToolStripLabel1.Name = "ToolStripLabel1"
+        ToolStripLabel1.Size = New Size(121, 46)
+        ToolStripLabel1.Text = "Total Timed-in: "
         ' 
         ' StatusStrip1
         ' 
@@ -122,6 +151,11 @@ Partial Class Form1
         ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
         ToolStripStatusLabel1.Size = New Size(126, 17)
         ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
+        ' 
+        ' Timer1
+        ' 
+        Timer1.Enabled = True
+        Timer1.Interval = 10000
         ' 
         ' Form1
         ' 
@@ -152,4 +186,8 @@ Partial Class Form1
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
     Friend WithEvents ToolStripButton5 As ToolStripButton
+    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents lbl_empInCount As ToolStripLabel
+    Friend WithEvents ToolStripLabel1 As ToolStripLabel
+    Friend WithEvents Timer1 As Timer
 End Class

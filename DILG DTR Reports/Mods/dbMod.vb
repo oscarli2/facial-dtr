@@ -57,7 +57,7 @@ Module dbMod
         dr = cmd.ExecuteReader
 
         SearchEmp.lv_employees.Clear() 'clear the table
-        SearchEmp.lv_employees.Columns.Add("ID", 100)
+        SearchEmp.lv_employees.Columns.Add("ID", 80)
         SearchEmp.lv_employees.Columns.Add("Emp_ID", 100)
         SearchEmp.lv_employees.Columns.Add("First Name", 250)
         SearchEmp.lv_employees.Columns.Add("Last Name", 250)
@@ -85,10 +85,11 @@ Module dbMod
         CloseDB()
     End Sub
 
-    Public Sub searchDTR(emp_id As Integer, a As Boolean, b As Boolean, c As Boolean, month As String)
+    Public Sub searchDTR(emp_id As Integer, a As Boolean, b As Boolean, c As Boolean, month As String, ifSG As Boolean)
 
         Dim query As String
-        query = "
+        If ifSG = False Then
+            query = "
             WITH RECURSIVE date_ranges AS (
             SELECT @dateFrm dt UNION ALL
             SELECT dt + INTERVAL 1 DAY FROM date_ranges 
@@ -103,6 +104,23 @@ Module dbMod
             ON date_ranges.dt = CAST(punch_time AS DATE)
             GROUP BY date_ranges.dt;
             "
+        Else
+            query = "
+            WITH RECURSIVE date_ranges AS (
+            SELECT @dateFrm dt UNION ALL
+            SELECT dt + INTERVAL 1 DAY FROM date_ranges 
+            WHERE dt + INTERVAL 1 DAY <= @dateTo)
+            SELECT date_ranges.dt
+            , MAX(CASE WHEN T.workstate = 1 AND T.employee_id = @emp_id AND TIME(T.punch_time) BETWEEN '03:00:00' AND '11:59:00' THEN DATE_FORMAT(T.punch_time, '%l:%i %p') END) AS ArrivalAM 
+            , MAX(CASE WHEN T.workstate = 0 AND T.employee_id = @emp_id  AND TIME(T.punch_time) BETWEEN '12:00:00' AND '14:00:00' THEN DATE_FORMAT(T.punch_time, '%l:%i %p') END) AS DepartAM 
+            , MAX(CASE WHEN T.workstate = 1 AND T.employee_id = @emp_id  AND TIME(T.punch_time) BETWEEN '12:00:00' AND '13:00:00' THEN DATE_FORMAT(T.punch_time, '%l:%i %p') END) AS ArrivalPM 
+            , MAX(CASE WHEN T.workstate = 0 AND T.employee_id = @emp_id  AND TIME(T.punch_time) BETWEEN '13:00:01' AND '23:59:00' THEN DATE_FORMAT(T.punch_time, '%l:%i %p') END) AS DepartPM 
+             FROM date_ranges
+            LEFT JOIN `att_punches` T
+            ON date_ranges.dt = CAST(punch_time AS DATE)
+            GROUP BY date_ranges.dt;
+            "
+        End If
 
         str = "Server=" & server & ";Port=" & port & ";Uid=" & user & ";Pwd=" & pass & ";Database=" & db & ";persist security info=false; SslMode=none;"
         conn = New MySqlConnection(str)
@@ -409,6 +427,27 @@ Module dbMod
         End If
         CloseDB()
     End Sub
+    Public Sub checkTotalEmpIn()
+        Dim counter As Integer = 0
+        connection()
+        Dim query As String = "SELECT 
+                  COUNT(`employee_id`) AS TOTAL_IN
+                FROM
+                  `att_punches`
+                WHERE CAST(`punch_time` AS DATE) = CURDATE() AND TIME(`punch_time`) 
+                AND `workstate` = '0'"
 
+        cmd = New MySqlCommand(query, conn)
+        dr = cmd.ExecuteReader
+
+        If dr.HasRows Then
+            Form1.lbl_empInCount.Text = counter
+        Else
+            MsgBox("Error")
+        End If
+        CloseDB()
+
+
+    End Sub
 End Module
 

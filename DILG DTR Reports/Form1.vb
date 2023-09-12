@@ -20,7 +20,7 @@ Public Class Form1
                 Me.BackgroundImageLayout = ImageLayout.Zoom
                 ctlMDI.BackColor = Color.White
                 'ctlMDI.BackgroundImage = My.Resources.eplogo
-
+                Timer1.Start()
             Catch exc As InvalidCastException
                 ' Catch and ignore the error if casting failed.
             End Try
@@ -101,5 +101,9 @@ Public Class Form1
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles ToolStripButton5.Click
         AllData.MdiParent = Me
         AllData.Show()
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        checkTotalEmpIn()
     End Sub
 End Class

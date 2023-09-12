@@ -28,6 +28,7 @@ Partial Class DTRMain
         Label3 = New Label()
         Button1 = New Button()
         GroupBox1 = New GroupBox()
+        CheckBox1 = New CheckBox()
         ComboBox1 = New ComboBox()
         RadioButton3 = New RadioButton()
         RadioButton2 = New RadioButton()
@@ -129,6 +130,7 @@ Partial Class DTRMain
         ' GroupBox1
         ' 
         GroupBox1.BackColor = Color.Khaki
+        GroupBox1.Controls.Add(CheckBox1)
         GroupBox1.Controls.Add(ComboBox1)
         GroupBox1.Controls.Add(RadioButton3)
         GroupBox1.Controls.Add(RadioButton2)
@@ -145,6 +147,16 @@ Partial Class DTRMain
         GroupBox1.Size = New Size(304, 279)
         GroupBox1.TabIndex = 8
         GroupBox1.TabStop = False
+        ' 
+        ' CheckBox1
+        ' 
+        CheckBox1.AutoSize = True
+        CheckBox1.Location = New Point(181, 28)
+        CheckBox1.Name = "CheckBox1"
+        CheckBox1.Size = New Size(94, 18)
+        CheckBox1.TabIndex = 20
+        CheckBox1.Text = "Security Unit"
+        CheckBox1.UseVisualStyleBackColor = True
         ' 
         ' ComboBox1
         ' 
@@ -783,4 +795,5 @@ Partial Class DTRMain
     Friend WithEvents RadioButton3 As RadioButton
     Friend WithEvents TextBox6 As TextBox
     Friend WithEvents ComboBox1 As ComboBox
+    Friend WithEvents CheckBox1 As CheckBox
 End Class

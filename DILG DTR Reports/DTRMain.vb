@@ -45,13 +45,17 @@ Public Class DTRMain
             ElseIf ComboBox1.Text = "DECEMBER" Then
                 month = "12"
             End If
+            Dim isSecurity As Boolean = False
 
+            If CheckBox1.Checked = True Then
+                isSecurity = True
+            End If
             If RadioButton1.Checked = True And RadioButton2.Checked = False And RadioButton3.Checked = False Then
-                searchDTR(Convert.ToInt32(emp_id.Text), True, False, False, month)
+                searchDTR(Convert.ToInt32(emp_id.Text), True, False, False, month, isSecurity)
             ElseIf RadioButton2.Checked = True And RadioButton1.Checked = False And RadioButton3.Checked = False Then
-                searchDTR(Convert.ToInt32(emp_id.Text), False, True, False, month)
+                searchDTR(Convert.ToInt32(emp_id.Text), False, True, False, month, isSecurity)
             ElseIf RadioButton3.Checked = True And RadioButton2.Checked = False And RadioButton1.Checked = False Then
-                searchDTR(Convert.ToInt32(emp_id.Text), False, False, True, month)
+                searchDTR(Convert.ToInt32(emp_id.Text), False, False, True, month, isSecurity)
             End If
         End If
     End Sub
