@@ -41,9 +41,9 @@ Public Class Form1
         AddHandler wc.DownloadFileCompleted, AddressOf OnFileDownloadCompleted
         If IO.File.Exists("C:\Users\" & currentADUser.ToString & "\Downloads\DILGDTRSetup.msi") Then
             IO.File.Delete("C:\Users\" & currentADUser.ToString & "\Downloads\DILGDTRSetup.msi")
-            wc.DownloadFileAsync(New Uri("https://www.dropbox.com/scl/fi/y4jqtf7pe6262g1txa8wj/DILG-DTR-Setup.msi?rlkey=t6kty6m3w7v6kwtkataila8xs&dl=1"), "C:\Users\" & currentADUser.ToString & "\Downloads\DILGDTRSetup.msi")
+            wc.DownloadFileAsync(New Uri("https://www.dropbox.com/scl/fi/51qmp8z01emqew466j2uh/DILGDTRSetup.msi?rlkey=2rjp88hwq0ns96y5zucm1kwgn&dl=1"), "C:\Users\" & currentADUser.ToString & "\Downloads\DILGDTRSetup.msi")
         Else
-            wc.DownloadFileAsync(New Uri("https://www.dropbox.com/scl/fi/y4jqtf7pe6262g1txa8wj/DILG-DTR-Setup.msi?rlkey=t6kty6m3w7v6kwtkataila8xs&dl=1"), "C:\Users\" & currentADUser.ToString & "\Downloads\DILGDTRSetup.msi")
+            wc.DownloadFileAsync(New Uri("https://www.dropbox.com/scl/fi/51qmp8z01emqew466j2uh/DILGDTRSetup.msi?rlkey=2rjp88hwq0ns96y5zucm1kwgn&dl=1"), "C:\Users\" & currentADUser.ToString & "\Downloads\DILGDTRSetup.msi")
         End If
 
     End Sub
@@ -70,7 +70,7 @@ Public Class Form1
     End Sub
 
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
-        Dim request As HttpWebRequest = HttpWebRequest.Create("https://www.dropbox.com/scl/fi/h4vw7a3acgvmlw7zb5cj8/updatenum.txt?rlkey=rlvdu4hrzuosjl1j6h89jf7i3&dl=1")
+        Dim request As HttpWebRequest = HttpWebRequest.Create("https://www.dropbox.com/scl/fi/51qmp8z01emqew466j2uh/DILGDTRSetup.msi?rlkey=2rjp88hwq0ns96y5zucm1kwgn&dl=1")
         Dim response As HttpWebResponse = request.GetResponse()
         Dim sr As IO.StreamReader = New System.IO.StreamReader(response.GetResponseStream())
         Dim newestversion As String = sr.ReadToEnd()

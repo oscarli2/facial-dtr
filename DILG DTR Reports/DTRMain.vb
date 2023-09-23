@@ -49,6 +49,8 @@ Public Class DTRMain
 
             If CheckBox1.Checked = True Then
                 isSecurity = True
+            Else
+                isSecurity = False
             End If
             If RadioButton1.Checked = True And RadioButton2.Checked = False And RadioButton3.Checked = False Then
                 searchDTR(Convert.ToInt32(emp_id.Text), True, False, False, month, isSecurity)

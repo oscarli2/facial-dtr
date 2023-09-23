@@ -296,7 +296,7 @@ Partial Class DTRMain
         TextBox11.BackColor = Color.White
         TextBox11.BorderStyle = BorderStyle.None
         TextBox11.Font = New Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
-        TextBox11.Location = New Point(98, 948)
+        TextBox11.Location = New Point(88, 948)
         TextBox11.Name = "TextBox11"
         TextBox11.ReadOnly = True
         TextBox11.Size = New Size(334, 18)
@@ -309,7 +309,7 @@ Partial Class DTRMain
         TextBox9.BackColor = Color.White
         TextBox9.BorderStyle = BorderStyle.None
         TextBox9.Font = New Font("Arial", 9.75F, FontStyle.Italic, GraphicsUnit.Point)
-        TextBox9.Location = New Point(98, 971)
+        TextBox9.Location = New Point(88, 971)
         TextBox9.Name = "TextBox9"
         TextBox9.ReadOnly = True
         TextBox9.Size = New Size(334, 15)
@@ -322,7 +322,7 @@ Partial Class DTRMain
         TextBox10.BackColor = Color.White
         TextBox10.BorderStyle = BorderStyle.None
         TextBox10.Font = New Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point)
-        TextBox10.Location = New Point(98, 932)
+        TextBox10.Location = New Point(88, 932)
         TextBox10.Name = "TextBox10"
         TextBox10.ReadOnly = True
         TextBox10.Size = New Size(334, 19)
@@ -351,7 +351,7 @@ Partial Class DTRMain
         ListView1.HeaderStyle = ColumnHeaderStyle.None
         ListView1.Location = New Point(16, 211)
         ListView1.Name = "ListView1"
-        ListView1.Size = New Size(477, 542)
+        ListView1.Size = New Size(477, 543)
         ListView1.TabIndex = 37
         ListView1.UseCompatibleStateImageBehavior = False
         ListView1.View = View.Details
@@ -360,7 +360,7 @@ Partial Class DTRMain
         ' 
         Label6.AutoSize = True
         Label6.Font = New Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point)
-        Label6.Location = New Point(301, 152)
+        Label6.Location = New Point(301, 151)
         Label6.Margin = New Padding(4, 0, 4, 0)
         Label6.Name = "Label6"
         Label6.Size = New Size(62, 15)
@@ -371,7 +371,7 @@ Partial Class DTRMain
         ' 
         Label7.AutoSize = True
         Label7.Font = New Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point)
-        Label7.Location = New Point(301, 136)
+        Label7.Location = New Point(301, 135)
         Label7.Margin = New Padding(4, 0, 4, 0)
         Label7.Name = "Label7"
         Label7.Size = New Size(82, 15)
@@ -383,7 +383,7 @@ Partial Class DTRMain
         Label9.AutoSize = True
         Label9.BackColor = Color.White
         Label9.Font = New Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point)
-        Label9.Location = New Point(20, 152)
+        Label9.Location = New Point(20, 151)
         Label9.Margin = New Padding(4, 0, 4, 0)
         Label9.Name = "Label9"
         Label9.Size = New Size(84, 15)
@@ -395,7 +395,7 @@ Partial Class DTRMain
         Label10.AutoSize = True
         Label10.BackColor = Color.White
         Label10.Font = New Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point)
-        Label10.Location = New Point(20, 138)
+        Label10.Location = New Point(20, 137)
         Label10.Margin = New Padding(4, 0, 4, 0)
         Label10.Name = "Label10"
         Label10.Size = New Size(122, 15)
@@ -469,11 +469,11 @@ Partial Class DTRMain
         ' 
         Label13.AutoSize = True
         Label13.BackColor = Color.White
-        Label13.Font = New Font("Arial", 8.25F, FontStyle.Italic, GraphicsUnit.Point)
+        Label13.Font = New Font("Arial", 9F, FontStyle.Italic, GraphicsUnit.Point)
         Label13.Location = New Point(16, 12)
         Label13.Margin = New Padding(4, 0, 4, 0)
         Label13.Name = "Label13"
-        Label13.Size = New Size(136, 14)
+        Label13.Size = New Size(149, 15)
         Label13.TabIndex = 24
         Label13.Text = "Civil Service Form  No. 48"
         ' 
@@ -557,7 +557,7 @@ Partial Class DTRMain
         Label15.AutoSize = True
         Label15.BackColor = Color.White
         Label15.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
-        Label15.Location = New Point(388, 147)
+        Label15.Location = New Point(388, 146)
         Label15.Margin = New Padding(4, 0, 4, 0)
         Label15.Name = "Label15"
         Label15.Size = New Size(91, 16)
@@ -569,7 +569,7 @@ Partial Class DTRMain
         Label14.AutoSize = True
         Label14.BackColor = Color.White
         Label14.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
-        Label14.Location = New Point(388, 131)
+        Label14.Location = New Point(388, 130)
         Label14.Margin = New Padding(4, 0, 4, 0)
         Label14.Name = "Label14"
         Label14.Size = New Size(91, 16)
