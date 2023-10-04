@@ -284,7 +284,7 @@ Partial Class DTRMain
         Label8.AutoSize = True
         Label8.BackColor = Color.White
         Label8.Font = New Font("Arial", 9.75F, FontStyle.Italic, GraphicsUnit.Point)
-        Label8.Location = New Point(20, 1002)
+        Label8.Location = New Point(20, 1105)
         Label8.Margin = New Padding(4, 0, 4, 0)
         Label8.Name = "Label8"
         Label8.Size = New Size(158, 16)
@@ -296,7 +296,7 @@ Partial Class DTRMain
         TextBox11.BackColor = Color.White
         TextBox11.BorderStyle = BorderStyle.None
         TextBox11.Font = New Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
-        TextBox11.Location = New Point(88, 948)
+        TextBox11.Location = New Point(88, 1051)
         TextBox11.Name = "TextBox11"
         TextBox11.ReadOnly = True
         TextBox11.Size = New Size(334, 18)
@@ -309,7 +309,7 @@ Partial Class DTRMain
         TextBox9.BackColor = Color.White
         TextBox9.BorderStyle = BorderStyle.None
         TextBox9.Font = New Font("Arial", 9.75F, FontStyle.Italic, GraphicsUnit.Point)
-        TextBox9.Location = New Point(88, 971)
+        TextBox9.Location = New Point(88, 1074)
         TextBox9.Name = "TextBox9"
         TextBox9.ReadOnly = True
         TextBox9.Size = New Size(334, 15)
@@ -322,7 +322,7 @@ Partial Class DTRMain
         TextBox10.BackColor = Color.White
         TextBox10.BorderStyle = BorderStyle.None
         TextBox10.Font = New Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point)
-        TextBox10.Location = New Point(88, 932)
+        TextBox10.Location = New Point(88, 1035)
         TextBox10.Name = "TextBox10"
         TextBox10.ReadOnly = True
         TextBox10.Size = New Size(334, 19)
@@ -334,8 +334,8 @@ Partial Class DTRMain
         ' 
         RichTextBox1.BackColor = Color.White
         RichTextBox1.BorderStyle = BorderStyle.None
-        RichTextBox1.Font = New Font("Arial", 9F, FontStyle.Italic, GraphicsUnit.Point)
-        RichTextBox1.Location = New Point(35, 773)
+        RichTextBox1.Font = New Font("Arial", 9.75F, FontStyle.Italic, GraphicsUnit.Point)
+        RichTextBox1.Location = New Point(35, 878)
         RichTextBox1.Name = "RichTextBox1"
         RichTextBox1.Size = New Size(444, 50)
         RichTextBox1.TabIndex = 38
@@ -345,13 +345,13 @@ Partial Class DTRMain
         ' 
         ListView1.BackColor = Color.White
         ListView1.BorderStyle = BorderStyle.FixedSingle
-        ListView1.Font = New Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point)
+        ListView1.Font = New Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point)
         ListView1.FullRowSelect = True
         ListView1.GridLines = True
         ListView1.HeaderStyle = ColumnHeaderStyle.None
         ListView1.Location = New Point(16, 211)
         ListView1.Name = "ListView1"
-        ListView1.Size = New Size(477, 543)
+        ListView1.Size = New Size(477, 656)
         ListView1.TabIndex = 37
         ListView1.UseCompatibleStateImageBehavior = False
         ListView1.View = View.Details
@@ -513,7 +513,7 @@ Partial Class DTRMain
         Panel1.Controls.Add(TextBox7)
         Panel1.Location = New Point(336, 11)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(508, 1043)
+        Panel1.Size = New Size(508, 1184)
         Panel1.TabIndex = 46
         ' 
         ' TextBox6
@@ -545,7 +545,7 @@ Partial Class DTRMain
         Label2.AutoSize = True
         Label2.BackColor = Color.White
         Label2.Font = New Font("Arial", 9.75F, FontStyle.Italic, GraphicsUnit.Point)
-        Label2.Location = New Point(35, 868)
+        Label2.Location = New Point(35, 971)
         Label2.Margin = New Padding(4, 0, 4, 0)
         Label2.Name = "Label2"
         Label2.Size = New Size(264, 16)

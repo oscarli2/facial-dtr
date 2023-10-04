@@ -107,10 +107,10 @@ Public Class DTRMain
         Panel1.DrawToBitmap(bm, New Rectangle(15, 15, Me.Panel1.Width + 2, Me.Panel1.Height))
         e.Graphics.DrawImage(bm, 0, 0, Panel1.Width - 125, Me.Panel1.Height - 205)
         e.Graphics.DrawImage(bm, 400, 0, Panel1.Width - 125, Me.Panel1.Height - 205)
-        h += 104
+        h += 200
         e.Graphics.DrawString("______________________", New Font("Arial", 10), Brushes.Black, 110, 75)
         e.Graphics.DrawString("______________________", New Font("Arial", 10), Brushes.Black, 515, 75)
-        h += 565
+        h += 578
         e.Graphics.DrawString("_____________________", New Font("Arial", 20, FontStyle.Bold), Brushes.Black, 30, h)
         e.Graphics.DrawString("_____________________", New Font("Arial", 20, FontStyle.Bold), Brushes.Black, 425, h)
         h += 84

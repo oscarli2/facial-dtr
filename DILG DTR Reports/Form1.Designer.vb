@@ -120,11 +120,11 @@ Partial Class Form1
         ' lbl_empInCount
         ' 
         lbl_empInCount.Alignment = ToolStripItemAlignment.Right
-        lbl_empInCount.Font = New Font("Bahnschrift SemiBold", 14.25F, FontStyle.Bold, GraphicsUnit.Point)
+        lbl_empInCount.Font = New Font("Arial", 15.75F, FontStyle.Bold, GraphicsUnit.Point)
         lbl_empInCount.ForeColor = Color.White
         lbl_empInCount.Name = "lbl_empInCount"
-        lbl_empInCount.Padding = New Padding(0, 0, 20, 0)
-        lbl_empInCount.Size = New Size(40, 46)
+        lbl_empInCount.Padding = New Padding(0, 0, 15, 0)
+        lbl_empInCount.Size = New Size(37, 46)
         lbl_empInCount.Text = "0"
         ' 
         ' ToolStripLabel1
@@ -133,8 +133,8 @@ Partial Class Form1
         ToolStripLabel1.Font = New Font("Bahnschrift", 12F, FontStyle.Regular, GraphicsUnit.Point)
         ToolStripLabel1.ForeColor = Color.White
         ToolStripLabel1.Name = "ToolStripLabel1"
-        ToolStripLabel1.Size = New Size(121, 46)
-        ToolStripLabel1.Text = "Total Timed-in: "
+        ToolStripLabel1.Size = New Size(152, 46)
+        ToolStripLabel1.Text = "Total Timed-in as of"
         ' 
         ' StatusStrip1
         ' 
@@ -155,7 +155,7 @@ Partial Class Form1
         ' Timer1
         ' 
         Timer1.Enabled = True
-        Timer1.Interval = 5000
+        Timer1.Interval = 1000
         ' 
         ' Form1
         ' 
@@ -168,6 +168,7 @@ Partial Class Form1
         Controls.Add(ToolStrip1)
         DoubleBuffered = True
         FormBorderStyle = FormBorderStyle.FixedSingle
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
         IsMdiContainer = True
         Name = "Form1"
         Text = "DILG R8 - DTR"
