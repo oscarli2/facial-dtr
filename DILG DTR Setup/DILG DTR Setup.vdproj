@@ -16,19 +16,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_868B2AA834A74BD79723D7060B5BEFDE"
+        "MsmKey" = "8:_0A96E4DF9AF14C90B45EC0945BF731FA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_97665A432973498CA85319E398992392"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A4C1377D675F47F39D0B7F6295CF2058"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -129,27 +123,7 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_868B2AA834A74BD79723D7060B5BEFDE"
-            {
-            "SourcePath" = "8:..\\DILG DTR Reports\\Resources\\pngaaa.com-4194622.png"
-            "TargetName" = "8:pngaaa.com-4194622.png"
-            "Tag" = "8:"
-            "Folder" = "8:_4E8CA572915A4C889F55E26277F9A0F6"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A4C1377D675F47F39D0B7F6295CF2058"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0A96E4DF9AF14C90B45EC0945BF731FA"
             {
             "SourcePath" = "8:..\\DILG DTR Reports\\pngaa.ico"
             "TargetName" = "8:pngaa.ico"
@@ -225,15 +199,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DILG DTR Setup"
-        "ProductCode" = "8:{F9A01050-0C17-433D-BB60-E5256CBA5177}"
-        "PackageCode" = "8:{191CAE41-D8D5-4A4D-A916-A078E9D6265D}"
+        "ProductCode" = "8:{2BB52648-2BA5-4F13-8962-B179BEC33B88}"
+        "PackageCode" = "8:{2CD45522-4246-4989-A36D-6460A068CCC7}"
         "UpgradeCode" = "8:{620312D6-8876-432E-A5EB-4F62982E29F7}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.1.4"
+        "ProductVersion" = "8:1.1.9"
         "Manufacturer" = "8:RICTU 8"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -243,7 +217,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:_A4C1377D675F47F39D0B7F6295CF2058"
+        "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -346,7 +320,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F3A8E35C85B0480FB0A3674E98B1D36E"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_135EE758D237491A8540C0969CDA70AF"
             {
             "Name" = "8:DILG DTR Reports"
             "Arguments" = "8:"
@@ -357,7 +331,7 @@
             "Target" = "8:_97665A432973498CA85319E398992392"
             "Folder" = "8:_C3B68BE01C7144799F93B411562A7B96"
             "WorkingFolder" = "8:_4E8CA572915A4C889F55E26277F9A0F6"
-            "Icon" = "8:_A4C1377D675F47F39D0B7F6295CF2058"
+            "Icon" = "8:_0A96E4DF9AF14C90B45EC0945BF731FA"
             "Feature" = "8:"
             }
         }

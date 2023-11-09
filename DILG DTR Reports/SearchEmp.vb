@@ -54,4 +54,40 @@ Public Class SearchEmp
 
         Me.Close()
     End Sub
+
+    Private Sub lv_employees_KeyDown(sender As Object, e As KeyEventArgs) Handles lv_employees.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            'initialize columns in DTRMain Form
+            DTRMain.ListView1.Columns.Add("Day", CStr(50), HorizontalAlignment.Center)
+            DTRMain.ListView1.Columns.Add("Arrive", CStr(80), HorizontalAlignment.Center)
+            DTRMain.ListView1.Columns.Add("Depart", CStr(80), HorizontalAlignment.Center)
+            DTRMain.ListView1.Columns.Add("Arrive", CStr(80), HorizontalAlignment.Center)
+            DTRMain.ListView1.Columns.Add("Depart", CStr(80), HorizontalAlignment.Center)
+            DTRMain.ListView1.Columns.Add("Hours", CStr(30), HorizontalAlignment.Center)
+            DTRMain.ListView1.Columns.Add("Minutes", CStr(50), HorizontalAlignment.Center)
+
+            With DTRMain
+                .emp_id.Text = lv_employees.SelectedItems(0).Text
+                .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
+                .txtEmpName.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
+
+                Dim BoldFont As Font = New Font(.ListView1.Font.FontFamily, .ListView1.Font.Size, FontStyle.Bold)
+                For i As Integer = 0 To .ListView1.Items.Count - 1
+                    .ListView1.Items(i).UseItemStyleForSubItems = False
+                    .ListView1.Items(i).Font = BoldFont
+                    .ListView1.Items(i).BackColor = Color.LightGray
+                Next
+            End With
+
+            With AllData
+                .emp_id.Text = lv_employees.SelectedItems(0).Text
+                .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
+            End With
+
+            Me.Close()
+        End If
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+    End Sub
 End Class

@@ -52,8 +52,23 @@ Partial Class Database_Updater
         RadioButton1 = New RadioButton()
         RadioButton2 = New RadioButton()
         Button2 = New Button()
+        TabControl1 = New TabControl()
+        TabPage1 = New TabPage()
+        TabPage2 = New TabPage()
+        Label4 = New Label()
+        txtEmployee = New TextBox()
+        DateTimePicker1 = New DateTimePicker()
+        Button3 = New Button()
+        RadioButton3 = New RadioButton()
+        GroupBox3 = New GroupBox()
+        RichTextBox2 = New RichTextBox()
+        RadioButton4 = New RadioButton()
         GroupBox1.SuspendLayout()
         GroupBox2.SuspendLayout()
+        TabControl1.SuspendLayout()
+        TabPage1.SuspendLayout()
+        TabPage2.SuspendLayout()
+        GroupBox3.SuspendLayout()
         SuspendLayout()
         ' 
         ' TextBox1
@@ -160,7 +175,7 @@ Partial Class Database_Updater
         ' 
         Button1.BackColor = Color.YellowGreen
         Button1.Font = New Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
-        Button1.Location = New Point(324, 244)
+        Button1.Location = New Point(313, 238)
         Button1.Name = "Button1"
         Button1.Size = New Size(381, 85)
         Button1.TabIndex = 22
@@ -251,7 +266,7 @@ Partial Class Database_Updater
         ' 
         Label3.AutoSize = True
         Label3.Font = New Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
-        Label3.Location = New Point(321, 18)
+        Label3.Location = New Point(334, 33)
         Label3.Name = "Label3"
         Label3.Size = New Size(0, 17)
         Label3.TabIndex = 34
@@ -260,7 +275,7 @@ Partial Class Database_Updater
         ' 
         GroupBox1.Controls.Add(RichTextBox1)
         GroupBox1.Font = New Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
-        GroupBox1.Location = New Point(321, 12)
+        GroupBox1.Location = New Point(310, 6)
         GroupBox1.Name = "GroupBox1"
         GroupBox1.Size = New Size(384, 174)
         GroupBox1.TabIndex = 35
@@ -303,7 +318,7 @@ Partial Class Database_Updater
         GroupBox2.Controls.Add(Label2)
         GroupBox2.Controls.Add(TextBox11)
         GroupBox2.Font = New Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
-        GroupBox2.Location = New Point(12, 12)
+        GroupBox2.Location = New Point(6, 6)
         GroupBox2.Name = "GroupBox2"
         GroupBox2.Size = New Size(290, 355)
         GroupBox2.TabIndex = 36
@@ -314,7 +329,7 @@ Partial Class Database_Updater
         ' 
         RadioButton1.AutoSize = True
         RadioButton1.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
-        RadioButton1.Location = New Point(384, 219)
+        RadioButton1.Location = New Point(346, 186)
         RadioButton1.Name = "RadioButton1"
         RadioButton1.Size = New Size(124, 20)
         RadioButton1.TabIndex = 37
@@ -326,7 +341,7 @@ Partial Class Database_Updater
         ' 
         RadioButton2.AutoSize = True
         RadioButton2.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
-        RadioButton2.Location = New Point(532, 219)
+        RadioButton2.Location = New Point(494, 186)
         RadioButton2.Name = "RadioButton2"
         RadioButton2.Size = New Size(121, 20)
         RadioButton2.TabIndex = 38
@@ -339,31 +354,161 @@ Partial Class Database_Updater
         Button2.BackColor = Color.Tomato
         Button2.Font = New Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
         Button2.ForeColor = Color.DarkRed
-        Button2.Location = New Point(324, 330)
+        Button2.Location = New Point(313, 324)
         Button2.Name = "Button2"
         Button2.Size = New Size(381, 37)
         Button2.TabIndex = 39
         Button2.Text = "Clear Fields"
         Button2.UseVisualStyleBackColor = False
         ' 
+        ' TabControl1
+        ' 
+        TabControl1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        TabControl1.Controls.Add(TabPage1)
+        TabControl1.Controls.Add(TabPage2)
+        TabControl1.Location = New Point(12, 12)
+        TabControl1.Name = "TabControl1"
+        TabControl1.SelectedIndex = 0
+        TabControl1.Size = New Size(708, 380)
+        TabControl1.TabIndex = 40
+        ' 
+        ' TabPage1
+        ' 
+        TabPage1.Controls.Add(GroupBox2)
+        TabPage1.Controls.Add(Button2)
+        TabPage1.Controls.Add(Button1)
+        TabPage1.Controls.Add(RadioButton2)
+        TabPage1.Controls.Add(GroupBox1)
+        TabPage1.Controls.Add(RadioButton1)
+        TabPage1.Location = New Point(4, 24)
+        TabPage1.Name = "TabPage1"
+        TabPage1.Padding = New Padding(3)
+        TabPage1.Size = New Size(700, 352)
+        TabPage1.TabIndex = 0
+        TabPage1.Text = "TabPage1"
+        TabPage1.UseVisualStyleBackColor = True
+        ' 
+        ' TabPage2
+        ' 
+        TabPage2.Controls.Add(Label4)
+        TabPage2.Controls.Add(txtEmployee)
+        TabPage2.Controls.Add(DateTimePicker1)
+        TabPage2.Controls.Add(Button3)
+        TabPage2.Controls.Add(RadioButton3)
+        TabPage2.Controls.Add(GroupBox3)
+        TabPage2.Controls.Add(RadioButton4)
+        TabPage2.Location = New Point(4, 24)
+        TabPage2.Name = "TabPage2"
+        TabPage2.Padding = New Padding(3)
+        TabPage2.Size = New Size(700, 352)
+        TabPage2.TabIndex = 1
+        TabPage2.Text = "TabPage2"
+        TabPage2.UseVisualStyleBackColor = True
+        ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.Font = New Font("Calibri", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
+        Label4.Location = New Point(22, 138)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(126, 18)
+        Label4.TabIndex = 45
+        Label4.Text = "Name of Employee"
+        ' 
+        ' txtEmployee
+        ' 
+        txtEmployee.BorderStyle = BorderStyle.FixedSingle
+        txtEmployee.Font = New Font("Calibri", 12F, FontStyle.Bold, GraphicsUnit.Point)
+        txtEmployee.Location = New Point(22, 159)
+        txtEmployee.Name = "txtEmployee"
+        txtEmployee.Size = New Size(367, 27)
+        txtEmployee.TabIndex = 44
+        ' 
+        ' DateTimePicker1
+        ' 
+        DateTimePicker1.CalendarFont = New Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point)
+        DateTimePicker1.Location = New Point(22, 200)
+        DateTimePicker1.Name = "DateTimePicker1"
+        DateTimePicker1.Size = New Size(200, 23)
+        DateTimePicker1.TabIndex = 43
+        ' 
+        ' Button3
+        ' 
+        Button3.BackColor = Color.YellowGreen
+        Button3.Font = New Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
+        Button3.Location = New Point(413, 138)
+        Button3.Name = "Button3"
+        Button3.Size = New Size(267, 86)
+        Button3.TabIndex = 39
+        Button3.Text = "Run"
+        Button3.UseVisualStyleBackColor = False
+        ' 
+        ' RadioButton3
+        ' 
+        RadioButton3.AutoSize = True
+        RadioButton3.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
+        RadioButton3.Location = New Point(311, 203)
+        RadioButton3.Name = "RadioButton3"
+        RadioButton3.Size = New Size(78, 20)
+        RadioButton3.TabIndex = 42
+        RadioButton3.TabStop = True
+        RadioButton3.Text = "Time Out"
+        RadioButton3.UseVisualStyleBackColor = True
+        ' 
+        ' GroupBox3
+        ' 
+        GroupBox3.Controls.Add(RichTextBox2)
+        GroupBox3.Font = New Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
+        GroupBox3.Location = New Point(6, 6)
+        GroupBox3.Name = "GroupBox3"
+        GroupBox3.Size = New Size(688, 116)
+        GroupBox3.TabIndex = 40
+        GroupBox3.TabStop = False
+        GroupBox3.Text = "SQL QUERY"
+        ' 
+        ' RichTextBox2
+        ' 
+        RichTextBox2.Dock = DockStyle.Fill
+        RichTextBox2.Font = New Font("Arial", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
+        RichTextBox2.Location = New Point(3, 21)
+        RichTextBox2.Name = "RichTextBox2"
+        RichTextBox2.ReadOnly = True
+        RichTextBox2.Size = New Size(682, 92)
+        RichTextBox2.TabIndex = 33
+        RichTextBox2.Text = ""
+        ' 
+        ' RadioButton4
+        ' 
+        RadioButton4.AutoSize = True
+        RadioButton4.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
+        RadioButton4.Location = New Point(238, 203)
+        RadioButton4.Name = "RadioButton4"
+        RadioButton4.Size = New Size(67, 20)
+        RadioButton4.TabIndex = 41
+        RadioButton4.TabStop = True
+        RadioButton4.Text = "Time In"
+        RadioButton4.UseVisualStyleBackColor = True
+        ' 
         ' Database_Updater
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(721, 384)
-        Controls.Add(Button2)
-        Controls.Add(RadioButton2)
-        Controls.Add(RadioButton1)
-        Controls.Add(GroupBox2)
-        Controls.Add(GroupBox1)
+        AutoScroll = True
+        ClientSize = New Size(732, 404)
+        Controls.Add(TabControl1)
         Controls.Add(Label3)
-        Controls.Add(Button1)
         Name = "Database_Updater"
         SizeGripStyle = SizeGripStyle.Hide
         Text = "Database_Updater"
         GroupBox1.ResumeLayout(False)
         GroupBox2.ResumeLayout(False)
         GroupBox2.PerformLayout()
+        TabControl1.ResumeLayout(False)
+        TabPage1.ResumeLayout(False)
+        TabPage1.PerformLayout()
+        TabPage2.ResumeLayout(False)
+        TabPage2.PerformLayout()
+        GroupBox3.ResumeLayout(False)
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -398,4 +543,15 @@ Partial Class Database_Updater
     Friend WithEvents RadioButton1 As RadioButton
     Friend WithEvents RadioButton2 As RadioButton
     Friend WithEvents Button2 As Button
+    Friend WithEvents TabControl1 As TabControl
+    Friend WithEvents TabPage1 As TabPage
+    Friend WithEvents TabPage2 As TabPage
+    Friend WithEvents Button3 As Button
+    Friend WithEvents RadioButton3 As RadioButton
+    Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents RichTextBox2 As RichTextBox
+    Friend WithEvents RadioButton4 As RadioButton
+    Friend WithEvents DateTimePicker1 As DateTimePicker
+    Friend WithEvents Label4 As Label
+    Friend WithEvents txtEmployee As TextBox
 End Class

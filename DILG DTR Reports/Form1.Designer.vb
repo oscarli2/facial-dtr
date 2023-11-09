@@ -35,6 +35,7 @@ Partial Class Form1
         StatusStrip1 = New StatusStrip()
         ToolStripStatusLabel1 = New ToolStripStatusLabel()
         Timer1 = New Timer(components)
+        Timer2 = New Timer(components)
         ToolStrip1.SuspendLayout()
         StatusStrip1.SuspendLayout()
         SuspendLayout()
@@ -130,10 +131,10 @@ Partial Class Form1
         ' ToolStripLabel1
         ' 
         ToolStripLabel1.Alignment = ToolStripItemAlignment.Right
-        ToolStripLabel1.Font = New Font("Bahnschrift", 12F, FontStyle.Regular, GraphicsUnit.Point)
+        ToolStripLabel1.Font = New Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold, GraphicsUnit.Point)
         ToolStripLabel1.ForeColor = Color.White
         ToolStripLabel1.Name = "ToolStripLabel1"
-        ToolStripLabel1.Size = New Size(152, 46)
+        ToolStripLabel1.Size = New Size(135, 46)
         ToolStripLabel1.Text = "Total Timed-in as of"
         ' 
         ' StatusStrip1
@@ -156,6 +157,11 @@ Partial Class Form1
         ' 
         Timer1.Enabled = True
         Timer1.Interval = 1000
+        ' 
+        ' Timer2
+        ' 
+        Timer2.Enabled = True
+        Timer2.Interval = 1000
         ' 
         ' Form1
         ' 
@@ -191,4 +197,5 @@ Partial Class Form1
     Friend WithEvents lbl_empInCount As ToolStripLabel
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents Timer2 As Timer
 End Class
