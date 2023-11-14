@@ -55,14 +55,16 @@ Partial Class Database_Updater
         TabControl1 = New TabControl()
         TabPage1 = New TabPage()
         TabPage2 = New TabPage()
+        txt_punch = New TextBox()
+        Button4 = New Button()
+        emp_id = New Label()
         Label4 = New Label()
         txtEmployee = New TextBox()
-        DateTimePicker1 = New DateTimePicker()
         Button3 = New Button()
-        RadioButton3 = New RadioButton()
+        rb_timeout = New RadioButton()
         GroupBox3 = New GroupBox()
         RichTextBox2 = New RichTextBox()
-        RadioButton4 = New RadioButton()
+        rb_timein = New RadioButton()
         GroupBox1.SuspendLayout()
         GroupBox2.SuspendLayout()
         TabControl1.SuspendLayout()
@@ -390,13 +392,15 @@ Partial Class Database_Updater
         ' 
         ' TabPage2
         ' 
+        TabPage2.Controls.Add(txt_punch)
+        TabPage2.Controls.Add(Button4)
+        TabPage2.Controls.Add(emp_id)
         TabPage2.Controls.Add(Label4)
         TabPage2.Controls.Add(txtEmployee)
-        TabPage2.Controls.Add(DateTimePicker1)
         TabPage2.Controls.Add(Button3)
-        TabPage2.Controls.Add(RadioButton3)
+        TabPage2.Controls.Add(rb_timeout)
         TabPage2.Controls.Add(GroupBox3)
-        TabPage2.Controls.Add(RadioButton4)
+        TabPage2.Controls.Add(rb_timein)
         TabPage2.Location = New Point(4, 24)
         TabPage2.Name = "TabPage2"
         TabPage2.Padding = New Padding(3)
@@ -405,11 +409,43 @@ Partial Class Database_Updater
         TabPage2.Text = "TabPage2"
         TabPage2.UseVisualStyleBackColor = True
         ' 
+        ' txt_punch
+        ' 
+        txt_punch.BorderStyle = BorderStyle.FixedSingle
+        txt_punch.Location = New Point(22, 216)
+        txt_punch.Name = "txt_punch"
+        txt_punch.Size = New Size(219, 23)
+        txt_punch.TabIndex = 48
+        txt_punch.Text = "yyyy-mm-dd hh:mm:ss"
+        txt_punch.TextAlign = HorizontalAlignment.Center
+        ' 
+        ' Button4
+        ' 
+        Button4.BackColor = Color.Red
+        Button4.Font = New Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
+        Button4.Location = New Point(569, 162)
+        Button4.Name = "Button4"
+        Button4.Size = New Size(110, 86)
+        Button4.TabIndex = 47
+        Button4.Text = "Undo"
+        Button4.UseVisualStyleBackColor = False
+        ' 
+        ' emp_id
+        ' 
+        emp_id.Font = New Font("Calibri", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
+        emp_id.ForeColor = Color.Red
+        emp_id.Location = New Point(263, 157)
+        emp_id.Name = "emp_id"
+        emp_id.Size = New Size(126, 18)
+        emp_id.TabIndex = 46
+        emp_id.Text = "Name of Employee"
+        emp_id.TextAlign = ContentAlignment.MiddleRight
+        ' 
         ' Label4
         ' 
         Label4.AutoSize = True
         Label4.Font = New Font("Calibri", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
-        Label4.Location = New Point(22, 138)
+        Label4.Location = New Point(22, 157)
         Label4.Name = "Label4"
         Label4.Size = New Size(126, 18)
         Label4.TabIndex = 45
@@ -418,42 +454,35 @@ Partial Class Database_Updater
         ' txtEmployee
         ' 
         txtEmployee.BorderStyle = BorderStyle.FixedSingle
+        txtEmployee.Cursor = Cursors.Hand
         txtEmployee.Font = New Font("Calibri", 12F, FontStyle.Bold, GraphicsUnit.Point)
-        txtEmployee.Location = New Point(22, 159)
+        txtEmployee.Location = New Point(22, 183)
         txtEmployee.Name = "txtEmployee"
         txtEmployee.Size = New Size(367, 27)
         txtEmployee.TabIndex = 44
-        ' 
-        ' DateTimePicker1
-        ' 
-        DateTimePicker1.CalendarFont = New Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point)
-        DateTimePicker1.Location = New Point(22, 200)
-        DateTimePicker1.Name = "DateTimePicker1"
-        DateTimePicker1.Size = New Size(200, 23)
-        DateTimePicker1.TabIndex = 43
         ' 
         ' Button3
         ' 
         Button3.BackColor = Color.YellowGreen
         Button3.Font = New Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
-        Button3.Location = New Point(413, 138)
+        Button3.Location = New Point(413, 162)
         Button3.Name = "Button3"
-        Button3.Size = New Size(267, 86)
+        Button3.Size = New Size(150, 86)
         Button3.TabIndex = 39
         Button3.Text = "Run"
         Button3.UseVisualStyleBackColor = False
         ' 
-        ' RadioButton3
+        ' rb_timeout
         ' 
-        RadioButton3.AutoSize = True
-        RadioButton3.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
-        RadioButton3.Location = New Point(311, 203)
-        RadioButton3.Name = "RadioButton3"
-        RadioButton3.Size = New Size(78, 20)
-        RadioButton3.TabIndex = 42
-        RadioButton3.TabStop = True
-        RadioButton3.Text = "Time Out"
-        RadioButton3.UseVisualStyleBackColor = True
+        rb_timeout.AutoSize = True
+        rb_timeout.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
+        rb_timeout.Location = New Point(318, 219)
+        rb_timeout.Name = "rb_timeout"
+        rb_timeout.Size = New Size(78, 20)
+        rb_timeout.TabIndex = 42
+        rb_timeout.TabStop = True
+        rb_timeout.Text = "Time Out"
+        rb_timeout.UseVisualStyleBackColor = True
         ' 
         ' GroupBox3
         ' 
@@ -477,17 +506,17 @@ Partial Class Database_Updater
         RichTextBox2.TabIndex = 33
         RichTextBox2.Text = ""
         ' 
-        ' RadioButton4
+        ' rb_timein
         ' 
-        RadioButton4.AutoSize = True
-        RadioButton4.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
-        RadioButton4.Location = New Point(238, 203)
-        RadioButton4.Name = "RadioButton4"
-        RadioButton4.Size = New Size(67, 20)
-        RadioButton4.TabIndex = 41
-        RadioButton4.TabStop = True
-        RadioButton4.Text = "Time In"
-        RadioButton4.UseVisualStyleBackColor = True
+        rb_timein.AutoSize = True
+        rb_timein.Font = New Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
+        rb_timein.Location = New Point(247, 219)
+        rb_timein.Name = "rb_timein"
+        rb_timein.Size = New Size(67, 20)
+        rb_timein.TabIndex = 41
+        rb_timein.TabStop = True
+        rb_timein.Text = "Time In"
+        rb_timein.UseVisualStyleBackColor = True
         ' 
         ' Database_Updater
         ' 
@@ -547,11 +576,13 @@ Partial Class Database_Updater
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents Button3 As Button
-    Friend WithEvents RadioButton3 As RadioButton
+    Friend WithEvents rb_timeout As RadioButton
     Friend WithEvents GroupBox3 As GroupBox
     Friend WithEvents RichTextBox2 As RichTextBox
-    Friend WithEvents RadioButton4 As RadioButton
-    Friend WithEvents DateTimePicker1 As DateTimePicker
+    Friend WithEvents rb_timein As RadioButton
     Friend WithEvents Label4 As Label
     Friend WithEvents txtEmployee As TextBox
+    Friend WithEvents emp_id As Label
+    Friend WithEvents Button4 As Button
+    Friend WithEvents txt_punch As TextBox
 End Class

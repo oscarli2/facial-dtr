@@ -18,6 +18,7 @@ Public Class LoginForm1
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Me.Hide()
+        Form1.ToolStripStatusLabel1.Text = "Welcome Guest!"
         Form1.Show()
     End Sub
 

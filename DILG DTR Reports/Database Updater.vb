@@ -1,4 +1,6 @@
-﻿Imports System.Security.Cryptography
+﻿Imports System.Reflection
+Imports System.Security.Cryptography
+Imports System.Threading
 
 Public Class Database_Updater
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -46,10 +48,18 @@ Public Class Database_Updater
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-
+        If rb_timein.Checked = True Then
+            DBInsert(emp_id.Text, txt_punch.Text, 0, False)
+        ElseIf rb_timeout.Checked = True Then
+            DBInsert(emp_id.Text, txt_punch.Text, 1, False)
+        End If
     End Sub
 
     Private Sub txtEmployee_Click(sender As Object, e As EventArgs) Handles txtEmployee.Click
+        SearchEmp.Show()
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
 
     End Sub
 End Class

@@ -156,7 +156,7 @@ Partial Class Form1
         ' Timer1
         ' 
         Timer1.Enabled = True
-        Timer1.Interval = 1000
+        Timer1.Interval = 10000
         ' 
         ' Timer2
         ' 

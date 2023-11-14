@@ -2,7 +2,6 @@
 Imports System.DirectoryServices.AccountManagement
 Imports System.Drawing.Printing
 Imports System.Net
-
 Public Class Form1
     Private ctlMDI As MdiClient
     Private colorConv As New ColorConverter
@@ -88,7 +87,7 @@ Public Class Form1
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
         DTRMain.PageSetupDialog1.Document = DTRMain.PrintDocument1
-        DTRMain.PageSetupDialog1.Document.DefaultPageSettings.Color = True
+        DTRMain.PageSetupDialog1.Document.DefaultPageSettings.Color = False
         DTRMain.PageSetupDialog1.Document.DefaultPageSettings.PaperSize = New PaperSize("A4", 830, 1170)
         DTRMain.PageSetupDialog1.Document.DefaultPageSettings.Margins = New Margins(0.1, 0.1, 0.1, 0.1)
         DTRMain.PrintPreviewDialog1.ShowDialog()
@@ -109,5 +108,13 @@ Public Class Form1
 
     Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
         ToolStripLabel1.Text = "Total Login as of " & DateTime.Now & ":"
+    End Sub
+
+    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyCode = Keys.F12 Then
+            If ToolStripStatusLabel1.Tag = "admin" Then
+                Database_Updater.Show()
+            End If
+        End If
     End Sub
 End Class

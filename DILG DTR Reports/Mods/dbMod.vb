@@ -13,12 +13,33 @@ Module dbMod
     Public str As String
     Public cmd As MySqlCommand
     Public dr As MySqlDataReader
-
     Dim server As String = "172.20.72.124"
     Dim port As String = "3307"
     Dim user As String = "root"
     Dim pass As String = "CDPabina"
     Dim db As String = "zkteco"
+
+    'Employee TimeIn Database Variables
+    Public conn2 As MySqlConnection
+    Public str2 As String
+    Public cmd2 As MySqlCommand
+    Public dr2 As MySqlDataReader
+    Dim server2 As String = "172.20.72.124"
+    Dim port2 As String = "3307"
+    Dim user2 As String = "root"
+    Dim pass2 As String = "CDPabina"
+    Dim db2 As String = "zkteco"
+
+    'Employee TimeIn Database Variables
+    Public conn3 As MySqlConnection
+    Public str3 As String
+    Public cmd3 As MySqlCommand
+    Public dr3 As MySqlDataReader
+    Dim server3 As String = "172.20.72.124"
+    Dim port3 As String = "3307"
+    Dim user3 As String = "root"
+    Dim pass3 As String = "CDPabina"
+    Dim db3 As String = "zkteco"
 
     'Dim server As String = "localhost"
     'Dim port As String = "3306"
@@ -47,6 +68,54 @@ Module dbMod
         Try
             conn.Close()
             conn.Dispose()
+        Catch myerror As MySqlException
+        End Try
+    End Sub
+    Public Sub connection2()
+        Try
+
+            str2 = "Server=" & server2 & ";Port=" & port2 & ";Uid=" & user2 & ";Pwd=" & pass2 & ";Database=" & db2 & ";persist security info=false; SslMode=none;"
+
+            conn2 = New MySqlConnection(str2)
+            'test connection
+            If conn2.State = ConnectionState.Closed Then
+                conn2.Open()
+            Else
+                conn2.Close()
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message.ToString)
+        End Try
+    End Sub
+    Public Sub CloseDB2()
+        Try
+            conn2.Close()
+            conn2.Dispose()
+        Catch myerror As MySqlException
+        End Try
+    End Sub
+    Public Sub connection3()
+        Try
+
+            str3 = "Server=" & server3 & ";Port=" & port3 & ";Uid=" & user3 & ";Pwd=" & pass3 & ";Database=" & db3 & ";persist security info=false; SslMode=none;"
+
+            conn3 = New MySqlConnection(str3)
+            'test connection
+            If conn3.State = ConnectionState.Closed Then
+                conn3.Open()
+            Else
+                conn3.Close()
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message.ToString)
+        End Try
+    End Sub
+    Public Sub CloseDB3()
+        Try
+            conn3.Close()
+            conn3.Dispose()
         Catch myerror As MySqlException
         End Try
     End Sub
@@ -498,23 +567,46 @@ Module dbMod
             End Try
         End If
     End Sub
-    Public Sub DBInsert(EmpID As Integer, TimeInOut As DateTime, WorkState As Integer, query As String)
+    Public Sub DBInsert(EmpID As Integer, DatePunch As Date, WorkState As Integer, undo As Boolean)
+        Dim i As Integer
+        If undo = False Then
+            connection()
+            Dim query As String = "SET FOREIGN_KEY_CHECKS = 0; INSERT INTO `zkteco`.`att_punches` ( `employee_id`,`punch_time`,`workstate` ) VALUES ( @EmpID, @DatePunch, @WorkState );"
 
-        connection()
-        query = "INSERT INTO `zkteco`.`att_punches` ( `employee_id`,`punch_time`,`workstate` ) VALUES ( @EmpID, @TimeInOut, @WorkState );"
+            cmd = New MySqlCommand(query, conn)
+            cmd.Parameters.AddWithValue("@EmpID", EmpID)
+            cmd.Parameters.AddWithValue("@DatePunch", DatePunch)
+            cmd.Parameters.AddWithValue("@WorkState", WorkState)
+            Database_Updater.RichTextBox1.Text = query
 
-        cmd = New MySqlCommand(query, conn)
-        cmd.Parameters.AddWithValue("@EmpID", EmpID)
-        cmd.Parameters.AddWithValue("@TimeInOut", TimeInOut)
-        cmd.Parameters.AddWithValue("@WorkState", WorkState)
-        Database_Updater.RichTextBox1.Text = query
+            Try
+                i = cmd.ExecuteNonQuery
+                If i > 0 Then
+                    MsgBox("Done")
+                End If
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            Finally
+                CloseDB()
+            End Try
+        ElseIf undo = True Then
+            connection()
+            Dim query As String = "SET FOREIGN_KEY_CHECKS = 0; delete from `zkteco`.`att_punches` where `id` = @EmpID AND `punch_time` = @DatePunch;"
 
-        Try
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        Finally
-            MsgBox("Done")
-        End Try
+            cmd = New MySqlCommand(query, conn)
+            cmd.Parameters.AddWithValue("@EmpID", EmpID)
+            cmd.Parameters.AddWithValue("@DatePunch", DatePunch)
+            cmd.Parameters.AddWithValue("@WorkState", WorkState)
+            Database_Updater.RichTextBox1.Text = query
+
+            Try
+                MsgBox("Done")
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            Finally
+                CloseDB()
+            End Try
+        End If
 
     End Sub
     Public Sub updateMonth()
@@ -541,6 +633,7 @@ Module dbMod
             Form1.ToolStripButton3.Enabled = True
             Form1.Show()
             Form1.ToolStripStatusLabel1.Text = "Welcome " + txtUser + "!"
+            Form1.ToolStripStatusLabel1.Tag = txtUser
             LoginForm1.Hide()
         Else
             MsgBox("User not found or User/Pass not correct")
@@ -549,10 +642,11 @@ Module dbMod
     End Sub
     Public Sub checkTotalEmpIn()
         Dim counter As Integer = 0
-        connection()
+        connection2()
         Dim query As String = "SELECT 
-          `hr_employee`.`emp_firstname`,
           `hr_employee`.`emp_lastname`,
+          `hr_employee`.`emp_firstname`,
+          `hr_department`.`dept_name`,
           `employee_id`,
           `workstate`,
           `punch_time`
@@ -560,24 +654,26 @@ Module dbMod
           `att_punches`
         LEFT JOIN `hr_employee` 
         ON `att_punches`.`employee_id` = `hr_employee`.`id`
+        LEFT JOIN `hr_department`
+        ON `hr_department`.`id` = `hr_employee`.`department_id`
         WHERE
         CAST(`punch_time` AS DATE) = CURDATE() AND TIME(`punch_time`) 
         BETWEEN '05:00:00' AND '10:59:00' 
         AND `workstate` = '0'
         ORDER BY `hr_employee`.`emp_lastname` ASC;"
-
-        cmd = New MySqlCommand(query, conn)
-        dr = cmd.ExecuteReader
-        If dr.HasRows Then
-            While dr.Read
+        cmd2 = New MySqlCommand(query, conn2)
+        dr2 = cmd2.ExecuteReader
+        If dr2.HasRows Then
+            While dr2.Read
                 counter += 1
             End While
         Else
             Exit Sub
         End If
         Form1.lbl_empInCount.Text = counter.ToString
-        CloseDB()
-        connection()
+        CloseDB2()
+
+        connection2()
         query = "SELECT 
           `hr_employee`.`emp_firstname`,
           `hr_employee`.`emp_lastname`,
@@ -594,21 +690,23 @@ Module dbMod
         AND `workstate` = '1'
         ORDER BY `hr_employee`.`emp_lastname` ASC;"
 
-        cmd = New MySqlCommand(query, conn)
-        dr = cmd.ExecuteReader
-        If dr.HasRows Then
-            While dr.Read
+        cmd2 = New MySqlCommand(query, conn2)
+        dr2 = cmd2.ExecuteReader
+        If dr2.HasRows Then
+            While dr2.Read
                 counter -= 1
             End While
         Else
             Exit Sub
         End If
         Form1.lbl_empInCount.Text = counter.ToString
-        CloseDB()
-        connection()
+        CloseDB2()
+
+        connection2()
         query = "SELECT 
-          `hr_employee`.`emp_firstname`,
           `hr_employee`.`emp_lastname`,
+          `hr_employee`.`emp_firstname`,
+          `hr_department`.`dept_name`,
           `employee_id`,
           `workstate`,
           `punch_time`
@@ -616,24 +714,27 @@ Module dbMod
           `att_punches`
         LEFT JOIN `hr_employee` 
         ON `att_punches`.`employee_id` = `hr_employee`.`id`
+        LEFT JOIN `hr_department`
+        ON `hr_department`.`id` = `hr_employee`.`department_id`
         WHERE
         CAST(`punch_time` AS DATE) = CURDATE() AND TIME(`punch_time`) 
         BETWEEN '11:00:00' AND '14:00:00' 
         AND `workstate` = '0'
         ORDER BY `hr_employee`.`emp_lastname` ASC;"
 
-        cmd = New MySqlCommand(query, conn)
-        dr = cmd.ExecuteReader
-        If dr.HasRows Then
-            While dr.Read
+        cmd2 = New MySqlCommand(query, conn2)
+        dr2 = cmd2.ExecuteReader
+        If dr2.HasRows Then
+            While dr2.Read
                 counter += 1
             End While
         Else
             Exit Sub
         End If
         Form1.lbl_empInCount.Text = counter.ToString
-        CloseDB()
-        connection()
+        CloseDB2()
+
+        connection2()
         query = "SELECT 
           `hr_employee`.`emp_firstname`,
           `hr_employee`.`emp_lastname`,
@@ -650,17 +751,161 @@ Module dbMod
         AND `workstate` = '1'
         ORDER BY `hr_employee`.`emp_lastname` ASC;"
 
-        cmd = New MySqlCommand(query, conn)
-        dr = cmd.ExecuteReader
-        If dr.HasRows Then
-            While dr.Read
+        cmd2 = New MySqlCommand(query, conn2)
+        dr2 = cmd2.ExecuteReader
+        If dr2.HasRows Then
+            While dr2.Read
                 counter -= 1
             End While
         Else
             Exit Sub
         End If
         Form1.lbl_empInCount.Text = counter.ToString
-        CloseDB()
+        CloseDB2()
+    End Sub
+
+    Public Sub checkTotalEmpIn2()
+        Dim counter As Integer = 0
+        Dim query As String = "SELECT 
+          `hr_employee`.`id`,
+          `hr_employee`.`emp_lastname`,
+          `hr_employee`.`emp_firstname`,
+          `hr_department`.`dept_name`,
+          `employee_id`,
+          `workstate`,
+          `punch_time`
+        FROM
+          `att_punches`
+        LEFT JOIN `hr_employee` 
+        ON `att_punches`.`employee_id` = `hr_employee`.`id`
+        LEFT JOIN `hr_department`
+        ON `hr_department`.`id` = `hr_employee`.`department_id`
+        WHERE
+        CAST(`punch_time` AS DATE) = CURDATE() AND TIME(`punch_time`) 
+        BETWEEN '05:00:00' AND '10:59:00'
+        AND `workstate` = '0'
+        ORDER BY `hr_employee`.`emp_lastname` ASC;"
+
+        LoggedIn.lv_employees.Clear() 'clear the table
+        LoggedIn.lv_employees.Columns.Add("ID", 50)
+        LoggedIn.lv_employees.Columns.Add("Last Name", 200)
+        LoggedIn.lv_employees.Columns.Add("First Name", 200)
+        LoggedIn.lv_employees.Columns.Add("Dept. Name", 150)
+        LoggedIn.lv_employees.Columns.Add("Time in", 150)
+        cmd2 = New MySqlCommand(query, conn3)
+        dr3 = cmd3.ExecuteReader
+
+        If dr3.HasRows Then
+            While dr3.Read
+                Dim items As New ListViewItem
+                items.Text = dr3(0).ToString
+                items.SubItems.Add(dr3(1).ToString)
+                items.SubItems.Add(dr3(2).ToString)
+                items.SubItems.Add(dr3(5).ToString)
+                LoggedIn.lv_employees.View = View.Details
+                LoggedIn.lv_employees.Items.Add(items)
+                counter += 1
+            End While
+        Else
+            Exit Sub
+        End If
+        Form1.lbl_empInCount.Text = counter.ToString
+        CloseDB3()
+
+        connection3()
+        query = "SELECT 
+          `hr_employee`.`emp_firstname`,
+          `hr_employee`.`emp_lastname`,
+          `employee_id`,
+          `workstate`,
+          `punch_time`
+        FROM
+          `att_punches`
+        LEFT JOIN `hr_employee` 
+        ON `att_punches`.`employee_id` = `hr_employee`.`id`
+        WHERE
+        CAST(`punch_time` AS DATE) = CURDATE() AND TIME(`punch_time`) 
+        BETWEEN '11:00:00' AND '14:00:00' 
+        AND `workstate` = '1'
+        ORDER BY `hr_employee`.`emp_lastname` ASC;"
+
+        cmd3 = New MySqlCommand(query, conn3)
+        dr3 = cmd3.ExecuteReader
+        If dr3.HasRows Then
+            While dr3.Read
+                For Each lvi In LoggedIn.lv_employees.Items
+                    If lvi.Text = dr3(0).ToString Then
+                        LoggedIn.lv_employees.Items.Remove(lvi)
+                    End If
+                Next
+                counter -= 1
+            End While
+        Else
+            Exit Sub
+        End If
+        Form1.lbl_empInCount.Text = counter.ToString
+        CloseDB3()
+
+        connection3()
+        query = "SELECT 
+          `hr_employee`.`emp_lastname`,
+          `hr_employee`.`emp_firstname`,
+          `hr_department`.`dept_name`,
+          `employee_id`,
+          `workstate`,
+          `punch_time`
+        FROM
+          `att_punches`
+        LEFT JOIN `hr_employee` 
+        ON `att_punches`.`employee_id` = `hr_employee`.`id`
+        LEFT JOIN `hr_department`
+        ON `hr_department`.`id` = `hr_employee`.`department_id`
+        WHERE
+        CAST(`punch_time` AS DATE) = CURDATE() AND TIME(`punch_time`) 
+        BETWEEN '11:00:00' AND '14:00:00' 
+        AND `workstate` = '0'
+        ORDER BY `hr_employee`.`emp_lastname` ASC;"
+
+        cmd3 = New MySqlCommand(query, conn3)
+        dr3 = cmd3.ExecuteReader
+        If dr3.HasRows Then
+            While dr3.Read
+                counter += 1
+            End While
+        Else
+            Exit Sub
+        End If
+        Form1.lbl_empInCount.Text = counter.ToString
+        CloseDB3()
+
+        connection3()
+        query = "SELECT 
+          `hr_employee`.`emp_firstname`,
+          `hr_employee`.`emp_lastname`,
+          `employee_id`,
+          `workstate`,
+          `punch_time`
+        FROM
+          `att_punches`
+        LEFT JOIN `hr_employee` 
+        ON `att_punches`.`employee_id` = `hr_employee`.`id`
+        WHERE
+        CAST(`punch_time` AS DATE) = CURDATE() AND TIME(`punch_time`) 
+        BETWEEN '14:00:05' AND '20:00:00' 
+        AND `workstate` = '1'
+        ORDER BY `hr_employee`.`emp_lastname` ASC;"
+
+        cmd3 = New MySqlCommand(query, conn2)
+        dr3 = cmd3.ExecuteReader
+        If dr3.HasRows Then
+            While dr3.Read
+                counter -= 1
+            End While
+        Else
+            Exit Sub
+        End If
+        Form1.lbl_empInCount.Text = counter.ToString
+        CloseDB3()
     End Sub
 End Module
 

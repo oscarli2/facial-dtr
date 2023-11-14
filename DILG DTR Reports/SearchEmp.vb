@@ -52,6 +52,10 @@ Public Class SearchEmp
             .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
         End With
 
+        With Database_Updater
+            .emp_id.Text = lv_employees.SelectedItems(0).Text
+            .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
+        End With
         Me.Close()
     End Sub
 
@@ -84,6 +88,10 @@ Public Class SearchEmp
                 .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
             End With
 
+            With Database_Updater
+                .emp_id.Text = lv_employees.SelectedItems(0).Text
+                .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
+            End With
             Me.Close()
         End If
     End Sub

@@ -122,12 +122,6 @@ Public Class DTRMain
         SearchEmp.ShowDialog()
     End Sub
 
-    Private Sub DTRMain_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-        If e.KeyCode = Keys.F12 Then
-            Database_Updater.Show()
-        End If
-    End Sub
-
     Private Sub dtp_from_ValueChanged(sender As Object, e As EventArgs) Handles dtp_from.ValueChanged
         ifDTPChanged = True
         updateMonth()
