@@ -24,5 +24,6 @@ Public Class LoginForm1
 
     Private Sub LoginForm1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Form1.ToolStripButton3.Enabled = False
+        Form1.ToolStripButton2.Enabled = False
     End Sub
 End Class

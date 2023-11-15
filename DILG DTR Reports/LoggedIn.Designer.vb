@@ -36,9 +36,10 @@ Partial Class LoggedIn
         ' 
         ' lv_employees
         ' 
-        lv_employees.Location = New Point(12, 41)
+        lv_employees.FullRowSelect = True
+        lv_employees.Location = New Point(12, 320)
         lv_employees.Name = "lv_employees"
-        lv_employees.Size = New Size(750, 394)
+        lv_employees.Size = New Size(750, 231)
         lv_employees.TabIndex = 1
         lv_employees.UseCompatibleStateImageBehavior = False
         ' 
@@ -46,7 +47,7 @@ Partial Class LoggedIn
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(777, 454)
+        ClientSize = New Size(777, 563)
         Controls.Add(lv_employees)
         Controls.Add(ComboBox1)
         Name = "LoggedIn"

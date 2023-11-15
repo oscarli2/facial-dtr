@@ -107,6 +107,7 @@ Partial Class Form1
         ' 
         ToolStripButton2.AutoSize = False
         ToolStripButton2.BackColor = Color.Firebrick
+        ToolStripButton2.Enabled = False
         ToolStripButton2.Font = New Font("Bahnschrift", 9F, FontStyle.Regular, GraphicsUnit.Point)
         ToolStripButton2.ForeColor = Color.White
         ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), Image)

@@ -631,6 +631,7 @@ Module dbMod
 
         If dr.HasRows Then
             Form1.ToolStripButton3.Enabled = True
+            Form1.ToolStripButton2.Enabled = True
             Form1.Show()
             Form1.ToolStripStatusLabel1.Text = "Welcome " + txtUser + "!"
             Form1.ToolStripStatusLabel1.Tag = txtUser
@@ -765,6 +766,7 @@ Module dbMod
     End Sub
 
     Public Sub checkTotalEmpIn2()
+        connection3()
         Dim counter As Integer = 0
         Dim query As String = "SELECT 
           `hr_employee`.`id`,
@@ -784,7 +786,7 @@ Module dbMod
         CAST(`punch_time` AS DATE) = CURDATE() AND TIME(`punch_time`) 
         BETWEEN '05:00:00' AND '10:59:00'
         AND `workstate` = '0'
-        ORDER BY `hr_employee`.`emp_lastname` ASC;"
+        ORDER BY `hr_department`.`dept_name` ASC;"
 
         LoggedIn.lv_employees.Clear() 'clear the table
         LoggedIn.lv_employees.Columns.Add("ID", 50)
@@ -792,7 +794,7 @@ Module dbMod
         LoggedIn.lv_employees.Columns.Add("First Name", 200)
         LoggedIn.lv_employees.Columns.Add("Dept. Name", 150)
         LoggedIn.lv_employees.Columns.Add("Time in", 150)
-        cmd2 = New MySqlCommand(query, conn3)
+        cmd3 = New MySqlCommand(query, conn3)
         dr3 = cmd3.ExecuteReader
 
         If dr3.HasRows Then
@@ -801,7 +803,7 @@ Module dbMod
                 items.Text = dr3(0).ToString
                 items.SubItems.Add(dr3(1).ToString)
                 items.SubItems.Add(dr3(2).ToString)
-                items.SubItems.Add(dr3(5).ToString)
+                items.SubItems.Add(dr3(3).ToString)
                 LoggedIn.lv_employees.View = View.Details
                 LoggedIn.lv_employees.Items.Add(items)
                 counter += 1
@@ -864,7 +866,7 @@ Module dbMod
         CAST(`punch_time` AS DATE) = CURDATE() AND TIME(`punch_time`) 
         BETWEEN '11:00:00' AND '14:00:00' 
         AND `workstate` = '0'
-        ORDER BY `hr_employee`.`emp_lastname` ASC;"
+        ORDER BY `hr_department`.`dept_name` ASC;"
 
         cmd3 = New MySqlCommand(query, conn3)
         dr3 = cmd3.ExecuteReader
@@ -895,7 +897,7 @@ Module dbMod
         AND `workstate` = '1'
         ORDER BY `hr_employee`.`emp_lastname` ASC;"
 
-        cmd3 = New MySqlCommand(query, conn2)
+        cmd3 = New MySqlCommand(query, conn3)
         dr3 = cmd3.ExecuteReader
         If dr3.HasRows Then
             While dr3.Read
