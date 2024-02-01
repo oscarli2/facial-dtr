@@ -28,6 +28,8 @@ Partial Class DTRMain
         Label3 = New Label()
         Button1 = New Button()
         GroupBox1 = New GroupBox()
+        cbYear = New ComboBox()
+        Label16 = New Label()
         CheckBox1 = New CheckBox()
         ComboBox1 = New ComboBox()
         RadioButton3 = New RadioButton()
@@ -58,6 +60,7 @@ Partial Class DTRMain
         Label12 = New Label()
         Label13 = New Label()
         Panel1 = New Panel()
+        DataGridView1 = New DataGridView()
         TextBox6 = New TextBox()
         PictureBox2 = New PictureBox()
         Label2 = New Label()
@@ -77,6 +80,7 @@ Partial Class DTRMain
         PictureBox1 = New PictureBox()
         GroupBox1.SuspendLayout()
         Panel1.SuspendLayout()
+        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -120,7 +124,7 @@ Partial Class DTRMain
         Button1.FlatStyle = FlatStyle.Flat
         Button1.Font = New Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
         Button1.ForeColor = Color.White
-        Button1.Location = New Point(28, 196)
+        Button1.Location = New Point(28, 235)
         Button1.Name = "Button1"
         Button1.Size = New Size(245, 54)
         Button1.TabIndex = 7
@@ -130,6 +134,8 @@ Partial Class DTRMain
         ' GroupBox1
         ' 
         GroupBox1.BackColor = Color.Khaki
+        GroupBox1.Controls.Add(cbYear)
+        GroupBox1.Controls.Add(Label16)
         GroupBox1.Controls.Add(CheckBox1)
         GroupBox1.Controls.Add(ComboBox1)
         GroupBox1.Controls.Add(RadioButton3)
@@ -144,9 +150,28 @@ Partial Class DTRMain
         GroupBox1.FlatStyle = FlatStyle.Flat
         GroupBox1.Location = New Point(12, 203)
         GroupBox1.Name = "GroupBox1"
-        GroupBox1.Size = New Size(304, 279)
+        GroupBox1.Size = New Size(304, 340)
         GroupBox1.TabIndex = 8
         GroupBox1.TabStop = False
+        ' 
+        ' cbYear
+        ' 
+        cbYear.FormattingEnabled = True
+        cbYear.Items.AddRange(New Object() {"2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"})
+        cbYear.Location = New Point(90, 132)
+        cbYear.Name = "cbYear"
+        cbYear.Size = New Size(103, 22)
+        cbYear.TabIndex = 22
+        ' 
+        ' Label16
+        ' 
+        Label16.AutoSize = True
+        Label16.Font = New Font("Calibri", 12F, FontStyle.Bold, GraphicsUnit.Point)
+        Label16.Location = New Point(28, 135)
+        Label16.Name = "Label16"
+        Label16.Size = New Size(38, 19)
+        Label16.TabIndex = 21
+        Label16.Text = "Year"
         ' 
         ' CheckBox1
         ' 
@@ -171,7 +196,7 @@ Partial Class DTRMain
         ' 
         RadioButton3.AutoSize = True
         RadioButton3.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        RadioButton3.Location = New Point(98, 162)
+        RadioButton3.Location = New Point(98, 201)
         RadioButton3.Name = "RadioButton3"
         RadioButton3.Size = New Size(109, 20)
         RadioButton3.TabIndex = 18
@@ -183,7 +208,7 @@ Partial Class DTRMain
         ' 
         RadioButton2.AutoSize = True
         RadioButton2.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        RadioButton2.Location = New Point(158, 136)
+        RadioButton2.Location = New Point(158, 175)
         RadioButton2.Name = "RadioButton2"
         RadioButton2.Size = New Size(99, 20)
         RadioButton2.TabIndex = 17
@@ -195,7 +220,7 @@ Partial Class DTRMain
         ' 
         RadioButton1.AutoSize = True
         RadioButton1.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        RadioButton1.Location = New Point(41, 136)
+        RadioButton1.Location = New Point(41, 175)
         RadioButton1.Name = "RadioButton1"
         RadioButton1.Size = New Size(92, 20)
         RadioButton1.TabIndex = 16
@@ -480,6 +505,7 @@ Partial Class DTRMain
         ' Panel1
         ' 
         Panel1.BackColor = Color.White
+        Panel1.Controls.Add(DataGridView1)
         Panel1.Controls.Add(TextBox6)
         Panel1.Controls.Add(PictureBox2)
         Panel1.Controls.Add(Label2)
@@ -515,6 +541,20 @@ Partial Class DTRMain
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(508, 1184)
         Panel1.TabIndex = 46
+        ' 
+        ' DataGridView1
+        ' 
+        DataGridView1.AllowUserToAddRows = False
+        DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        DataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders
+        DataGridView1.BackgroundColor = SystemColors.Control
+        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridView1.ColumnHeadersVisible = False
+        DataGridView1.Location = New Point(16, 211)
+        DataGridView1.Name = "DataGridView1"
+        DataGridView1.RowHeadersVisible = False
+        DataGridView1.Size = New Size(477, 656)
+        DataGridView1.TabIndex = 48
         ' 
         ' TextBox6
         ' 
@@ -738,6 +778,7 @@ Partial Class DTRMain
         GroupBox1.PerformLayout()
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
+        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
@@ -796,4 +837,7 @@ Partial Class DTRMain
     Friend WithEvents TextBox6 As TextBox
     Friend WithEvents ComboBox1 As ComboBox
     Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents cbYear As ComboBox
+    Friend WithEvents Label16 As Label
+    Friend WithEvents DataGridView1 As DataGridView
 End Class

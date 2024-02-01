@@ -53,11 +53,14 @@ Public Class DTRMain
                 isSecurity = False
             End If
             If RadioButton1.Checked = True And RadioButton2.Checked = False And RadioButton3.Checked = False Then
-                searchDTR(Convert.ToInt32(emp_id.Text), True, False, False, month, isSecurity)
+                DG_Search(Convert.ToInt32(emp_id.Text), True, False, False, month, cbYear.Text, isSecurity)
+                'searchDTR(Convert.ToInt32(emp_id.Text), True, False, False, month, cbYear.Text, isSecurity)
             ElseIf RadioButton2.Checked = True And RadioButton1.Checked = False And RadioButton3.Checked = False Then
-                searchDTR(Convert.ToInt32(emp_id.Text), False, True, False, month, isSecurity)
+                DG_Search(Convert.ToInt32(emp_id.Text), False, True, False, month, cbYear.Text, isSecurity)
+                'searchDTR(Convert.ToInt32(emp_id.Text), False, True, False, month, cbYear.Text, isSecurity)
             ElseIf RadioButton3.Checked = True And RadioButton2.Checked = False And RadioButton1.Checked = False Then
-                searchDTR(Convert.ToInt32(emp_id.Text), False, False, True, month, isSecurity)
+                DG_Search(Convert.ToInt32(emp_id.Text), False, False, True, month, cbYear.Text, isSecurity)
+                'searchDTR(Convert.ToInt32(emp_id.Text), False, False, True, month, cbYear.Text, isSecurity)
             End If
         End If
     End Sub
@@ -104,7 +107,7 @@ Public Class DTRMain
     Private Sub PrintDocument1_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
         Dim h As Integer = 0
         Dim bm As New Bitmap(Me.Panel1.Width + 2, Me.Panel1.Height + 10)
-        Panel1.DrawToBitmap(bm, New Rectangle(15, 15, Me.Panel1.Width + 2, Me.Panel1.Height))
+        Panel1.DrawToBitmap(bm, New Rectangle(15, 15, Me.Panel1.Width, Me.Panel1.Height))
         e.Graphics.DrawImage(bm, 0, 0, Panel1.Width - 125, Me.Panel1.Height - 205)
         e.Graphics.DrawImage(bm, 400, 0, Panel1.Width - 125, Me.Panel1.Height - 205)
         h += 200
@@ -151,4 +154,16 @@ Public Class DTRMain
         RadioButton3.Enabled = True
     End Sub
 
+    Private Sub DTRMain_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyCode = Keys.F12 Then
+            If Form1.ToolStripStatusLabel1.Tag = "admin" Then
+                Database_Updater.MdiParent = Form1
+                Database_Updater.Show()
+            End If
+        End If
+    End Sub
+
+    Private Sub cbYear_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbYear.SelectedIndexChanged
+        updateMonth()
+    End Sub
 End Class

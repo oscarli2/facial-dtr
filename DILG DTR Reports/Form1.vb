@@ -103,22 +103,24 @@ Public Class Form1
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        checkTotalEmpIn()
+        'checkTotalEmpIn()
     End Sub
 
     Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
         ToolStripLabel1.Text = "Total Login as of " & DateTime.Now & ":"
     End Sub
 
+    Private Sub lbl_empInCount_Click(sender As Object, e As EventArgs) Handles lbl_empInCount.Click
+        'LoggedIn.MdiParent = Me
+        'LoggedIn.Show()
+    End Sub
+
     Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyCode = Keys.F12 Then
             If ToolStripStatusLabel1.Tag = "admin" Then
+                Database_Updater.MdiParent = Me
                 Database_Updater.Show()
             End If
         End If
-    End Sub
-
-    Private Sub lbl_empInCount_Click(sender As Object, e As EventArgs) Handles lbl_empInCount.Click
-        LoggedIn.Show()
     End Sub
 End Class

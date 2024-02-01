@@ -21,8 +21,7 @@ Public Class SearchEmp
         'initialize columns
         lv_employees.Columns.Add("ID", 100)
         lv_employees.Columns.Add("Emp_ID", 100)
-        lv_employees.Columns.Add("First Name", 250)
-        lv_employees.Columns.Add("Last Name", 250)
+        lv_employees.Columns.Add("Full Name", 250)
     End Sub
     Private Sub lv_employees_DoubleClick(sender As Object, e As EventArgs) Handles lv_employees.DoubleClick
         'initialize columns in DTRMain Form
@@ -36,8 +35,8 @@ Public Class SearchEmp
 
         With DTRMain
             .emp_id.Text = lv_employees.SelectedItems(0).Text
-            .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
-            .txtEmpName.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
+            .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text
+            .txtEmpName.Text = lv_employees.SelectedItems(0).SubItems(2).Text
 
             Dim BoldFont As Font = New Font(.ListView1.Font.FontFamily, .ListView1.Font.Size, FontStyle.Bold)
             For i As Integer = 0 To .ListView1.Items.Count - 1
@@ -49,12 +48,12 @@ Public Class SearchEmp
 
         With AllData
             .emp_id.Text = lv_employees.SelectedItems(0).Text
-            .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
+            .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text
         End With
 
         With Database_Updater
             .emp_id.Text = lv_employees.SelectedItems(0).Text
-            .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
+            .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text
         End With
         Me.Close()
     End Sub
@@ -72,8 +71,8 @@ Public Class SearchEmp
 
             With DTRMain
                 .emp_id.Text = lv_employees.SelectedItems(0).Text
-                .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
-                .txtEmpName.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
+                .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text
+                .txtEmpName.Text = lv_employees.SelectedItems(0).SubItems(2).Text
 
                 Dim BoldFont As Font = New Font(.ListView1.Font.FontFamily, .ListView1.Font.Size, FontStyle.Bold)
                 For i As Integer = 0 To .ListView1.Items.Count - 1
@@ -85,12 +84,12 @@ Public Class SearchEmp
 
             With AllData
                 .emp_id.Text = lv_employees.SelectedItems(0).Text
-                .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
+                .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text
             End With
 
             With Database_Updater
                 .emp_id.Text = lv_employees.SelectedItems(0).Text
-                .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text & " " & lv_employees.SelectedItems(0).SubItems(3).Text
+                .txtEmployee.Text = lv_employees.SelectedItems(0).SubItems(2).Text
             End With
             Me.Close()
         End If

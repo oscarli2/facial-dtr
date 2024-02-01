@@ -1,23 +1,30 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports System.Data.SqlClient
 Imports Mysqlx
 Imports System.IO
 Imports System.Net
 Imports System.Security.Cryptography
 Imports System.Windows
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+Imports System.Diagnostics.Eventing
 
 Module dbMod
 
     'Database Variables
-    Public conn As MySqlConnection
+    ' Public conn As MySqlConnection
+    Public conn As New SqlConnection
     Public str As String
-    Public cmd As MySqlCommand
-    Public dr As MySqlDataReader
-    Dim server As String = "172.20.72.124"
+    'Public cmd As MySqlCommand
+    Public cmd As SqlCommand
+    'Public dr As MySqlDataReader
+    Public dr As SqlDataReader
+    Dim server As String = "172.20.72.124" '"localhost" 
     Dim port As String = "3307"
-    Dim user As String = "root"
+    'Dim user As String = "root"
+    Dim user As String = "sa"
     Dim pass As String = "CDPabina"
     Dim db As String = "zkteco"
+    Dim dbSQLServer As String = "anviz"
 
     'Employee TimeIn Database Variables
     Public conn2 As MySqlConnection
@@ -51,7 +58,8 @@ Module dbMod
 
             str = "Server=" & server & ";Port=" & port & ";Uid=" & user & ";Pwd=" & pass & ";Database=" & db & ";persist security info=false; SslMode=none;"
 
-            conn = New MySqlConnection(str)
+            'conn = New MySqlConnection(str)
+            conn = New SqlConnection(str)
             'test connection
             If conn.State = ConnectionState.Closed Then
                 conn.Open()
@@ -62,6 +70,24 @@ Module dbMod
         Catch ex As Exception
             MessageBox.Show(ex.Message.ToString)
         End Try
+    End Sub
+
+    Public Sub ConnDB()
+
+        conn.Close()
+
+        Try
+            conn.ConnectionString = "Server = '" & server & "';  " _
+                                         & "Database = '" & dbSQLServer & "'; " _
+                                         & "user id = '" & user & "'; " _
+                                         & "password = '" & pass & "'"
+
+            conn.Open()
+
+        Catch ex As Exception
+            MsgBox("The system failed to establish a connection", MsgBoxStyle.Information, "Database Settings")
+        End Try
+
     End Sub
 
     Public Sub CloseDB()
@@ -120,24 +146,23 @@ Module dbMod
         End Try
     End Sub
     Public Sub searchEmployee(ByVal txtEmployee As String)
-        connection()
-        Dim query As String = "SELECT id, emp_pin, emp_firstname, emp_lastname FROM hr_employee WHERE emp_firstname LIKE '%" & txtEmployee & "%' or emp_lastname LIKE '%" & txtEmployee & "%'"
-        cmd = New MySqlCommand(query, conn)
+        ConnDB()
+        Dim query As String = "SELECT Userid, UserCode, Name FROM Userinfo WHERE Name LIKE '%" & txtEmployee & "%'"
+        'cmd = New MySqlCommand(query, conn)
+        cmd = New SqlCommand(query, conn)
         dr = cmd.ExecuteReader
 
         SearchEmp.lv_employees.Clear() 'clear the table
         SearchEmp.lv_employees.Columns.Add("ID", 80)
-        SearchEmp.lv_employees.Columns.Add("Emp_ID", 100)
-        SearchEmp.lv_employees.Columns.Add("First Name", 250)
-        SearchEmp.lv_employees.Columns.Add("Last Name", 250)
+        SearchEmp.lv_employees.Columns.Add("UserCode", 100)
+        SearchEmp.lv_employees.Columns.Add("Name", 500)
 
         If dr.HasRows Then
             While dr.Read
                 Dim items As New ListViewItem
-                items.Text = dr("id").ToString
-                items.SubItems.Add(dr("emp_pin").ToString)
-                items.SubItems.Add(dr("emp_firstname").ToString)
-                items.SubItems.Add(dr("emp_lastname").ToString)
+                items.Text = dr("Userid").ToString
+                items.SubItems.Add(dr("UserCode").ToString)
+                items.SubItems.Add(dr("Name").ToString)
                 SearchEmp.lv_employees.View = View.Details
                 SearchEmp.lv_employees.Items.Add(items)
                 SearchEmp.recordCount.Text = SearchEmp.lv_employees.Items.Count
@@ -153,8 +178,116 @@ Module dbMod
         End If
         CloseDB()
     End Sub
+    Public Sub DG_Search(emp_id As Integer, a As Boolean, b As Boolean, c As Boolean, month As String, year As String, ifSG As Boolean)
+        ConnDB()
 
-    Public Sub searchDTR(emp_id As Integer, a As Boolean, b As Boolean, c As Boolean, month As String, ifSG As Boolean)
+        cmd.CommandType = CommandType.StoredProcedure
+        Dim query As String
+        Dim dateMonth As String = year & "-" & month
+        Dim dateFrom, dateToo As Date
+        Dim countah As Integer = 0
+        If a = True And b = False And c = False Then
+            dateFrom = dateMonth & "-01"
+            dateToo = dateMonth & "-15"
+            countah = 15
+            While (countah >= 31)
+                countah += 1
+                DTRMain.DataGridView1.Rows.Add(countah)
+            End While
+        ElseIf b = True And a = False And c = False Then
+            dateFrom = dateMonth & "-16"
+            dateToo = dateMonth & "-31"
+            countah = 0
+            While (countah >= 15)
+                countah += 1
+                DTRMain.DataGridView1.Rows.Add(countah)
+            End While
+        ElseIf b = False And a = False And c = True Then
+            dateFrom = dateMonth & "-01"
+            dateToo = dateMonth & "-31"
+        End If
+        If ifSG = False Then
+            query = "
+            SET NOCOUNT ON;
+
+            -- Disable foreign key checks
+            EXEC sp_msforeachtable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL';
+
+            -- Your original CTE and main query
+            WITH date_ranges AS (
+                SELECT CAST('" & dateFrom & "' AS DATE) AS dt
+                UNION ALL
+                SELECT DATEADD(DAY, 1, dt) 
+                FROM date_ranges 
+                WHERE DATEADD(DAY, 1, dt) <= '" & dateToo & "'
+            )
+            SELECT 
+                date_ranges.dt,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalAM,
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
+                DATEPART(WEEKDAY, date_ranges.dt) AS Weekend
+            FROM 
+                date_ranges
+            LEFT JOIN 
+                Checkinout T ON date_ranges.dt = CAST(T.Checktime AS DATE)
+            GROUP BY 
+                date_ranges.dt;
+
+            -- Enable foreign key checks
+            EXEC sp_msforeachtable 'ALTER TABLE ? CHECK CONSTRAINT ALL';
+            "
+        Else
+            query = "
+            SET NOCOUNT ON;
+
+            -- Disable foreign key checks
+            EXEC sp_msforeachtable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL';
+
+            -- Your original CTE and main query
+            WITH date_ranges AS (
+                SELECT CAST(" & dateFrom & " AS DATE) AS dt
+                UNION ALL
+                SELECT DATEADD(DAY, 1, dt) 
+                FROM date_ranges 
+                WHERE DATEADD(DAY, 1, dt) <= " & dateToo & "
+            )
+            )
+            SELECT 
+                date_ranges.dt,
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = @Userid AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') or T.Checktype IS NULL END) AS ArrivalAM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = @Userid AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = @Userid AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = @Userid AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
+                DATEPART(WEEKDAY, date_ranges.dt) AS Weekend
+            FROM 
+                date_ranges
+            LEFT JOIN 
+                Checkinout T ON date_ranges.dt = CAST(T.Checktime AS DATE)
+            GROUP BY 
+                date_ranges.dt;
+
+            -- Enable foreign key checks
+            EXEC sp_msforeachtable 'ALTER TABLE ? CHECK CONSTRAINT ALL';
+            "
+        End If
+
+        cmd = New SqlCommand(query, conn)
+        dr = cmd.ExecuteReader
+
+        Dim table As New DataTable
+        table.Load(dr)
+        DTRMain.DataGridView1.DataSource = table
+        DTRMain.DataGridView1.Columns(0).Width = 50
+        DTRMain.DataGridView1.Columns(1).Width = 79
+        DTRMain.DataGridView1.Columns(2).Width = 79
+        DTRMain.DataGridView1.Columns(3).Width = 80
+        DTRMain.DataGridView1.Columns(4).Width = 80
+
+    End Sub
+
+    Public Sub searchDTR(emp_id As Integer, a As Boolean, b As Boolean, c As Boolean, month As String, year As Integer, ifSG As Boolean)
 
         Dim query As String
         If ifSG = False Then
@@ -194,24 +327,24 @@ Module dbMod
         End If
 
         str = "Server=" & server & ";Port=" & port & ";Uid=" & user & ";Pwd=" & pass & ";Database=" & db & ";persist security info=false; SslMode=none;"
-        conn = New MySqlConnection(str)
-        cmd = New MySqlCommand(query, conn)
+        'conn = New MySqlConnection(str)
+        'cmd = New MySqlCommand(query, conn)
 
         Dim dayFrom As Integer = Convert.ToInt32(DTRMain.dtp_from.Value.ToString("dd"))
         Dim days As Integer = 0
 
         If a = True And b = False And c = False Then
-            Dim dateMonth As String = "2023-" & month
+            Dim dateMonth As String = year & "-" & month
             cmd.Parameters.AddWithValue("@dateFrm", dateMonth & "-01")
             cmd.Parameters.AddWithValue("@dateTo", dateMonth & "-15")
             days = 1
         ElseIf b = True And a = False And c = False Then
-            Dim dateMonth As String = "2023-" & month
+            Dim dateMonth As String = year & "-" & month
             cmd.Parameters.AddWithValue("@dateFrm", dateMonth & "-16")
             cmd.Parameters.AddWithValue("@dateTo", dateMonth & "-31")
             days = 16
         ElseIf b = False And a = False And c = True Then
-            Dim dateMonth As String = "2023-" & month
+            Dim dateMonth As String = year & "-" & month
             cmd.Parameters.AddWithValue("@dateFrm", dateMonth & "-01")
             cmd.Parameters.AddWithValue("@dateTo", dateMonth & "-31")
             days = 1
@@ -469,8 +602,8 @@ Module dbMod
                 "
 
         str = "Server=" & server & ";Port=" & port & ";Uid=" & user & ";Pwd=" & pass & ";Database=" & db & ";persist security info=false; SslMode=none;"
-        conn = New MySqlConnection(str)
-        cmd = New MySqlCommand(query, conn)
+        'conn = New MySqlConnection(str)
+        'cmd = New MySqlCommand(query, conn)
 
         cmd.Parameters.AddWithValue("@emp_id", emp_id)
         cmd.Parameters.AddWithValue("@dtpFrom", dtpFrom)
@@ -530,7 +663,7 @@ Module dbMod
         connection()
         If hr_employee = True Then
             query = "SET FOREIGN_KEY_CHECKS = 0; UPDATE hr_employee SET id=@OldID WHERE id=@NewID"
-            cmd = New MySqlCommand(query, conn)
+            'cmd = New MySqlCommand(query, conn)
 
             cmd.Parameters.AddWithValue("@OldID", OldID)
             cmd.Parameters.AddWithValue("@NewID", NewID)
@@ -551,7 +684,7 @@ Module dbMod
             connection()
             query = "SET FOREIGN_KEY_CHECKS = 0; INSERT hr_biotemplate SET employee_id='" & OldID & "' WHERE employee_id='" & NewID & "'"
 
-            cmd = New MySqlCommand(query, conn)
+            'cmd = New MySqlCommand(query, conn)
             cmd.Parameters.AddWithValue("@OldID", OldID)
             cmd.Parameters.AddWithValue("@NewID", NewID)
             Database_Updater.RichTextBox1.Text = query
@@ -573,7 +706,7 @@ Module dbMod
             connection()
             Dim query As String = "SET FOREIGN_KEY_CHECKS = 0; INSERT INTO `zkteco`.`att_punches` ( `employee_id`,`punch_time`,`workstate` ) VALUES ( @EmpID, @DatePunch, @WorkState );"
 
-            cmd = New MySqlCommand(query, conn)
+            'cmd = New MySqlCommand(query, conn)
             cmd.Parameters.AddWithValue("@EmpID", EmpID)
             cmd.Parameters.AddWithValue("@DatePunch", DatePunch)
             cmd.Parameters.AddWithValue("@WorkState", WorkState)
@@ -593,7 +726,7 @@ Module dbMod
             connection()
             Dim query As String = "SET FOREIGN_KEY_CHECKS = 0; delete from `zkteco`.`att_punches` where `id` = @EmpID AND `punch_time` = @DatePunch;"
 
-            cmd = New MySqlCommand(query, conn)
+            'cmd = New MySqlCommand(query, conn)
             cmd.Parameters.AddWithValue("@EmpID", EmpID)
             cmd.Parameters.AddWithValue("@DatePunch", DatePunch)
             cmd.Parameters.AddWithValue("@WorkState", WorkState)
@@ -613,18 +746,20 @@ Module dbMod
         Dim day As Integer = Convert.ToInt32(DTRMain.dtp_from.Value.ToString("dd"))
         Dim dayTo As Integer = Convert.ToInt32(DTRMain.dtp_to.Value.ToString("dd"))
         If DTRMain.RadioButton1.Checked = True Then
-            DTRMain.lblMonth.Text = DTRMain.ComboBox1.Text & " 1 - 15 , " & DTRMain.dtp_from.Value.ToString("yyyy").ToUpper
+            DTRMain.lblMonth.Text = DTRMain.ComboBox1.Text & " 1 - 15 , " & DTRMain.cbYear.Text.ToUpper
         ElseIf DTRMain.RadioButton3.Checked = True Then
-            DTRMain.lblMonth.Text = DTRMain.ComboBox1.Text & " " & DTRMain.dtp_from.Value.ToString("yyyy").ToUpper
+            DTRMain.lblMonth.Text = DTRMain.ComboBox1.Text & " " & DTRMain.cbYear.Text.ToUpper
         ElseIf DTRMain.RadioButton2.Checked = True Then
-            DTRMain.lblMonth.Text = DTRMain.ComboBox1.Text & " 16 - 30 , " & DTRMain.dtp_from.Value.ToString("yyyy").ToUpper
+            DTRMain.lblMonth.Text = DTRMain.ComboBox1.Text & " 16 - 30 , " & DTRMain.cbYear.Text.ToUpper
         End If
     End Sub
 
     Public Sub searchLogin(ByVal txtUser As String, txtPass As String)
-        connection()
-        Dim query As String = "SELECT username, user_pwd FROM sys_user WHERE username = @txtUser and user_pwd = @txtPass"
-        cmd = New MySqlCommand(query, conn)
+        'connection()
+        ConnDB()
+        Dim query As String = "SELECT OPName, OPPwd FROM OPinfo WHERE OPName = @txtUser and OPPwd = @txtPass"
+        'cmd = New MySqlCommand(query, conn)
+        cmd = New SqlCommand(query, conn)
         cmd.Parameters.AddWithValue("@txtUser", txtUser)
         cmd.Parameters.AddWithValue("@txtPass", txtPass)
         dr = cmd.ExecuteReader
@@ -816,8 +951,10 @@ Module dbMod
 
         connection3()
         query = "SELECT 
-          `hr_employee`.`emp_firstname`,
+          `hr_employee`.`id`,
           `hr_employee`.`emp_lastname`,
+          `hr_employee`.`emp_firstname`,
+          `hr_department`.`dept_name`,
           `employee_id`,
           `workstate`,
           `punch_time`
@@ -825,21 +962,18 @@ Module dbMod
           `att_punches`
         LEFT JOIN `hr_employee` 
         ON `att_punches`.`employee_id` = `hr_employee`.`id`
+        LEFT JOIN `hr_department`
+        ON `hr_department`.`id` = `hr_employee`.`department_id`
         WHERE
         CAST(`punch_time` AS DATE) = CURDATE() AND TIME(`punch_time`) 
         BETWEEN '11:00:00' AND '14:00:00' 
         AND `workstate` = '1'
-        ORDER BY `hr_employee`.`emp_lastname` ASC;"
+        ORDER BY `hr_department`.`dept_name` ASC;"
 
         cmd3 = New MySqlCommand(query, conn3)
         dr3 = cmd3.ExecuteReader
         If dr3.HasRows Then
             While dr3.Read
-                For Each lvi In LoggedIn.lv_employees.Items
-                    If lvi.Text = dr3(0).ToString Then
-                        LoggedIn.lv_employees.Items.Remove(lvi)
-                    End If
-                Next
                 counter -= 1
             End While
         Else
@@ -850,6 +984,7 @@ Module dbMod
 
         connection3()
         query = "SELECT 
+          `hr_employee`.`id`,
           `hr_employee`.`emp_lastname`,
           `hr_employee`.`emp_firstname`,
           `hr_department`.`dept_name`,
@@ -868,10 +1003,24 @@ Module dbMod
         AND `workstate` = '0'
         ORDER BY `hr_department`.`dept_name` ASC;"
 
+        LoggedIn.lv_employees.Clear() 'clear the table
+        LoggedIn.lv_employees.Columns.Add("ID", 50)
+        LoggedIn.lv_employees.Columns.Add("Last Name", 200)
+        LoggedIn.lv_employees.Columns.Add("First Name", 200)
+        LoggedIn.lv_employees.Columns.Add("Dept. Name", 150)
+        LoggedIn.lv_employees.Columns.Add("Time in", 150)
         cmd3 = New MySqlCommand(query, conn3)
         dr3 = cmd3.ExecuteReader
+
         If dr3.HasRows Then
             While dr3.Read
+                Dim items As New ListViewItem
+                items.Text = dr3(0).ToString
+                items.SubItems.Add(dr3(1).ToString)
+                items.SubItems.Add(dr3(2).ToString)
+                items.SubItems.Add(dr3(3).ToString)
+                LoggedIn.lv_employees.View = View.Details
+                LoggedIn.lv_employees.Items.Add(items)
                 counter += 1
             End While
         Else
@@ -882,8 +1031,10 @@ Module dbMod
 
         connection3()
         query = "SELECT 
-          `hr_employee`.`emp_firstname`,
+          `hr_employee`.`id`,
           `hr_employee`.`emp_lastname`,
+          `hr_employee`.`emp_firstname`,
+          `hr_department`.`dept_name`,
           `employee_id`,
           `workstate`,
           `punch_time`
@@ -891,22 +1042,39 @@ Module dbMod
           `att_punches`
         LEFT JOIN `hr_employee` 
         ON `att_punches`.`employee_id` = `hr_employee`.`id`
+        LEFT JOIN `hr_department`
+        ON `hr_department`.`id` = `hr_employee`.`department_id`
         WHERE
         CAST(`punch_time` AS DATE) = CURDATE() AND TIME(`punch_time`) 
         BETWEEN '14:00:05' AND '20:00:00' 
         AND `workstate` = '1'
-        ORDER BY `hr_employee`.`emp_lastname` ASC;"
+        ORDER BY `hr_department`.`dept_name` ASC;"
 
+        LoggedIn.lv_employees.Clear() 'clear the table
+        LoggedIn.lv_employees.Columns.Add("ID", 50)
+        LoggedIn.lv_employees.Columns.Add("Last Name", 200)
+        LoggedIn.lv_employees.Columns.Add("First Name", 200)
+        LoggedIn.lv_employees.Columns.Add("Dept. Name", 150)
+        LoggedIn.lv_employees.Columns.Add("Time in", 150)
         cmd3 = New MySqlCommand(query, conn3)
         dr3 = cmd3.ExecuteReader
+
         If dr3.HasRows Then
             While dr3.Read
+                Dim items As New ListViewItem
+                items.Text = dr3(0).ToString
+                items.SubItems.Add(dr3(1).ToString)
+                items.SubItems.Add(dr3(2).ToString)
+                items.SubItems.Add(dr3(3).ToString)
+                LoggedIn.lv_employees.View = View.Details
+                LoggedIn.lv_employees.Items.Add(items)
                 counter -= 1
             End While
         Else
             Exit Sub
         End If
         Form1.lbl_empInCount.Text = counter.ToString
+        LoggedIn.ToolStripStatusLabel1.Text = LoggedIn.lv_employees.Items.Count.ToString
         CloseDB3()
     End Sub
 End Module
