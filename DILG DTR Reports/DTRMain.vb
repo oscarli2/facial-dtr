@@ -69,8 +69,6 @@ Public Class DTRMain
         RadioButton1.Enabled = False
         RadioButton2.Enabled = False
         RadioButton3.Enabled = False
-        dtp_from.Value = Date.Now
-        dtp_to.Value = Date.Now
 
         ListView1.Columns.Add("Day", CStr(50), HorizontalAlignment.Center)
         ListView1.Columns.Add("Arrive", CStr(80), HorizontalAlignment.Center)
@@ -125,14 +123,6 @@ Public Class DTRMain
         SearchEmp.ShowDialog()
     End Sub
 
-    Private Sub dtp_from_ValueChanged(sender As Object, e As EventArgs) Handles dtp_from.ValueChanged
-        ifDTPChanged = True
-        updateMonth()
-    End Sub
-
-    Private Sub dtp_to_ValueChanged(sender As Object, e As EventArgs) Handles dtp_to.ValueChanged
-        updateMonth()
-    End Sub
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
         ifDTPChanged = True
@@ -166,4 +156,5 @@ Public Class DTRMain
     Private Sub cbYear_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbYear.SelectedIndexChanged
         updateMonth()
     End Sub
+
 End Class

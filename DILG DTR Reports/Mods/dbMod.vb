@@ -7,6 +7,7 @@ Imports System.Security.Cryptography
 Imports System.Windows
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports System.Diagnostics.Eventing
+Imports MySql.Data.Types
 
 Module dbMod
 
@@ -185,26 +186,20 @@ Module dbMod
         Dim query As String
         Dim dateMonth As String = year & "-" & month
         Dim dateFrom, dateToo As Date
-        Dim countah As Integer = 0
+        Dim days As Integer = 0
+
         If a = True And b = False And c = False Then
             dateFrom = dateMonth & "-01"
             dateToo = dateMonth & "-15"
-            countah = 15
-            While (countah >= 31)
-                countah += 1
-                DTRMain.DataGridView1.Rows.Add(countah)
-            End While
+            days = 1
         ElseIf b = True And a = False And c = False Then
             dateFrom = dateMonth & "-16"
             dateToo = dateMonth & "-31"
-            countah = 0
-            While (countah >= 15)
-                countah += 1
-                DTRMain.DataGridView1.Rows.Add(countah)
-            End While
+            days = 16
         ElseIf b = False And a = False And c = True Then
             dateFrom = dateMonth & "-01"
             dateToo = dateMonth & "-31"
+            days = 1
         End If
         If ifSG = False Then
             query = "
@@ -222,11 +217,11 @@ Module dbMod
                 WHERE DATEADD(DAY, 1, dt) <= '" & dateToo & "'
             )
             SELECT 
-                date_ranges.dt,
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalAM,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
+                DAY(date_ranges.dt),
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalAM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
                 DATEPART(WEEKDAY, date_ranges.dt) AS Weekend
             FROM 
                 date_ranges
@@ -256,10 +251,10 @@ Module dbMod
             )
             SELECT 
                 date_ranges.dt,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = @Userid AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') or T.Checktype IS NULL END) AS ArrivalAM,
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = @Userid AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = @Userid AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = @Userid AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') or T.Checktype IS NULL END) AS ArrivalAM,
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
                 DATEPART(WEEKDAY, date_ranges.dt) AS Weekend
             FROM 
                 date_ranges
@@ -272,19 +267,204 @@ Module dbMod
             EXEC sp_msforeachtable 'ALTER TABLE ? CHECK CONSTRAINT ALL';
             "
         End If
-
         cmd = New SqlCommand(query, conn)
         dr = cmd.ExecuteReader
 
-        Dim table As New DataTable
-        table.Load(dr)
-        DTRMain.DataGridView1.DataSource = table
-        DTRMain.DataGridView1.Columns(0).Width = 50
-        DTRMain.DataGridView1.Columns(1).Width = 79
-        DTRMain.DataGridView1.Columns(2).Width = 79
-        DTRMain.DataGridView1.Columns(3).Width = 80
-        DTRMain.DataGridView1.Columns(4).Width = 80
+        DTRMain.ListView1.Clear()
+        DTRMain.ListView1.Columns.Add("Day", 50, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        DTRMain.ListView1.Columns.Add("Arrive", 80, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        DTRMain.ListView1.Columns.Add("Depart", 80, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        DTRMain.ListView1.Columns.Add("Arrive", 80, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        DTRMain.ListView1.Columns.Add("Depart", 80, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        DTRMain.ListView1.Columns.Add("Hours", 40, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        DTRMain.ListView1.Columns.Add("Minutes", 40, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
 
+        Try
+            If days = 1 And c = False Then
+                While days <= 31
+                    If days = 1 Then
+                        If dr.HasRows Then
+                            While dr.Read()
+                                Dim weekEnd As String = dr(5).ToString
+                                Dim items As New ListViewItem
+                                If weekEnd = "7" Or weekEnd = "" Then
+                                    items.Text = days.ToString
+                                    items.SubItems.Add("")
+                                    items.SubItems.Add("Saturday").ForeColor = Color.Red
+                                    items.SubItems.Add("")
+                                    items.SubItems.Add("")
+                                    items.SubItems.Add("")
+                                ElseIf weekEnd = "1" Or weekEnd = "" Then
+                                    items.Text = days.ToString
+                                    items.SubItems.Add("")
+                                    items.SubItems.Add("Sunday").ForeColor = Color.Red
+                                    items.SubItems.Add("")
+                                    items.SubItems.Add("")
+                                    items.SubItems.Add("")
+                                Else
+                                    items.Text = days.ToString
+                                    items.SubItems.Add(dr(1).ToString)
+                                    items.SubItems.Add(dr(2).ToString)
+                                    items.SubItems.Add(dr(3).ToString)
+                                    items.SubItems.Add(dr(4).ToString)
+                                    items.SubItems.Add("")
+                                End If
+                                DTRMain.ListView1.View = View.Details
+                                DTRMain.ListView1.Items.Add(items)
+                                days += 1
+                            End While
+                        Else
+                            Exit Sub
+                        End If
+                    Else
+                        Dim items As New ListViewItem
+                        items.Text = days.ToString
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        DTRMain.ListView1.View = View.Details
+                        DTRMain.ListView1.Items.Add(items)
+                        days += 1
+                    End If
+                End While
+            ElseIf days = 16 And c = False Then
+                Dim count As Integer = 1
+                While count <= 15
+                    Dim items As New ListViewItem
+                    items.Text = count.ToString
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                    DTRMain.ListView1.View = View.Details
+                    DTRMain.ListView1.Items.Add(items)
+                    count += 1
+                End While
+                If days = 16 Then
+                    If dr.HasRows Then
+                        While dr.Read()
+                            Dim weekEnd As String = dr(5).ToString
+                            Dim items As New ListViewItem
+                            If weekEnd = "7" Or weekEnd = "" Then
+                                items.Text = days.ToString
+                                items.SubItems.Add("")
+                                items.SubItems.Add("Saturday").ForeColor = Color.Red
+                                items.SubItems.Add("")
+                                items.SubItems.Add("")
+                                items.SubItems.Add("")
+                            ElseIf weekEnd = "1" Or weekEnd = "" Then
+                                items.Text = days.ToString
+                                items.SubItems.Add("")
+                                items.SubItems.Add("Sunday").ForeColor = Color.Red
+                                items.SubItems.Add("")
+                                items.SubItems.Add("")
+                                items.SubItems.Add("")
+                            Else
+                                items.Text = days.ToString
+                                items.SubItems.Add(dr(1).ToString)
+                                items.SubItems.Add(dr(2).ToString)
+                                items.SubItems.Add(dr(3).ToString)
+                                items.SubItems.Add(dr(4).ToString)
+                                items.SubItems.Add("")
+                            End If
+                            DTRMain.ListView1.View = View.Details
+                            DTRMain.ListView1.Items.Add(items)
+                            days += 1
+                        End While
+                    Else
+                        Exit Sub
+                    End If
+                Else
+                    Dim items As New ListViewItem
+                    items.Text = days.ToString
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                    DTRMain.ListView1.View = View.Details
+                    DTRMain.ListView1.Items.Add(items)
+                    days += 1
+                End If
+            ElseIf days = 1 And c = True Then
+                If dr.HasRows Then
+                    While dr.Read()
+                        Dim weekEnd As String = dr(5).ToString
+                        Dim items As New ListViewItem
+                        If weekEnd = "7" Then
+                            items.Text = days.ToString
+                            items.SubItems.Add("")
+                            items.SubItems.Add("Saturday").ForeColor = Color.Red
+                            items.SubItems.Add("")
+                            items.SubItems.Add("")
+                            items.SubItems.Add("")
+                        ElseIf weekEnd = "1" Then
+                            items.Text = days.ToString
+                            items.SubItems.Add("")
+                            items.SubItems.Add("Sunday").ForeColor = Color.Red
+                            items.SubItems.Add("")
+                            items.SubItems.Add("")
+                            items.SubItems.Add("")
+                        Else
+                            items.Text = days.ToString
+                            items.SubItems.Add(dr(1).ToString)
+                            items.SubItems.Add(dr(2).ToString)
+                            items.SubItems.Add(dr(3).ToString)
+                            items.SubItems.Add(dr(4).ToString)
+                            items.SubItems.Add("")
+                        End If
+                        DTRMain.ListView1.View = View.Details
+                        DTRMain.ListView1.Items.Add(items)
+                        days += 1
+                    End While
+                Else
+                    Exit Sub
+                End If
+            Else
+                Dim weekEnd As String = dr(5).ToString
+                Dim items As New ListViewItem
+                If weekEnd = "7" Then
+                    items.Text = days.ToString
+                    items.SubItems.Add("")
+                    items.SubItems.Add("Saturday").ForeColor = Color.Red
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                ElseIf weekEnd = "1" Then
+                    items.Text = days.ToString
+                    items.SubItems.Add("")
+                    items.SubItems.Add("Sunday").ForeColor = Color.Red
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                Else
+                    items.Text = days.ToString
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                    items.SubItems.Add("")
+                End If
+                DTRMain.ListView1.View = View.Details
+                DTRMain.ListView1.Items.Add(items)
+                days += 1
+            End If
+
+            With DTRMain
+                Dim BoldFont As Font = New Font(.ListView1.Font.FontFamily, .ListView1.Font.Size, Drawing.FontStyle.Bold)
+                For i As Integer = 0 To .ListView1.Items.Count - 1
+                    .ListView1.Items(i).UseItemStyleForSubItems = False
+                    .ListView1.Items(i).Font = BoldFont
+                    .ListView1.Items(i).BackColor = Color.LightGray
+                Next
+            End With
+        Catch ex As Exception
+            MessageBox.Show(ex.Message.ToString)
+        End Try
+        CloseDB()
     End Sub
 
     Public Sub searchDTR(emp_id As Integer, a As Boolean, b As Boolean, c As Boolean, month As String, year As Integer, ifSG As Boolean)
@@ -329,8 +509,6 @@ Module dbMod
         str = "Server=" & server & ";Port=" & port & ";Uid=" & user & ";Pwd=" & pass & ";Database=" & db & ";persist security info=false; SslMode=none;"
         'conn = New MySqlConnection(str)
         'cmd = New MySqlCommand(query, conn)
-
-        Dim dayFrom As Integer = Convert.ToInt32(DTRMain.dtp_from.Value.ToString("dd"))
         Dim days As Integer = 0
 
         If a = True And b = False And c = False Then
@@ -584,37 +762,48 @@ Module dbMod
     Public Sub searchDTRAll(emp_id As Integer, dtpFrom As Date, dtpTo As Date)
 
         Dim query As String
+        'query = "
+        '        SELECT 
+        '          `hr_employee`.`emp_pin`,
+        '          `hr_employee`.`emp_firstname`,
+        '          `hr_employee`.`emp_lastname`,
+        '          `employee_id`,
+        '          `workstate`,
+        '          `punch_time`
+        '        FROM
+        '          `att_punches`
+        '        LEFT JOIN `hr_employee` 
+        '        ON `att_punches`.`employee_id` = `hr_employee`.`id`
+        '        WHERE `employee_id` = @emp_id
+        '        AND CAST(`punch_time` AS DATE) BETWEEN @dtpFrom AND @dtpTo
+        '        ORDER BY `punch_time` DESC;
+        '        "
         query = "
                 SELECT 
-                  `hr_employee`.`emp_pin`,
-                  `hr_employee`.`emp_firstname`,
-                  `hr_employee`.`emp_lastname`,
-                  `employee_id`,
-                  `workstate`,
-                  `punch_time`
+                  Checkinout.Userid,
+                  Userinfo.Name,
+                  CheckType,
+                  Checktime
                 FROM
-                  `att_punches`
-                LEFT JOIN `hr_employee` 
-                ON `att_punches`.`employee_id` = `hr_employee`.`id`
-                WHERE `employee_id` = @emp_id
-                AND CAST(`punch_time` AS DATE) BETWEEN @dtpFrom AND @dtpTo
-                ORDER BY `punch_time` DESC;
+                  Checkinout
+                LEFT JOIN Userinfo 
+                ON Checkinout.Userid = Userinfo.Userid
+                WHERE Checkinout.Userid = '" & emp_id & "'
+                AND CAST(Checktime AS DATE) BETWEEN '" & dtpFrom & "' AND '" & dtpTo & "'
+                ORDER BY Checktime DESC;
                 "
 
         str = "Server=" & server & ";Port=" & port & ";Uid=" & user & ";Pwd=" & pass & ";Database=" & db & ";persist security info=false; SslMode=none;"
         'conn = New MySqlConnection(str)
         'cmd = New MySqlCommand(query, conn)
 
-        cmd.Parameters.AddWithValue("@emp_id", emp_id)
-        cmd.Parameters.AddWithValue("@dtpFrom", dtpFrom)
-        cmd.Parameters.AddWithValue("@dtpTo", dtpTo)
-        conn.Open()
+        ConnDB()
+        cmd = New SqlCommand(query, conn)
         dr = cmd.ExecuteReader
 
         AllData.ListView1.Clear()
         AllData.ListView1.Columns.Add("Emp_ID", 70, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
-        AllData.ListView1.Columns.Add("First Name", 150, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
-        AllData.ListView1.Columns.Add("Last Name", 150, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        AllData.ListView1.Columns.Add("Full Name", 300, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
         AllData.ListView1.Columns.Add("Status", 100, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
         AllData.ListView1.Columns.Add("Date/Time", 150, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
 
@@ -623,8 +812,8 @@ Module dbMod
             Dim workstate As String = ""
             If dr.HasRows Then
                 While dr.Read()
-                    workstate = dr(4).ToString
-                    If workstate = 0 Then
+                    workstate = dr(2).ToString
+                    If workstate = 1 Then
                         workstate = "TIME-IN"
                     Else
                         workstate = "TIME-OUT"
@@ -632,9 +821,8 @@ Module dbMod
                     Dim items As New ListViewItem
                     items.Text = dr(0).ToString
                     items.SubItems.Add(dr(1).ToString)
-                    items.SubItems.Add(dr(2).ToString)
                     items.SubItems.Add(workstate)
-                    items.SubItems.Add(dr(5).ToString)
+                    items.SubItems.Add(dr(3).ToString)
                     AllData.ListView1.View = View.Details
                     AllData.ListView1.Items.Add(items)
                     days += 1
@@ -743,8 +931,6 @@ Module dbMod
 
     End Sub
     Public Sub updateMonth()
-        Dim day As Integer = Convert.ToInt32(DTRMain.dtp_from.Value.ToString("dd"))
-        Dim dayTo As Integer = Convert.ToInt32(DTRMain.dtp_to.Value.ToString("dd"))
         If DTRMain.RadioButton1.Checked = True Then
             DTRMain.lblMonth.Text = DTRMain.ComboBox1.Text & " 1 - 15 , " & DTRMain.cbYear.Text.ToUpper
         ElseIf DTRMain.RadioButton3.Checked = True Then

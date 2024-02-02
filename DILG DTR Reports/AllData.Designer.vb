@@ -72,7 +72,7 @@ Partial Class AllData
         dtp_to.Format = DateTimePickerFormat.Custom
         dtp_to.Location = New Point(154, 139)
         dtp_to.Name = "dtp_to"
-        dtp_to.Size = New Size(94, 26)
+        dtp_to.Size = New Size(111, 26)
         dtp_to.TabIndex = 22
         ' 
         ' Label3
@@ -102,7 +102,7 @@ Partial Class AllData
         dtp_from.Format = DateTimePickerFormat.Custom
         dtp_from.Location = New Point(40, 139)
         dtp_from.Name = "dtp_from"
-        dtp_from.Size = New Size(89, 26)
+        dtp_from.Size = New Size(106, 26)
         dtp_from.TabIndex = 21
         ' 
         ' lblName

@@ -25,7 +25,6 @@ Partial Class DTRMain
         Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(DTRMain))
         txtEmployee = New TextBox()
         Label1 = New Label()
-        Label3 = New Label()
         Button1 = New Button()
         GroupBox1 = New GroupBox()
         cbYear = New ComboBox()
@@ -38,9 +37,6 @@ Partial Class DTRMain
         Label5 = New Label()
         lblName = New Label()
         emp_id = New Label()
-        Label4 = New Label()
-        dtp_to = New DateTimePicker()
-        dtp_from = New DateTimePicker()
         PrintDocument1 = New Printing.PrintDocument()
         PrintPreviewDialog1 = New PrintPreviewDialog()
         Label8 = New Label()
@@ -60,7 +56,6 @@ Partial Class DTRMain
         Label12 = New Label()
         Label13 = New Label()
         Panel1 = New Panel()
-        DataGridView1 = New DataGridView()
         TextBox6 = New TextBox()
         PictureBox2 = New PictureBox()
         Label2 = New Label()
@@ -80,7 +75,6 @@ Partial Class DTRMain
         PictureBox1 = New PictureBox()
         GroupBox1.SuspendLayout()
         Panel1.SuspendLayout()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -107,16 +101,6 @@ Partial Class DTRMain
         Label1.Size = New Size(128, 19)
         Label1.TabIndex = 1
         Label1.Text = "EMPLOYEE NAME"
-        ' 
-        ' Label3
-        ' 
-        Label3.AutoSize = True
-        Label3.Location = New Point(38, 588)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(34, 14)
-        Label3.TabIndex = 5
-        Label3.Text = "From"
-        Label3.Visible = False
         ' 
         ' Button1
         ' 
@@ -257,38 +241,6 @@ Partial Class DTRMain
         emp_id.TabIndex = 8
         emp_id.Text = "EMP_ID"
         emp_id.Visible = False
-        ' 
-        ' Label4
-        ' 
-        Label4.AutoSize = True
-        Label4.Location = New Point(170, 588)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(19, 14)
-        Label4.TabIndex = 12
-        Label4.Text = "To"
-        Label4.Visible = False
-        ' 
-        ' dtp_to
-        ' 
-        dtp_to.CustomFormat = "yyyy-MM-dd"
-        dtp_to.Font = New Font("Calibri", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
-        dtp_to.Format = DateTimePickerFormat.Custom
-        dtp_to.Location = New Point(193, 580)
-        dtp_to.Name = "dtp_to"
-        dtp_to.Size = New Size(92, 26)
-        dtp_to.TabIndex = 11
-        dtp_to.Visible = False
-        ' 
-        ' dtp_from
-        ' 
-        dtp_from.CustomFormat = "yyyy-MM-dd"
-        dtp_from.Font = New Font("Calibri", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
-        dtp_from.Format = DateTimePickerFormat.Custom
-        dtp_from.Location = New Point(74, 580)
-        dtp_from.Name = "dtp_from"
-        dtp_from.Size = New Size(92, 26)
-        dtp_from.TabIndex = 10
-        dtp_from.Visible = False
         ' 
         ' PrintDocument1
         ' 
@@ -505,7 +457,6 @@ Partial Class DTRMain
         ' Panel1
         ' 
         Panel1.BackColor = Color.White
-        Panel1.Controls.Add(DataGridView1)
         Panel1.Controls.Add(TextBox6)
         Panel1.Controls.Add(PictureBox2)
         Panel1.Controls.Add(Label2)
@@ -541,20 +492,6 @@ Partial Class DTRMain
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(508, 1184)
         Panel1.TabIndex = 46
-        ' 
-        ' DataGridView1
-        ' 
-        DataGridView1.AllowUserToAddRows = False
-        DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        DataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders
-        DataGridView1.BackgroundColor = SystemColors.Control
-        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.ColumnHeadersVisible = False
-        DataGridView1.Location = New Point(16, 211)
-        DataGridView1.Name = "DataGridView1"
-        DataGridView1.RowHeadersVisible = False
-        DataGridView1.Size = New Size(477, 656)
-        DataGridView1.TabIndex = 48
         ' 
         ' TextBox6
         ' 
@@ -764,10 +701,6 @@ Partial Class DTRMain
         Controls.Add(PictureBox1)
         Controls.Add(Panel1)
         Controls.Add(GroupBox1)
-        Controls.Add(dtp_to)
-        Controls.Add(Label3)
-        Controls.Add(Label4)
-        Controls.Add(dtp_from)
         Font = New Font("Calibri", 9F, FontStyle.Regular, GraphicsUnit.Point)
         FormBorderStyle = FormBorderStyle.FixedSingle
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
@@ -778,23 +711,17 @@ Partial Class DTRMain
         GroupBox1.PerformLayout()
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
-        PerformLayout()
     End Sub
 
     Friend WithEvents txtEmployee As TextBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents Label3 As Label
     Friend WithEvents Button1 As Button
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents lblName As Label
     Friend WithEvents emp_id As Label
-    Friend WithEvents dtp_from As DateTimePicker
-    Friend WithEvents Label4 As Label
-    Friend WithEvents dtp_to As DateTimePicker
     Friend WithEvents Label5 As Label
     Friend WithEvents PrintDocument1 As Printing.PrintDocument
     Friend WithEvents PrintPreviewDialog1 As PrintPreviewDialog
@@ -839,5 +766,4 @@ Partial Class DTRMain
     Friend WithEvents CheckBox1 As CheckBox
     Friend WithEvents cbYear As ComboBox
     Friend WithEvents Label16 As Label
-    Friend WithEvents DataGridView1 As DataGridView
 End Class
