@@ -49,6 +49,9 @@ Module dbMod
     Dim pass3 As String = "CDPabina"
     Dim db3 As String = "zkteco"
 
+    'For printing
+    Public isActive As Boolean
+
     'Dim server As String = "localhost"
     'Dim port As String = "3306"
     'Dim user As String = "root"
@@ -179,6 +182,21 @@ Module dbMod
         End If
         CloseDB()
     End Sub
+    Function IsLeapYear(year As Integer) As Boolean
+        If year Mod 4 = 0 Then
+            If year Mod 100 = 0 Then
+                If year Mod 400 = 0 Then
+                    Return True
+                Else
+                    Return False
+                End If
+            Else
+                Return True
+            End If
+        Else
+            Return False
+        End If
+    End Function
     Public Sub DG_Search(emp_id As Integer, a As Boolean, b As Boolean, c As Boolean, month As String, year As String, ifSG As Boolean)
         ConnDB()
 
@@ -194,11 +212,21 @@ Module dbMod
             days = 1
         ElseIf b = True And a = False And c = False Then
             dateFrom = dateMonth & "-16"
-            dateToo = dateMonth & "-31"
+            dateMonth = dateMonth & "-31"
+            dateToo = DateTime.Parse(dateMonth)
             days = 16
         ElseIf b = False And a = False And c = True Then
             dateFrom = dateMonth & "-01"
-            dateToo = dateMonth & "-31"
+            If month = 2 Then
+                If IsLeapYear(year) Then
+                    dateMonth = dateMonth & "-29"
+                Else
+                    dateMonth = dateMonth & "-28"
+                End If
+            Else
+                dateMonth = dateMonth & "-31"
+            End If
+            dateToo = DateTime.Parse(dateMonth)
             days = 1
         End If
         If ifSG = False Then
@@ -218,10 +246,10 @@ Module dbMod
             )
             SELECT 
                 DAY(date_ranges.dt),
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalAM,
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalAM,
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
                 DATEPART(WEEKDAY, date_ranges.dt) AS Weekend
             FROM 
                 date_ranges
@@ -251,10 +279,10 @@ Module dbMod
             )
             SELECT 
                 date_ranges.dt,
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') or T.Checktype IS NULL END) AS ArrivalAM,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') or T.Checktype IS NULL END) AS ArrivalAM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
                 DATEPART(WEEKDAY, date_ranges.dt) AS Weekend
             FROM 
                 date_ranges

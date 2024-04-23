@@ -10,8 +10,9 @@ Public Class DTRMain
     Dim dateFrmTo As String = ""
     Dim ifDTPChanged As Boolean = False
     Dim directoryPath As String = My.Application.Info.DirectoryPath
-    Dim wClient As New System.Net.WebClient
+    Dim wClient As New WebClient
     Dim tool As String = directoryPath + "\DILG DTR Reports.exe"
+    Dim itemIndex As Integer = 0
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
         If txtEmployee.Text = "CLICK HERE TO SEARCH" Then
@@ -66,6 +67,8 @@ Public Class DTRMain
     End Sub
 
     Private Sub DTRMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        isActive = True
+        Panel2.Visible = False
         RadioButton1.Enabled = False
         RadioButton2.Enabled = False
         RadioButton3.Enabled = False
@@ -100,7 +103,6 @@ Public Class DTRMain
             ListView1.Items(i).BackColor = Color.LightGray
         Next
     End Sub
-
 
     Private Sub PrintDocument1_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
         Dim h As Integer = 0
@@ -157,4 +159,38 @@ Public Class DTRMain
         updateMonth()
     End Sub
 
+    Private Sub DTRMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        Form1.ToolStripButton3.Enabled = False
+    End Sub
+
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Panel2.Visible = False
+        txt_ArivalAM.Text = ""
+        txt_ArrivalPM.Text = ""
+        txt_DepAM.Text = ""
+        txt_DepPM.Text = ""
+    End Sub
+
+    Private Sub ListView1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles ListView1.MouseDoubleClick
+        If ListView1.SelectedItems.Item(0).SubItems(1).Text <> "" Or ListView1.SelectedItems.Item(0).SubItems(2).Text <> "" Or ListView1.SelectedItems.Item(0).SubItems(3).Text <> "" Or ListView1.SelectedItems.Item(0).SubItems(4).Text <> "" Then
+            Panel2.Visible = True
+            txt_ArivalAM.Text = ListView1.FocusedItem.SubItems(1).Text
+            txt_DepAM.Text = ListView1.FocusedItem.SubItems(2).Text
+            txt_ArrivalPM.Text = ListView1.FocusedItem.SubItems(3).Text
+            txt_DepPM.Text = ListView1.FocusedItem.SubItems(4).Text
+            lbl_index.Text = ListView1.FocusedItem.Index
+            itemIndex = ListView1.FocusedItem.Index
+        Else
+            MsgBox("No data in selected date!")
+        End If
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Panel2.Visible = False
+        ListView1.Items(itemIndex).SubItems(1).Text = txt_ArivalAM.Text
+        ListView1.Items(itemIndex).SubItems(2).Text = txt_DepAM.Text
+        ListView1.Items(itemIndex).SubItems(3).Text = txt_ArrivalPM.Text
+        ListView1.Items(itemIndex).SubItems(4).Text = txt_DepPM.Text
+    End Sub
 End Class

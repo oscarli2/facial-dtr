@@ -22,7 +22,7 @@ Partial Class DTRMain
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(DTRMain))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DTRMain))
         txtEmployee = New TextBox()
         Label1 = New Label()
         Button1 = New Button()
@@ -56,6 +56,21 @@ Partial Class DTRMain
         Label12 = New Label()
         Label13 = New Label()
         Panel1 = New Panel()
+        Panel2 = New Panel()
+        lbl_index = New Label()
+        Button3 = New Button()
+        Label3 = New Label()
+        Button2 = New Button()
+        TextBox20 = New TextBox()
+        TextBox21 = New TextBox()
+        TextBox22 = New TextBox()
+        TextBox23 = New TextBox()
+        TextBox24 = New TextBox()
+        TextBox25 = New TextBox()
+        txt_DepPM = New TextBox()
+        txt_ArrivalPM = New TextBox()
+        txt_DepAM = New TextBox()
+        txt_ArivalAM = New TextBox()
         TextBox6 = New TextBox()
         PictureBox2 = New PictureBox()
         Label2 = New Label()
@@ -75,6 +90,7 @@ Partial Class DTRMain
         PictureBox1 = New PictureBox()
         GroupBox1.SuspendLayout()
         Panel1.SuspendLayout()
+        Panel2.SuspendLayout()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -134,7 +150,7 @@ Partial Class DTRMain
         GroupBox1.FlatStyle = FlatStyle.Flat
         GroupBox1.Location = New Point(12, 203)
         GroupBox1.Name = "GroupBox1"
-        GroupBox1.Size = New Size(304, 340)
+        GroupBox1.Size = New Size(304, 326)
         GroupBox1.TabIndex = 8
         GroupBox1.TabStop = False
         ' 
@@ -457,6 +473,7 @@ Partial Class DTRMain
         ' Panel1
         ' 
         Panel1.BackColor = Color.White
+        Panel1.Controls.Add(Panel2)
         Panel1.Controls.Add(TextBox6)
         Panel1.Controls.Add(PictureBox2)
         Panel1.Controls.Add(Label2)
@@ -490,8 +507,180 @@ Partial Class DTRMain
         Panel1.Controls.Add(TextBox7)
         Panel1.Location = New Point(336, 11)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(508, 1184)
+        Panel1.Size = New Size(507, 1184)
         Panel1.TabIndex = 46
+        ' 
+        ' Panel2
+        ' 
+        Panel2.BackColor = Color.Khaki
+        Panel2.BorderStyle = BorderStyle.FixedSingle
+        Panel2.Controls.Add(lbl_index)
+        Panel2.Controls.Add(Button3)
+        Panel2.Controls.Add(Label3)
+        Panel2.Controls.Add(Button2)
+        Panel2.Controls.Add(TextBox20)
+        Panel2.Controls.Add(TextBox21)
+        Panel2.Controls.Add(TextBox22)
+        Panel2.Controls.Add(TextBox23)
+        Panel2.Controls.Add(TextBox24)
+        Panel2.Controls.Add(TextBox25)
+        Panel2.Controls.Add(txt_DepPM)
+        Panel2.Controls.Add(txt_ArrivalPM)
+        Panel2.Controls.Add(txt_DepAM)
+        Panel2.Controls.Add(txt_ArivalAM)
+        Panel2.Location = New Point(66, 285)
+        Panel2.Name = "Panel2"
+        Panel2.Size = New Size(391, 196)
+        Panel2.TabIndex = 48
+        ' 
+        ' lbl_index
+        ' 
+        lbl_index.AutoSize = True
+        lbl_index.Location = New Point(309, 21)
+        lbl_index.Name = "lbl_index"
+        lbl_index.Size = New Size(37, 14)
+        lbl_index.TabIndex = 67
+        lbl_index.Text = "Index"
+        ' 
+        ' Button3
+        ' 
+        Button3.BackColor = Color.White
+        Button3.Location = New Point(358, 5)
+        Button3.Name = "Button3"
+        Button3.Size = New Size(23, 22)
+        Button3.TabIndex = 66
+        Button3.Text = "X"
+        Button3.UseVisualStyleBackColor = False
+        ' 
+        ' Label3
+        ' 
+        Label3.BackColor = Color.Red
+        Label3.Font = New Font("Calibri", 18F, FontStyle.Bold, GraphicsUnit.Point)
+        Label3.Location = New Point(-1, 0)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(391, 46)
+        Label3.TabIndex = 65
+        Label3.Text = "UPDATE/REMARKS"
+        Label3.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' Button2
+        ' 
+        Button2.BackColor = Color.DarkSeaGreen
+        Button2.FlatStyle = FlatStyle.Flat
+        Button2.Font = New Font("Calibri", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
+        Button2.ForeColor = Color.White
+        Button2.Location = New Point(33, 139)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(323, 36)
+        Button2.TabIndex = 64
+        Button2.Text = "Save"
+        Button2.UseVisualStyleBackColor = False
+        ' 
+        ' TextBox20
+        ' 
+        TextBox20.BackColor = Color.LightGray
+        TextBox20.BorderStyle = BorderStyle.FixedSingle
+        TextBox20.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox20.Location = New Point(191, 63)
+        TextBox20.Name = "TextBox20"
+        TextBox20.ReadOnly = True
+        TextBox20.Size = New Size(165, 22)
+        TextBox20.TabIndex = 59
+        TextBox20.Text = "PM"
+        TextBox20.TextAlign = HorizontalAlignment.Center
+        ' 
+        ' TextBox21
+        ' 
+        TextBox21.BackColor = Color.LightGray
+        TextBox21.BorderStyle = BorderStyle.FixedSingle
+        TextBox21.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox21.Location = New Point(33, 63)
+        TextBox21.Name = "TextBox21"
+        TextBox21.ReadOnly = True
+        TextBox21.Size = New Size(161, 22)
+        TextBox21.TabIndex = 58
+        TextBox21.Text = "AM"
+        TextBox21.TextAlign = HorizontalAlignment.Center
+        ' 
+        ' TextBox22
+        ' 
+        TextBox22.BackColor = Color.LightGray
+        TextBox22.BorderStyle = BorderStyle.FixedSingle
+        TextBox22.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox22.Location = New Point(271, 82)
+        TextBox22.Name = "TextBox22"
+        TextBox22.ReadOnly = True
+        TextBox22.Size = New Size(85, 22)
+        TextBox22.TabIndex = 63
+        TextBox22.Text = "Departure"
+        TextBox22.TextAlign = HorizontalAlignment.Center
+        ' 
+        ' TextBox23
+        ' 
+        TextBox23.BackColor = Color.LightGray
+        TextBox23.BorderStyle = BorderStyle.FixedSingle
+        TextBox23.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox23.Location = New Point(191, 82)
+        TextBox23.Name = "TextBox23"
+        TextBox23.ReadOnly = True
+        TextBox23.Size = New Size(84, 22)
+        TextBox23.TabIndex = 62
+        TextBox23.Text = "Arrival"
+        TextBox23.TextAlign = HorizontalAlignment.Center
+        ' 
+        ' TextBox24
+        ' 
+        TextBox24.BackColor = Color.LightGray
+        TextBox24.BorderStyle = BorderStyle.FixedSingle
+        TextBox24.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox24.Location = New Point(111, 82)
+        TextBox24.Name = "TextBox24"
+        TextBox24.ReadOnly = True
+        TextBox24.Size = New Size(82, 22)
+        TextBox24.TabIndex = 61
+        TextBox24.Text = "Departure"
+        TextBox24.TextAlign = HorizontalAlignment.Center
+        ' 
+        ' TextBox25
+        ' 
+        TextBox25.BackColor = Color.LightGray
+        TextBox25.BorderStyle = BorderStyle.FixedSingle
+        TextBox25.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
+        TextBox25.Location = New Point(33, 82)
+        TextBox25.Name = "TextBox25"
+        TextBox25.ReadOnly = True
+        TextBox25.Size = New Size(81, 22)
+        TextBox25.TabIndex = 60
+        TextBox25.Text = "Arrival"
+        TextBox25.TextAlign = HorizontalAlignment.Center
+        ' 
+        ' txt_DepPM
+        ' 
+        txt_DepPM.Location = New Point(271, 105)
+        txt_DepPM.Name = "txt_DepPM"
+        txt_DepPM.Size = New Size(85, 22)
+        txt_DepPM.TabIndex = 3
+        ' 
+        ' txt_ArrivalPM
+        ' 
+        txt_ArrivalPM.Location = New Point(191, 105)
+        txt_ArrivalPM.Name = "txt_ArrivalPM"
+        txt_ArrivalPM.Size = New Size(84, 22)
+        txt_ArrivalPM.TabIndex = 2
+        ' 
+        ' txt_DepAM
+        ' 
+        txt_DepAM.Location = New Point(111, 105)
+        txt_DepAM.Name = "txt_DepAM"
+        txt_DepAM.Size = New Size(82, 22)
+        txt_DepAM.TabIndex = 1
+        ' 
+        ' txt_ArivalAM
+        ' 
+        txt_ArivalAM.Location = New Point(33, 105)
+        txt_ArivalAM.Name = "txt_ArivalAM"
+        txt_ArivalAM.Size = New Size(81, 22)
+        txt_ArivalAM.TabIndex = 0
         ' 
         ' TextBox6
         ' 
@@ -711,6 +900,8 @@ Partial Class DTRMain
         GroupBox1.PerformLayout()
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
+        Panel2.ResumeLayout(False)
+        Panel2.PerformLayout()
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
@@ -766,4 +957,19 @@ Partial Class DTRMain
     Friend WithEvents CheckBox1 As CheckBox
     Friend WithEvents cbYear As ComboBox
     Friend WithEvents Label16 As Label
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents TextBox20 As TextBox
+    Friend WithEvents TextBox21 As TextBox
+    Friend WithEvents TextBox22 As TextBox
+    Friend WithEvents TextBox23 As TextBox
+    Friend WithEvents TextBox24 As TextBox
+    Friend WithEvents TextBox25 As TextBox
+    Friend WithEvents txt_DepPM As TextBox
+    Friend WithEvents txt_ArrivalPM As TextBox
+    Friend WithEvents txt_DepAM As TextBox
+    Friend WithEvents txt_ArivalAM As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button3 As Button
+    Friend WithEvents lbl_index As Label
 End Class

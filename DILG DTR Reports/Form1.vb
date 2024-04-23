@@ -86,11 +86,19 @@ Public Class Form1
     End Sub
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
-        DTRMain.PageSetupDialog1.Document = DTRMain.PrintDocument1
-        DTRMain.PageSetupDialog1.Document.DefaultPageSettings.Color = False
-        DTRMain.PageSetupDialog1.Document.DefaultPageSettings.PaperSize = New PaperSize("A4", 830, 1170)
-        DTRMain.PageSetupDialog1.Document.DefaultPageSettings.Margins = New Margins(0.1, 0.1, 0.1, 0.1)
-        DTRMain.PrintPreviewDialog1.ShowDialog()
+        If isActive = True Then
+            AllData.PageSetupDialog1.Document = AllData.PrintDocument1
+            AllData.PageSetupDialog1.Document.DefaultPageSettings.Color = False
+            AllData.PageSetupDialog1.Document.DefaultPageSettings.PaperSize = New PaperSize("A4", 830, 1170)
+            AllData.PageSetupDialog1.Document.DefaultPageSettings.Margins = New Margins(0.1, 0.1, 0.1, 0.1)
+            AllData.PrintPreviewDialog1.ShowDialog()
+        Else
+            DTRMain.PageSetupDialog1.Document = DTRMain.PrintDocument1
+            DTRMain.PageSetupDialog1.Document.DefaultPageSettings.Color = False
+            DTRMain.PageSetupDialog1.Document.DefaultPageSettings.PaperSize = New PaperSize("A4", 830, 1170)
+            DTRMain.PageSetupDialog1.Document.DefaultPageSettings.Margins = New Margins(0.1, 0.1, 0.1, 0.1)
+            DTRMain.PrintPreviewDialog1.ShowDialog()
+        End If
     End Sub
 
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
@@ -100,6 +108,7 @@ Public Class Form1
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles ToolStripButton5.Click
         AllData.MdiParent = Me
         AllData.Show()
+        ToolStripButton3.Enabled = True
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick

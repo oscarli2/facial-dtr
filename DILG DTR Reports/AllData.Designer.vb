@@ -22,6 +22,8 @@ Partial Class AllData
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AllData))
         ListView1 = New ListView()
         GroupBox1 = New GroupBox()
         dtp_to = New DateTimePicker()
@@ -33,16 +35,23 @@ Partial Class AllData
         Button1 = New Button()
         Label1 = New Label()
         txtEmployee = New TextBox()
+        PrintPreviewDialog1 = New PrintPreviewDialog()
+        PrintDocument1 = New Printing.PrintDocument()
+        PageSetupDialog1 = New PageSetupDialog()
+        Panel1 = New Panel()
+        BindingSource1 = New BindingSource(components)
         GroupBox1.SuspendLayout()
+        Panel1.SuspendLayout()
+        CType(BindingSource1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' ListView1
         ' 
-        ListView1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         ListView1.BorderStyle = BorderStyle.FixedSingle
-        ListView1.Location = New Point(304, 12)
+        ListView1.Dock = DockStyle.Fill
+        ListView1.Location = New Point(0, 0)
         ListView1.Name = "ListView1"
-        ListView1.Size = New Size(670, 414)
+        ListView1.Size = New Size(725, 462)
         ListView1.TabIndex = 0
         ListView1.UseCompatibleStateImageBehavior = False
         ' 
@@ -161,17 +170,49 @@ Partial Class AllData
         txtEmployee.Text = "CLICK HERE TO SEARCH"
         txtEmployee.TextAlign = HorizontalAlignment.Center
         ' 
+        ' PrintPreviewDialog1
+        ' 
+        PrintPreviewDialog1.AutoScrollMargin = New Size(0, 0)
+        PrintPreviewDialog1.AutoScrollMinSize = New Size(0, 0)
+        PrintPreviewDialog1.ClientSize = New Size(400, 300)
+        PrintPreviewDialog1.Document = PrintDocument1
+        PrintPreviewDialog1.Enabled = True
+        PrintPreviewDialog1.Icon = CType(resources.GetObject("PrintPreviewDialog1.Icon"), Icon)
+        PrintPreviewDialog1.Name = "PrintPreviewDialog1"
+        PrintPreviewDialog1.Visible = False
+        ' 
+        ' PrintDocument1
+        ' 
+        ' 
+        ' PageSetupDialog1
+        ' 
+        PageSetupDialog1.Document = PrintDocument1
+        ' 
+        ' Panel1
+        ' 
+        Panel1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        Panel1.Controls.Add(ListView1)
+        Panel1.Location = New Point(304, 12)
+        Panel1.Name = "Panel1"
+        Panel1.Size = New Size(725, 462)
+        Panel1.TabIndex = 10
+        ' 
+        ' BindingSource1
+        ' 
+        ' 
         ' AllData
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(997, 446)
+        ClientSize = New Size(1041, 486)
         Controls.Add(GroupBox1)
-        Controls.Add(ListView1)
+        Controls.Add(Panel1)
         Name = "AllData"
         Text = "Search All Records"
         GroupBox1.ResumeLayout(False)
         GroupBox1.PerformLayout()
+        Panel1.ResumeLayout(False)
+        CType(BindingSource1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
 
@@ -186,4 +227,9 @@ Partial Class AllData
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents dtp_from As DateTimePicker
+    Friend WithEvents PrintPreviewDialog1 As PrintPreviewDialog
+    Friend WithEvents PageSetupDialog1 As PageSetupDialog
+    Friend WithEvents PrintDocument1 As Printing.PrintDocument
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents BindingSource1 As BindingSource
 End Class

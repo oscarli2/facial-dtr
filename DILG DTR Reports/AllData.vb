@@ -24,4 +24,20 @@
     Private Sub txtEmployee_Click(sender As Object, e As EventArgs) Handles txtEmployee.Click
         SearchEmp.ShowDialog()
     End Sub
+
+    Private Sub AllData_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        isActive = False
+        Form1.ToolStripButton3.Enabled = False
+    End Sub
+
+    Private Sub AllData_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        isActive = True
+    End Sub
+
+    Private Sub PrintDocument1_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
+        Dim bm As New Bitmap(Me.Panel1.Width + 2, Me.Panel1.Height + 10)
+        Panel1.DrawToBitmap(bm, New Rectangle(15, 15, Me.Panel1.Width, Me.Panel1.Height))
+        e.Graphics.DrawImage(bm, 20, 20, Panel1.Width - 20, Me.Panel1.Height)
+    End Sub
+
 End Class
