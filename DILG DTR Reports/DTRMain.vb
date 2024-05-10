@@ -23,28 +23,40 @@ Public Class DTRMain
             Dim month As String
             If ComboBox1.Text = "JANUARY" Then
                 month = "01"
+                dayCount = "31"
             ElseIf ComboBox1.Text = "FEBRUARY" Then
                 month = "02"
+                dayCount = "30"
             ElseIf ComboBox1.Text = "MARCH" Then
                 month = "03"
+                dayCount = "31"
             ElseIf ComboBox1.Text = "APRIL" Then
                 month = "04"
+                dayCount = "30"
             ElseIf ComboBox1.Text = "MAY" Then
                 month = "05"
+                dayCount = "31"
             ElseIf ComboBox1.Text = "JUNE" Then
                 month = "06"
+                dayCount = "30"
             ElseIf ComboBox1.Text = "JULY" Then
                 month = "07"
+                dayCount = "31"
             ElseIf ComboBox1.Text = "AUGUST" Then
                 month = "08"
+                dayCount = "31"
             ElseIf ComboBox1.Text = "SEPTEMBER" Then
                 month = "09"
+                dayCount = "30"
             ElseIf ComboBox1.Text = "OCTOBER" Then
                 month = "10"
+                dayCount = "31"
             ElseIf ComboBox1.Text = "NOVEMBER" Then
                 month = "11"
+                dayCount = "30"
             ElseIf ComboBox1.Text = "DECEMBER" Then
                 month = "12"
+                dayCount = "31"
             End If
             Dim isSecurity As Boolean = False
 
@@ -53,7 +65,9 @@ Public Class DTRMain
             Else
                 isSecurity = False
             End If
-            If RadioButton1.Checked = True And RadioButton2.Checked = False And RadioButton3.Checked = False Then
+            If cb_weekends.Checked = True Then
+                DG_SearchWeekends(Convert.ToInt32(emp_id.Text), True, False, False, month, cbYear.Text, isSecurity)
+            ElseIf RadioButton1.Checked = True And RadioButton2.Checked = False And RadioButton3.Checked = False Then
                 DG_Search(Convert.ToInt32(emp_id.Text), True, False, False, month, cbYear.Text, isSecurity)
                 'searchDTR(Convert.ToInt32(emp_id.Text), True, False, False, month, cbYear.Text, isSecurity)
             ElseIf RadioButton2.Checked = True And RadioButton1.Checked = False And RadioButton3.Checked = False Then

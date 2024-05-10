@@ -27,6 +27,7 @@ Partial Class DTRMain
         Label1 = New Label()
         Button1 = New Button()
         GroupBox1 = New GroupBox()
+        cb_weekends = New CheckBox()
         cbYear = New ComboBox()
         Label16 = New Label()
         CheckBox1 = New CheckBox()
@@ -124,7 +125,7 @@ Partial Class DTRMain
         Button1.FlatStyle = FlatStyle.Flat
         Button1.Font = New Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point)
         Button1.ForeColor = Color.White
-        Button1.Location = New Point(28, 235)
+        Button1.Location = New Point(28, 264)
         Button1.Name = "Button1"
         Button1.Size = New Size(245, 54)
         Button1.TabIndex = 7
@@ -134,6 +135,7 @@ Partial Class DTRMain
         ' GroupBox1
         ' 
         GroupBox1.BackColor = Color.Khaki
+        GroupBox1.Controls.Add(cb_weekends)
         GroupBox1.Controls.Add(cbYear)
         GroupBox1.Controls.Add(Label16)
         GroupBox1.Controls.Add(CheckBox1)
@@ -150,9 +152,19 @@ Partial Class DTRMain
         GroupBox1.FlatStyle = FlatStyle.Flat
         GroupBox1.Location = New Point(12, 203)
         GroupBox1.Name = "GroupBox1"
-        GroupBox1.Size = New Size(304, 326)
+        GroupBox1.Size = New Size(304, 338)
         GroupBox1.TabIndex = 8
         GroupBox1.TabStop = False
+        ' 
+        ' cb_weekends
+        ' 
+        cb_weekends.AutoSize = True
+        cb_weekends.Location = New Point(158, 233)
+        cb_weekends.Name = "cb_weekends"
+        cb_weekends.Size = New Size(84, 18)
+        cb_weekends.TabIndex = 23
+        cb_weekends.Text = "Weekends"
+        cb_weekends.UseVisualStyleBackColor = True
         ' 
         ' cbYear
         ' 
@@ -176,7 +188,7 @@ Partial Class DTRMain
         ' CheckBox1
         ' 
         CheckBox1.AutoSize = True
-        CheckBox1.Location = New Point(181, 28)
+        CheckBox1.Location = New Point(58, 233)
         CheckBox1.Name = "CheckBox1"
         CheckBox1.Size = New Size(94, 18)
         CheckBox1.TabIndex = 20
@@ -196,7 +208,7 @@ Partial Class DTRMain
         ' 
         RadioButton3.AutoSize = True
         RadioButton3.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        RadioButton3.Location = New Point(98, 201)
+        RadioButton3.Location = New Point(98, 197)
         RadioButton3.Name = "RadioButton3"
         RadioButton3.Size = New Size(109, 20)
         RadioButton3.TabIndex = 18
@@ -208,7 +220,7 @@ Partial Class DTRMain
         ' 
         RadioButton2.AutoSize = True
         RadioButton2.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        RadioButton2.Location = New Point(158, 175)
+        RadioButton2.Location = New Point(158, 171)
         RadioButton2.Name = "RadioButton2"
         RadioButton2.Size = New Size(99, 20)
         RadioButton2.TabIndex = 17
@@ -220,7 +232,7 @@ Partial Class DTRMain
         ' 
         RadioButton1.AutoSize = True
         RadioButton1.Font = New Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point)
-        RadioButton1.Location = New Point(41, 175)
+        RadioButton1.Location = New Point(41, 171)
         RadioButton1.Name = "RadioButton1"
         RadioButton1.Size = New Size(92, 20)
         RadioButton1.TabIndex = 16
@@ -294,7 +306,7 @@ Partial Class DTRMain
         TextBox11.ReadOnly = True
         TextBox11.Size = New Size(334, 18)
         TextBox11.TabIndex = 44
-        TextBox11.Text = "Regional Director"
+        TextBox11.Text = "Assistant Regional Director"
         TextBox11.TextAlign = HorizontalAlignment.Center
         ' 
         ' TextBox9
@@ -320,7 +332,7 @@ Partial Class DTRMain
         TextBox10.ReadOnly = True
         TextBox10.Size = New Size(334, 19)
         TextBox10.TabIndex = 42
-        TextBox10.Text = "ARNEL M. AGABE, CESO III"
+        TextBox10.Text = "ATTY. DARWIN N. BIBAR, CESO IV"
         TextBox10.TextAlign = HorizontalAlignment.Center
         ' 
         ' RichTextBox1
@@ -541,6 +553,7 @@ Partial Class DTRMain
         lbl_index.Size = New Size(37, 14)
         lbl_index.TabIndex = 67
         lbl_index.Text = "Index"
+        lbl_index.Visible = False
         ' 
         ' Button3
         ' 
@@ -874,7 +887,7 @@ Partial Class DTRMain
         ' PictureBox1
         ' 
         PictureBox1.Image = My.Resources.Resources.pngaaa_com_4194622
-        PictureBox1.Location = New Point(53, 26)
+        PictureBox1.Location = New Point(61, 25)
         PictureBox1.Name = "PictureBox1"
         PictureBox1.Size = New Size(199, 152)
         PictureBox1.SizeMode = PictureBoxSizeMode.Zoom
@@ -972,4 +985,5 @@ Partial Class DTRMain
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
     Friend WithEvents lbl_index As Label
+    Friend WithEvents cb_weekends As CheckBox
 End Class

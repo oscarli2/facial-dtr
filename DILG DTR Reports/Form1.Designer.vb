@@ -23,7 +23,7 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
-        Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(Form1))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         ToolStrip1 = New ToolStrip()
         ToolStripButton1 = New ToolStripButton()
         ToolStripButton3 = New ToolStripButton()
@@ -126,8 +126,8 @@ Partial Class Form1
         lbl_empInCount.ForeColor = Color.White
         lbl_empInCount.Name = "lbl_empInCount"
         lbl_empInCount.Padding = New Padding(0, 0, 15, 0)
-        lbl_empInCount.Size = New Size(37, 46)
-        lbl_empInCount.Text = "0"
+        lbl_empInCount.Size = New Size(31, 46)
+        lbl_empInCount.Text = " "
         ' 
         ' ToolStripLabel1
         ' 
@@ -135,8 +135,8 @@ Partial Class Form1
         ToolStripLabel1.Font = New Font("Bahnschrift SemiCondensed", 12F, FontStyle.Bold, GraphicsUnit.Point)
         ToolStripLabel1.ForeColor = Color.White
         ToolStripLabel1.Name = "ToolStripLabel1"
-        ToolStripLabel1.Size = New Size(135, 46)
-        ToolStripLabel1.Text = "Total Timed-in as of"
+        ToolStripLabel1.Size = New Size(13, 46)
+        ToolStripLabel1.Text = " "
         ' 
         ' StatusStrip1
         ' 
