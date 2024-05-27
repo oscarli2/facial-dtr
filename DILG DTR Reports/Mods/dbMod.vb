@@ -19,12 +19,11 @@ Module dbMod
     Public cmd As SqlCommand
     'Public dr As MySqlDataReader
     Public dr As SqlDataReader
-    Dim server As String = "26.113.153.103" '"localhost" 
+    Public server As String = "26.113.153.103" '"localhost" 
     Dim port As String = "3307"
-    'Dim user As String = "root"
-    Dim user As String = "sa"
-    Dim pass As String = "CDPabina"
-    Dim db As String = "zkteco"
+    Public user As String = "sa"
+    Public pass As String = "CDPabina"
+    Public db As String = "zkteco"
     Dim dbSQLServer As String = "anviz"
 
     'DTR days 30 or 31 days
@@ -63,7 +62,7 @@ Module dbMod
     Public Sub connection()
         Try
 
-            str = "Server=" & server & ";Port=" & port & ";Uid=" & user & ";Pwd=" & pass & ";Database=" & dbSQLServer & ";persist security info=false; SslMode=none;"
+            str = "Server=" & server & ";Port=" & port & ";Uid=" & user & ";Pwd=" & pass & ";Database=" & db & ";persist security info=false; SslMode=none;"
 
             'conn = New MySqlConnection(str)
             conn = New SqlConnection(str)
@@ -85,7 +84,7 @@ Module dbMod
 
         Try
             conn.ConnectionString = "Server = '" & server & "';  " _
-                                         & "Database = '" & dbSQLServer & "'; " _
+                                         & "Database = '" & db & "'; " _
                                          & "user id = '" & user & "'; " _
                                          & "password = '" & pass & "'"
 
@@ -214,7 +213,7 @@ Module dbMod
             dateToo = dateMonth & "-15"
             days = 1
         ElseIf b = True And a = False And c = False Then
-            dateFrom = dateMonth & "-16"
+            dateFrom = Convert.ToDateTime(dateMonth & "-16")
             dateMonth = dateMonth & "-" & dayCount
             dateToo = DateTime.Parse(dateMonth)
             days = 16
@@ -250,7 +249,7 @@ Module dbMod
             SELECT 
                 DAY(date_ranges.dt),
                 MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalAM,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
+                MIN(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
                 MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
                 MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
                 DATEPART(WEEKDAY, date_ranges.dt) AS Weekend
@@ -279,11 +278,10 @@ Module dbMod
                 FROM date_ranges 
                 WHERE DATEADD(DAY, 1, dt) <= " & dateToo & "
             )
-            )
             SELECT 
                 date_ranges.dt,
                 MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') or T.Checktype IS NULL END) AS ArrivalAM,
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
+                MIN(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
                 MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
                 MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
                 DATEPART(WEEKDAY, date_ranges.dt) AS Weekend
@@ -617,6 +615,13 @@ Module dbMod
                                 Dim items As New ListViewItem
                                 If weekEnd = "7" Or weekEnd = "" Then
                                     items.Text = days.ToString
+                                    If dr.IsDBNull(2) = True Then
+                                        items.SubItems.Add("")
+                                        items.SubItems.Add("Saturday")
+                                        items.SubItems.Add("")
+                                        items.SubItems.Add("")
+                                        items.SubItems.Add("")
+                                    End If
                                     items.SubItems.Add(dr(1).ToString)
                                     items.SubItems.Add(dr(2).ToString)
                                     items.SubItems.Add(dr(3).ToString)
@@ -1085,7 +1090,6 @@ Module dbMod
         CloseDB()
 
     End Sub
-
     Public Sub searchDTRAll(emp_id As Integer, dtpFrom As Date, dtpTo As Date)
 
         Dim query As String
@@ -1141,9 +1145,9 @@ Module dbMod
                 While dr.Read()
                     workstate = dr(2).ToString
                     If workstate = 1 Then
-                        workstate = "TIME-IN"
-                    Else
                         workstate = "TIME-OUT"
+                    Else
+                        workstate = "TIME-IN"
                     End If
                     Dim items As New ListViewItem
                     items.Text = dr(0).ToString
@@ -1219,12 +1223,12 @@ Module dbMod
         Dim i As Integer
         If undo = False Then
             connection()
-            Dim query As String = "SET FOREIGN_KEY_CHECKS = 0; INSERT INTO `zkteco`.`att_punches` ( `employee_id`,`punch_time`,`workstate` ) VALUES ( @EmpID, @DatePunch, @WorkState );"
+            Dim query As String = "EXEC sp_msforeachtable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL'; INSERT INTO `anviz`.`Checkinout` ( `Userid`,`CheckTime`,`CheckType` ) VALUES ( @Userid, @CheckTime, @CheckType );"
 
             'cmd = New MySqlCommand(query, conn)
-            cmd.Parameters.AddWithValue("@EmpID", EmpID)
-            cmd.Parameters.AddWithValue("@DatePunch", DatePunch)
-            cmd.Parameters.AddWithValue("@WorkState", WorkState)
+            cmd.Parameters.AddWithValue("@Userid", EmpID)
+            cmd.Parameters.AddWithValue("@CheckTime", DatePunch)
+            cmd.Parameters.AddWithValue("@CheckType", WorkState)
             Database_Updater.RichTextBox1.Text = query
 
             Try
@@ -1239,7 +1243,7 @@ Module dbMod
             End Try
         ElseIf undo = True Then
             connection()
-            Dim query As String = "SET FOREIGN_KEY_CHECKS = 0; delete from `zkteco`.`att_punches` where `id` = @EmpID AND `punch_time` = @DatePunch;"
+            Dim query As String = "EXEC sp_msforeachtable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL'; delete from `zkteco`.`att_punches` where `id` = @EmpID AND `punch_time` = @DatePunch;"
 
             'cmd = New MySqlCommand(query, conn)
             cmd.Parameters.AddWithValue("@EmpID", EmpID)
@@ -1270,7 +1274,7 @@ Module dbMod
     Public Sub searchLogin(ByVal txtUser As String, txtPass As String)
         'connection()
         ConnDB()
-        Dim query As String = "SELECT OPName, OPPwd FROM OPinfo WHERE OPName = @txtUser and OPPwd = @txtPass"
+        Dim query As String = "SELECT OPName, OPPwd, OPGroupID FROM OPinfo WHERE OPName = @txtUser and OPPwd = @txtPass"
         'cmd = New MySqlCommand(query, conn)
         cmd = New SqlCommand(query, conn)
         cmd.Parameters.AddWithValue("@txtUser", txtUser)
@@ -1282,7 +1286,13 @@ Module dbMod
             Form1.ToolStripButton2.Enabled = True
             Form1.Show()
             Form1.ToolStripStatusLabel1.Text = "Welcome " + txtUser + "!"
-            Form1.ToolStripStatusLabel1.Tag = txtUser
+            While dr.Read
+                If dr(2).ToString = "1" Then
+                    Form1.ToolStripStatusLabel1.Tag = "admin"
+                Else
+                    Form1.ToolStripStatusLabel1.Tag = ""
+                End If
+            End While
             LoginForm1.Hide()
         Else
             MsgBox("User not found or User/Pass not correct")

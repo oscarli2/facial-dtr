@@ -81,11 +81,12 @@ Public Class DTRMain
     End Sub
 
     Private Sub DTRMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        isActive = True
+        isActive = False
         Panel2.Visible = False
         RadioButton1.Enabled = False
         RadioButton2.Enabled = False
-        RadioButton3.Enabled = False
+        RadioButton3.Enabled = True
+        Form1.ToolStripButton3.Enabled = True
 
         ListView1.Columns.Add("Day", CStr(50), HorizontalAlignment.Center)
         ListView1.Columns.Add("Arrive", CStr(80), HorizontalAlignment.Center)

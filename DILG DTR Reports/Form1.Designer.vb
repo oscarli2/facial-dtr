@@ -177,7 +177,9 @@ Partial Class Form1
         FormBorderStyle = FormBorderStyle.FixedSingle
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
         IsMdiContainer = True
+        KeyPreview = True
         Name = "Form1"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "DILG R8 - DTR"
         WindowState = FormWindowState.Maximized
         ToolStrip1.ResumeLayout(False)

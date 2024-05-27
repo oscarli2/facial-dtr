@@ -9,7 +9,21 @@ Public Class LoginForm1
     ' such as the username, display name, etc.
 
     Private Sub OK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK.Click
-        searchLogin(UsernameTextBox.Text, PasswordTextBox.Text)
+        If RadioButton1.Checked = False And RadioButton2.Checked = False Then
+            MsgBox("Please select a biometric device!")
+        ElseIf RadioButton1.Checked = True And RadioButton2.Checked = False Then 'old biometrics
+            server = "26.113.153.103" '"localhost" 
+            user = "root"
+            pass = "CDPabina"
+            db = "zkteco"
+            searchLogin(UsernameTextBox.Text, PasswordTextBox.Text)
+        ElseIf RadioButton1.Checked = False And RadioButton2.Checked = True Then 'new biometrics
+            server = "26.113.153.103" '"localhost" 
+            user = "sa"
+            pass = "CDPabina"
+            db = "anviz"
+            searchLogin(UsernameTextBox.Text, PasswordTextBox.Text)
+        End If
     End Sub
 
     Private Sub Cancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cancel.Click
@@ -17,9 +31,13 @@ Public Class LoginForm1
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        Me.Hide()
-        Form1.ToolStripStatusLabel1.Text = "Welcome Guest!"
-        Form1.Show()
+        If RadioButton1.Checked = False Or RadioButton2.Checked = False Then
+            MsgBox("Please select a biometric device!")
+        Else
+            Me.Hide()
+            Form1.ToolStripStatusLabel1.Text = "Welcome Guest!"
+            Form1.Show()
+        End If
     End Sub
 
     Private Sub LoginForm1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
