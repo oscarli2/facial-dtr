@@ -23,7 +23,7 @@ Module dbMod
     Dim port As String = "3307"
     Public user As String = "sa"
     Public pass As String = "CDPabina"
-    Public db As String = "zkteco"
+    Public db As String = "anviz"
     Dim dbSQLServer As String = "anviz"
 
     'DTR days 30 or 31 days
@@ -247,7 +247,7 @@ Module dbMod
                 WHERE DATEADD(DAY, 1, dt) <= '" & dateToo & "'
             )
             SELECT 
-                DAY(date_ranges.dt),
+                DAY(date_ranges.dt) as 'Days',
                 MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalAM,
                 MIN(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
                 MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
@@ -264,40 +264,44 @@ Module dbMod
             EXEC sp_msforeachtable 'ALTER TABLE ? CHECK CONSTRAINT ALL';
             "
         Else
-            query = "
-            SET NOCOUNT ON;
+            query = "   
+                SET NOCOUNT ON;
 
-            -- Disable foreign key checks
-            EXEC sp_msforeachtable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL';
+                -- Disable foreign key checks
+                EXEC sp_msforeachtable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL';
 
-            -- Your original CTE and main query
-            WITH date_ranges AS (
-                SELECT CAST(" & dateFrom & " AS DATE) AS dt
-                UNION ALL
-                SELECT DATEADD(DAY, 1, dt) 
-                FROM date_ranges 
-                WHERE DATEADD(DAY, 1, dt) <= " & dateToo & "
-            )
-            SELECT 
-                date_ranges.dt,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') or T.Checktype IS NULL END) AS ArrivalAM,
-                MIN(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
-                DATEPART(WEEKDAY, date_ranges.dt) AS Weekend
-            FROM 
-                date_ranges
-            LEFT JOIN 
-                Checkinout T ON date_ranges.dt = CAST(T.Checktime AS DATE)
-            GROUP BY 
-                date_ranges.dt;
+                -- Your original CTE and main query
+                WITH date_ranges AS (
+                    SELECT CAST(@dateFrom AS DATE) AS dt
+                    UNION ALL
+                    SELECT DATEADD(DAY, 1, dt) 
+                    FROM date_ranges 
+                    WHERE DATEADD(DAY, 1, dt) <= CAST(@dateToo AS DATE)
+                )
+                SELECT 
+                    DAY(date_ranges.dt) as 'Days',
+                    MAX(CASE WHEN T.Checktype = 1 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalAM,
+                    MIN(CASE WHEN T.Checktype = 0 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
+                    MAX(CASE WHEN T.Checktype = 1 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
+                    MAX(CASE WHEN T.Checktype = 0 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
+                    DATEPART(WEEKDAY, date_ranges.dt) AS Weekend
+                FROM 
+                    date_ranges
+                LEFT JOIN 
+                    Checkinout T ON date_ranges.dt = CAST(T.Checktime AS DATE)
+                GROUP BY 
+                    date_ranges.dt;
 
-            -- Enable foreign key checks
-            EXEC sp_msforeachtable 'ALTER TABLE ? CHECK CONSTRAINT ALL';
-            "
+                -- Enable foreign key checks
+                EXEC sp_msforeachtable 'ALTER TABLE ? CHECK CONSTRAINT ALL';
+                "
         End If
         cmd = New SqlCommand(query, conn)
-        dr = cmd.ExecuteReader
+        cmd.Parameters.AddWithValue("@dateFrom", dateFrom)
+        cmd.Parameters.AddWithValue("@dateToo", dateToo)
+        cmd.Parameters.AddWithValue("@emp_id", emp_id)
+        dr = cmd.ExecuteReader()
+
 
         DTRMain.ListView1.Clear()
         DTRMain.ListView1.Columns.Add("Day", 50, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
@@ -454,44 +458,44 @@ Module dbMod
                 End If
             Else
                 Dim weekEnd As String = dr(5).ToString
-                Dim items As New ListViewItem
-                If weekEnd = "7" Then
-                    items.Text = days.ToString
-                    items.SubItems.Add("")
-                    items.SubItems.Add("Saturday").ForeColor = Color.Red
-                    items.SubItems.Add("")
-                    items.SubItems.Add("")
-                    items.SubItems.Add("")
-                ElseIf weekEnd = "1" Then
-                    items.Text = days.ToString
-                    items.SubItems.Add("")
-                    items.SubItems.Add("Sunday").ForeColor = Color.Red
-                    items.SubItems.Add("")
-                    items.SubItems.Add("")
-                    items.SubItems.Add("")
-                Else
-                    items.Text = days.ToString
-                    items.SubItems.Add("")
-                    items.SubItems.Add("")
-                    items.SubItems.Add("")
-                    items.SubItems.Add("")
-                    items.SubItems.Add("")
+                    Dim items As New ListViewItem
+                    If weekEnd = "7" Then
+                        items.Text = days.ToString
+                        items.SubItems.Add("")
+                        items.SubItems.Add("Saturday").ForeColor = Color.Red
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                    ElseIf weekEnd = "1" Then
+                        items.Text = days.ToString
+                        items.SubItems.Add("")
+                        items.SubItems.Add("Sunday").ForeColor = Color.Red
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                    Else
+                        items.Text = days.ToString
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                        items.SubItems.Add("")
+                    End If
+                    DTRMain.ListView1.View = View.Details
+                    DTRMain.ListView1.Items.Add(items)
+                    days += 1
                 End If
-                DTRMain.ListView1.View = View.Details
-                DTRMain.ListView1.Items.Add(items)
-                days += 1
-            End If
 
-            With DTRMain
-                Dim BoldFont As Font = New Font(.ListView1.Font.FontFamily, .ListView1.Font.Size, Drawing.FontStyle.Bold)
-                For i As Integer = 0 To .ListView1.Items.Count - 1
-                    .ListView1.Items(i).UseItemStyleForSubItems = False
-                    .ListView1.Items(i).Font = BoldFont
-                    .ListView1.Items(i).BackColor = Color.LightGray
-                Next
-            End With
-        Catch ex As Exception
-            MessageBox.Show(ex.Message.ToString)
+                With DTRMain
+                    Dim BoldFont As Font = New Font(.ListView1.Font.FontFamily, .ListView1.Font.Size, Drawing.FontStyle.Bold)
+                    For i As Integer = 0 To .ListView1.Items.Count - 1
+                        .ListView1.Items(i).UseItemStyleForSubItems = False
+                        .ListView1.Items(i).Font = BoldFont
+                        .ListView1.Items(i).BackColor = Color.LightGray
+                    Next
+                End With
+            Catch ex As Exception
+                MessageBox.Show(ex.Message.ToString)
         End Try
         CloseDB()
     End Sub
@@ -543,7 +547,7 @@ Module dbMod
                 WHERE DATEADD(DAY, 1, dt) <= '" & dateToo & "'
             )
             SELECT 
-                DAY(date_ranges.dt),
+                DAY(date_ranges.dt) as 'Days',
                 MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalAM,
                 MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
                 MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
@@ -560,41 +564,43 @@ Module dbMod
             EXEC sp_msforeachtable 'ALTER TABLE ? CHECK CONSTRAINT ALL';
             "
         Else
-            query = "
-            SET NOCOUNT ON;
+            query = "   
+                SET NOCOUNT ON;
 
-            -- Disable foreign key checks
-            EXEC sp_msforeachtable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL';
+                -- Disable foreign key checks
+                EXEC sp_msforeachtable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL';
 
-            -- Your original CTE and main query
-            WITH date_ranges AS (
-                SELECT CAST(" & dateFrom & " AS DATE) AS dt
-                UNION ALL
-                SELECT DATEADD(DAY, 1, dt) 
-                FROM date_ranges 
-                WHERE DATEADD(DAY, 1, dt) <= " & dateToo & "
-            )
-            )
-            SELECT 
-                date_ranges.dt,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') or T.Checktype IS NULL END) AS ArrivalAM,
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
-                DATEPART(WEEKDAY, date_ranges.dt) AS Weekend
-            FROM 
-                date_ranges
-            LEFT JOIN 
-                Checkinout T ON date_ranges.dt = CAST(T.Checktime AS DATE)
-            GROUP BY 
-                date_ranges.dt;
+                -- Your original CTE and main query
+                WITH date_ranges AS (
+                    SELECT CAST(@dateFrom AS DATE) AS dt
+                    UNION ALL
+                    SELECT DATEADD(DAY, 1, dt) 
+                    FROM date_ranges 
+                    WHERE DATEADD(DAY, 1, dt) <= CAST(@dateToo AS DATE)
+                )
+                SELECT 
+                    DAY(date_ranges.dt) as 'Days',
+                    MAX(CASE WHEN T.Checktype = 1 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalAM,
+                    MIN(CASE WHEN T.Checktype = 0 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
+                    MAX(CASE WHEN T.Checktype = 1 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
+                    MAX(CASE WHEN T.Checktype = 0 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
+                    DATEPART(WEEKDAY, date_ranges.dt) AS Weekend
+                FROM 
+                    date_ranges
+                LEFT JOIN 
+                    Checkinout T ON date_ranges.dt = CAST(T.Checktime AS DATE)
+                GROUP BY 
+                    date_ranges.dt;
 
-            -- Enable foreign key checks
-            EXEC sp_msforeachtable 'ALTER TABLE ? CHECK CONSTRAINT ALL';
-            "
+                -- Enable foreign key checks
+                EXEC sp_msforeachtable 'ALTER TABLE ? CHECK CONSTRAINT ALL';
+                "
         End If
         cmd = New SqlCommand(query, conn)
-        dr = cmd.ExecuteReader
+        cmd.Parameters.AddWithValue("@dateFrom", dateFrom)
+        cmd.Parameters.AddWithValue("@dateToo", dateToo)
+        cmd.Parameters.AddWithValue("@emp_id", emp_id)
+        dr = cmd.ExecuteReader()
 
         DTRMain.ListView1.Clear()
         DTRMain.ListView1.Columns.Add("Day", 50, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
