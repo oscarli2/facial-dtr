@@ -27,7 +27,11 @@
 
     Private Sub AllData_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         isActive = False
-        Form1.ToolStripButton3.Enabled = False
+        If Application.OpenForms().OfType(Of DTRMain).Any Then
+            Form1.ToolStripButton3.Enabled = True
+        Else
+            Form1.ToolStripButton3.Enabled = False
+        End If
     End Sub
 
     Private Sub AllData_Load(sender As Object, e As EventArgs) Handles MyBase.Load

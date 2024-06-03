@@ -197,7 +197,18 @@ Public Class DTRMain
             lbl_index.Text = ListView1.FocusedItem.Index
             itemIndex = ListView1.FocusedItem.Index
         Else
-            MsgBox("No data in selected date!")
+            Dim result As DialogResult = MessageBox.Show("No Data on selected date. Do you want to continue?",
+                              "No Data", MessageBoxButtons.YesNo)
+            If (result = DialogResult.Yes) Then
+                Panel2.Visible = True
+                txt_ArivalAM.Text = ListView1.FocusedItem.SubItems(1).Text
+                txt_DepAM.Text = ListView1.FocusedItem.SubItems(2).Text
+                txt_ArrivalPM.Text = ListView1.FocusedItem.SubItems(3).Text
+                txt_DepPM.Text = ListView1.FocusedItem.SubItems(4).Text
+                lbl_index.Text = ListView1.FocusedItem.Index
+                itemIndex = ListView1.FocusedItem.Index
+            Else
+            End If
         End If
     End Sub
 

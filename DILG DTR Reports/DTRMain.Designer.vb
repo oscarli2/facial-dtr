@@ -332,7 +332,7 @@ Partial Class DTRMain
         TextBox10.ReadOnly = True
         TextBox10.Size = New Size(334, 19)
         TextBox10.TabIndex = 42
-        TextBox10.Text = "ATTY. DARWIN N. BIBAR, CESO IV"
+        TextBox10.Text = "ATTY. DARWIN N. BIBAR, CESO V"
         TextBox10.TextAlign = HorizontalAlignment.Center
         ' 
         ' RichTextBox1
