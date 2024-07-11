@@ -240,18 +240,18 @@ Module dbMod
 
             -- Your original CTE and main query
             WITH date_ranges AS (
-                SELECT CAST('" & dateFrom & "' AS DATE) AS dt
+                SELECT CAST(@dateFrom AS DATE) AS dt
                 UNION ALL
                 SELECT DATEADD(DAY, 1, dt) 
                 FROM date_ranges 
-                WHERE DATEADD(DAY, 1, dt) <= '" & dateToo & "'
+                WHERE DATEADD(DAY, 1, dt) <= CAST(@dateToo AS DATE)
             )
             SELECT 
                 DAY(date_ranges.dt) as 'Days',
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalAM,
-                MIN(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalAM,
+                MIN(CASE WHEN T.Checktype = 1 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '14:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
                 DATEPART(WEEKDAY, date_ranges.dt) AS Weekend
             FROM 
                 date_ranges
@@ -540,18 +540,18 @@ Module dbMod
 
             -- Your original CTE and main query
             WITH date_ranges AS (
-                SELECT CAST('" & dateFrom & "' AS DATE) AS dt
+                SELECT CAST(@dateFrom AS DATE) AS dt
                 UNION ALL
                 SELECT DATEADD(DAY, 1, dt) 
                 FROM date_ranges 
-                WHERE DATEADD(DAY, 1, dt) <= '" & dateToo & "'
-            )
+                WHERE DATEADD(DAY, 1, dt) <= CAST(@dateToo AS DATE)
+               )
             SELECT 
                 DAY(date_ranges.dt) as 'Days',
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalAM,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
-                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
-                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = '" & emp_id & "' AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '03:00:00' AND '11:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalAM,
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartAM,
+                MAX(CASE WHEN T.Checktype = 0 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '12:00:00' AND '14:00:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS ArrivalPM,
+                MAX(CASE WHEN T.Checktype = 1 AND T.Userid = @emp_id AND CAST(T.Checktime AS TIME) BETWEEN '15:00:01' AND '23:59:00' THEN FORMAT(T.Checktime, 'h:mm tt') END) AS DepartPM,
                 DATEPART(WEEKDAY, date_ranges.dt) AS Weekend
             FROM 
                 date_ranges
@@ -1125,8 +1125,8 @@ Module dbMod
                   Checkinout
                 LEFT JOIN Userinfo 
                 ON Checkinout.Userid = Userinfo.Userid
-                WHERE Checkinout.Userid = '" & emp_id & "'
-                AND CAST(Checktime AS DATE) BETWEEN '" & dtpFrom & "' AND '" & dtpTo & "'
+                WHERE Checkinout.Userid = @emp_id
+                AND CAST(Checktime AS DATE) BETWEEN CAST(@dateFrom as Date) AND CAST(@dateToo as Date)
                 ORDER BY Checktime DESC;
                 "
 
@@ -1136,7 +1136,10 @@ Module dbMod
 
         ConnDB()
         cmd = New SqlCommand(query, conn)
-        dr = cmd.ExecuteReader
+        cmd.Parameters.AddWithValue("@dateFrom", dtpFrom)
+        cmd.Parameters.AddWithValue("@dateToo", dtpTo)
+        cmd.Parameters.AddWithValue("@emp_id", emp_id)
+        dr = cmd.ExecuteReader()
 
         AllData.ListView1.Clear()
         AllData.ListView1.Columns.Add("Emp_ID", 70, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
