@@ -63,6 +63,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property blue_database_server_settings_20288() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("blue-database-server-settings-20288", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property pngaaa_com_4194622() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("pngaaa.com-4194622", resourceCulture)
@@ -87,6 +97,16 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("pngaaaicon", resourceCulture)
                 Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property settings_778() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("settings-778", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
     End Module

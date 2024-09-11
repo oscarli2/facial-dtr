@@ -20,11 +20,11 @@ Module dbMod
     'Public dr As MySqlDataReader
     Public dr As SqlDataReader
     Public server As String = "26.113.153.103" '"localhost" 
-    Dim port As String = "3307"
+    Public port As String = "3307"
     Public user As String = "sa"
     Public pass As String = "CDPabina"
     Public db As String = "anviz"
-    Dim dbSQLServer As String = "anviz"
+    Public dbSQLServer As String = "anviz"
 
     'DTR days 30 or 31 days
     Public dayCount As String = ""
@@ -93,6 +93,25 @@ Module dbMod
         Catch ex As Exception
             MsgBox("The system failed to establish a connection", MsgBoxStyle.Information, "Database Settings")
         End Try
+
+    End Sub
+    Public Sub ConnDBTest()
+
+        conn.Close()
+
+        Try
+            conn.ConnectionString = "Server = '" & server & "';  " _
+                                         & "Database = '" & db & "'; " _
+                                         & "user id = '" & user & "'; " _
+                                         & "password = '" & pass & "'"
+
+            conn.Open()
+
+        Catch ex As Exception
+            MsgBox("The system failed to establish a connection", MsgBoxStyle.Information, "Database Settings")
+            Exit Sub
+        End Try
+        MsgBox("The system successfully to establish a connection", MsgBoxStyle.Information, "Database Settings")
 
     End Sub
 
@@ -608,8 +627,8 @@ Module dbMod
         DTRMain.ListView1.Columns.Add("Depart", 80, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
         DTRMain.ListView1.Columns.Add("Arrive", 80, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
         DTRMain.ListView1.Columns.Add("Depart", 80, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
-        DTRMain.ListView1.Columns.Add("Hours", 40, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
-        DTRMain.ListView1.Columns.Add("Minutes", 40, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        DTRMain.ListView1.Columns.Add("Hours", 80, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
+        DTRMain.ListView1.Columns.Add("Minutes", 80, CType(HorizontalAlignment.Center, Forms.HorizontalAlignment))
 
         Try
             If days = 1 And c = False Then
@@ -621,13 +640,6 @@ Module dbMod
                                 Dim items As New ListViewItem
                                 If weekEnd = "7" Or weekEnd = "" Then
                                     items.Text = days.ToString
-                                    If dr.IsDBNull(2) = True Then
-                                        items.SubItems.Add("")
-                                        items.SubItems.Add("Saturday")
-                                        items.SubItems.Add("")
-                                        items.SubItems.Add("")
-                                        items.SubItems.Add("")
-                                    End If
                                     items.SubItems.Add(dr(1).ToString)
                                     items.SubItems.Add(dr(2).ToString)
                                     items.SubItems.Add(dr(3).ToString)

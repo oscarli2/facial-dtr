@@ -332,7 +332,7 @@ Partial Class DTRMain
         TextBox10.ReadOnly = True
         TextBox10.Size = New Size(334, 19)
         TextBox10.TabIndex = 42
-        TextBox10.Text = "ATTY. DARWIN N. BIBAR, CESO V"
+        TextBox10.Text = "ATTY. DARWIN N. BIBAR, CESO IV"
         TextBox10.TextAlign = HorizontalAlignment.Center
         ' 
         ' RichTextBox1
@@ -519,7 +519,7 @@ Partial Class DTRMain
         Panel1.Controls.Add(TextBox7)
         Panel1.Location = New Point(336, 11)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(507, 1184)
+        Panel1.Size = New Size(510, 1184)
         Panel1.TabIndex = 46
         ' 
         ' Panel2
@@ -899,7 +899,7 @@ Partial Class DTRMain
         AutoScaleDimensions = New SizeF(6F, 14F)
         AutoScaleMode = AutoScaleMode.Font
         AutoScroll = True
-        ClientSize = New Size(851, 959)
+        ClientSize = New Size(867, 959)
         Controls.Add(PictureBox1)
         Controls.Add(Panel1)
         Controls.Add(GroupBox1)

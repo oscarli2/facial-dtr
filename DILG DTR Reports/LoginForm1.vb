@@ -26,8 +26,8 @@ Public Class LoginForm1
         End If
     End Sub
 
-    Private Sub Cancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cancel.Click
-        Me.Close()
+    Private Sub Cancel_Click(ByVal sender As Object, ByVal e As EventArgs) Handles Cancel.Click
+        Close
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
@@ -43,5 +43,9 @@ Public Class LoginForm1
     Private Sub LoginForm1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Form1.ToolStripButton3.Enabled = False
         Form1.ToolStripButton2.Enabled = False
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        DatabaseSettings.Show()
     End Sub
 End Class

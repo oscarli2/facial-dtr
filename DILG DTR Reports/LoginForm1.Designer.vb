@@ -40,6 +40,7 @@ Partial Class LoginForm1
         LinkLabel1 = New LinkLabel()
         RadioButton1 = New RadioButton()
         RadioButton2 = New RadioButton()
+        Button1 = New Button()
         CType(LogoPictureBox, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -49,14 +50,14 @@ Partial Class LoginForm1
         LogoPictureBox.Image = My.Resources.Resources.pngaaa_com_4194622
         LogoPictureBox.Location = New Point(12, 9)
         LogoPictureBox.Name = "LogoPictureBox"
-        LogoPictureBox.Size = New Size(170, 194)
+        LogoPictureBox.Size = New Size(176, 210)
         LogoPictureBox.SizeMode = PictureBoxSizeMode.Zoom
         LogoPictureBox.TabIndex = 0
         LogoPictureBox.TabStop = False
         ' 
         ' UsernameLabel
         ' 
-        UsernameLabel.Location = New Point(198, 7)
+        UsernameLabel.Location = New Point(205, 27)
         UsernameLabel.Name = "UsernameLabel"
         UsernameLabel.Size = New Size(220, 23)
         UsernameLabel.TabIndex = 0
@@ -65,7 +66,7 @@ Partial Class LoginForm1
         ' 
         ' PasswordLabel
         ' 
-        PasswordLabel.Location = New Point(198, 63)
+        PasswordLabel.Location = New Point(205, 83)
         PasswordLabel.Name = "PasswordLabel"
         PasswordLabel.Size = New Size(220, 23)
         PasswordLabel.TabIndex = 2
@@ -74,14 +75,14 @@ Partial Class LoginForm1
         ' 
         ' UsernameTextBox
         ' 
-        UsernameTextBox.Location = New Point(197, 27)
+        UsernameTextBox.Location = New Point(204, 47)
         UsernameTextBox.Name = "UsernameTextBox"
         UsernameTextBox.Size = New Size(213, 23)
         UsernameTextBox.TabIndex = 1
         ' 
         ' PasswordTextBox
         ' 
-        PasswordTextBox.Location = New Point(197, 84)
+        PasswordTextBox.Location = New Point(204, 104)
         PasswordTextBox.Name = "PasswordTextBox"
         PasswordTextBox.PasswordChar = "*"c
         PasswordTextBox.Size = New Size(213, 23)
@@ -89,7 +90,7 @@ Partial Class LoginForm1
         ' 
         ' OK
         ' 
-        OK.Location = New Point(206, 176)
+        OK.Location = New Point(213, 196)
         OK.Name = "OK"
         OK.Size = New Size(94, 23)
         OK.TabIndex = 6
@@ -98,7 +99,7 @@ Partial Class LoginForm1
         ' Cancel
         ' 
         Cancel.DialogResult = DialogResult.Cancel
-        Cancel.Location = New Point(309, 176)
+        Cancel.Location = New Point(316, 196)
         Cancel.Name = "Cancel"
         Cancel.Size = New Size(94, 23)
         Cancel.TabIndex = 7
@@ -107,7 +108,7 @@ Partial Class LoginForm1
         ' LinkLabel1
         ' 
         LinkLabel1.AutoSize = True
-        LinkLabel1.Location = New Point(267, 148)
+        LinkLabel1.Location = New Point(274, 168)
         LinkLabel1.Name = "LinkLabel1"
         LinkLabel1.Size = New Size(84, 15)
         LinkLabel1.TabIndex = 5
@@ -117,7 +118,7 @@ Partial Class LoginForm1
         ' RadioButton1
         ' 
         RadioButton1.AutoSize = True
-        RadioButton1.Location = New Point(199, 120)
+        RadioButton1.Location = New Point(206, 140)
         RadioButton1.Name = "RadioButton1"
         RadioButton1.Size = New Size(103, 19)
         RadioButton1.TabIndex = 3
@@ -128,7 +129,7 @@ Partial Class LoginForm1
         ' RadioButton2
         ' 
         RadioButton2.AutoSize = True
-        RadioButton2.Location = New Point(305, 120)
+        RadioButton2.Location = New Point(312, 140)
         RadioButton2.Name = "RadioButton2"
         RadioButton2.Size = New Size(108, 19)
         RadioButton2.TabIndex = 4
@@ -136,13 +137,24 @@ Partial Class LoginForm1
         RadioButton2.Text = "New Biometrics"
         RadioButton2.UseVisualStyleBackColor = True
         ' 
+        ' Button1
+        ' 
+        Button1.BackgroundImage = My.Resources.Resources.settings_778
+        Button1.BackgroundImageLayout = ImageLayout.Zoom
+        Button1.DialogResult = DialogResult.Cancel
+        Button1.Location = New Point(402, 4)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(28, 27)
+        Button1.TabIndex = 8
+        ' 
         ' LoginForm1
         ' 
         AcceptButton = OK
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         CancelButton = Cancel
-        ClientSize = New Size(433, 223)
+        ClientSize = New Size(435, 239)
+        Controls.Add(Button1)
         Controls.Add(RadioButton2)
         Controls.Add(RadioButton1)
         Controls.Add(LinkLabel1)
@@ -168,4 +180,5 @@ Partial Class LoginForm1
     Friend WithEvents LinkLabel1 As LinkLabel
     Friend WithEvents RadioButton1 As RadioButton
     Friend WithEvents RadioButton2 As RadioButton
+    Friend WithEvents Button1 As Button
 End Class
